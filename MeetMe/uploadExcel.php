@@ -98,7 +98,7 @@ if(isset($_FILES['excel'])){
     </nav>
     <div class="content">
         <h3>Upload excel file</h3><br>
-		<h4>Welcome <?php echo $user_data['username'];?>, to the excel upload page. </h4><br>
+		<h4>Welcome <?php echo $user_data['First_name'];?> <?php echo $user_data['Last_name'];?>, to the excel upload page. </h4><br>
         <form action="" method="POST" enctype="multipart/form-data">
         <input type="file" id="excel"name="excel" onchange="return fileValidation()"/><br>
         <input type="submit"/>
