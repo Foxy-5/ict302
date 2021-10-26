@@ -48,7 +48,8 @@ $user_data = check_login($con);
         </div>
     </nav>
     <div class="content">
-        <h1>Welcome back  <?php echo $user_data['username'];?></h1>
+        <h1>Welcome back  <?php echo $user_data['First_name'];?> <?php echo $user_data['Last_name'];?></h1>
+        <br>
         <ol style="list-style-type: lower-alpha">
             <li>
                 Use Strong Passwords<br />
