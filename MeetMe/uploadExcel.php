@@ -14,19 +14,19 @@ if(isset($_FILES['excel'])){
 	$file_type=$_FILES['excel']['type'];
 	//$file_ext=strtolower(end(explode('.',$_FILES['excel']['name'])));
 	$file_ext=strtolower(pathinfo($_FILES['excel']['name'],PATHINFO_EXTENSION));
-	$extensions= array("xlsx","xls");
+	$extensions= array("xlsx","xls","csv");
 	$errortype = 0;
 	if(in_array($file_ext,$extensions)=== false){
-	   $errortype = 1;
+	    $errortype = 1;
 	}
 	
 	if($file_size > 2097152){
-	   $errortype = 2;
+	    $errortype = 2;
 	}
 	
 	if($errortype == 0){
-	   move_uploaded_file($file_tmp,"uploads/".$file_name);
-	   echo '<script>alert("Excel file uploaded.")</script>';
+	    move_uploaded_file($file_tmp,"uploads/".$file_name);
+	    echo '<script>alert("Excel file uploaded.")</script>';
 	}else{
 		if($errortype == 1){
 			echo '<script>alert("extension not allowed, please choose a excel file.")</script>';
@@ -35,7 +35,49 @@ if(isset($_FILES['excel'])){
 			echo '<script>alert("File size must be excately 2 MB")</script>';
 		}
 	}
- }
+}
+
+if(isset($_POST["import"])){
+    $file = "uploads/".$_FILES['excel']['name'];
+    $userid = $user_data['StaffID'];
+    $date = date("Y-m-d H:i:s");
+    $file_open = fopen($file,"r");
+    $query3 = "INSERT into list(UserID,ListDate) values ('$userid','$date')";
+    $result3 = mysqli_query($con,$query3);
+    if(!$result3){
+        echo '<script>
+        alert("an error with insert list has occurred.");
+        </script>';
+    }
+    $listquery = "select ListID from list where (UserID = '$userid') AND (ListDate = '$date')";
+    $result = mysqli_query($con, $listquery);
+    if($result){
+        $fetch = mysqli_fetch_assoc($result);
+        $listid = $fetch['ListID'];
+    }
+    while(($csv = fgetcsv($file_open,1000,","))!== FALSE){
+        //insert row into mysql database
+        $StudentID = $csv[0];
+        $Email = $csv[1];
+        $Firstname = $csv[2];
+        $Lastname = $csv[3];
+        $query1 = "INSERT IGNORE into student(StudentID,Email,First_name,Last_name) VALUES ('$StudentID','$Email','$Firstname','$Lastname')";
+        $result1 = mysqli_query($con,$query1);
+        if(!$result1){
+            echo '<script>
+            alert("an error with insert student has occurred.");
+            </script>';
+        }
+
+        $query2 = "INSERT into studentlist(ListID,StudentID) VALUES ('$listid','$StudentID')";
+        $result2 = mysqli_query($con,$query2);
+        if(!$result2){
+            echo '<script>
+            alert("an error with insert studentlist has occurred.");
+            </script>';
+        }
+    }
+}
 ?>
 <script>
         function fileValidation() {
@@ -45,7 +87,7 @@ if(isset($_FILES['excel'])){
             var filePath = fileInput.value;
           
             // Allowing file type
-            var allowedExtensions = /(\.xls|\.xlsx)$/i;
+            var allowedExtensions = /(\.xls|\.xlsx|\.csv)$/i;
               
             if (!allowedExtensions.exec(filePath)) {
                 alert('Invalid file type');
@@ -98,10 +140,10 @@ if(isset($_FILES['excel'])){
     </nav>
     <div class="content">
         <h3>Upload excel file</h3><br>
-		<h4>Welcome <?php echo $user_data['username'];?>, to the excel upload page. </h4><br>
+		<h4>Welcome <?php echo $user_data['First_name'];?> <?php echo $user_data['Last_name'];?>, to the excel upload page. </h4><br>
         <form action="" method="POST" enctype="multipart/form-data">
-        <input type="file" id="excel"name="excel" onchange="return fileValidation()"/><br>
-        <input type="submit"/>
+        <input type="file" id="excel" name="excel" onchange="return fileValidation()"/><br>
+        <input id="import" name="import" type="submit"/>
         </form>
     </div>
 </body>

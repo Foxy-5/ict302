@@ -7,16 +7,18 @@ session_start();
     if($_SERVER['REQUEST_METHOD'] == "POST")
     {
         //something was posted
+        $firstname = $_POST['first_name'];
+        $lastname = $_POST['last_name'];
         $email = $_POST['email'];
         $user_name = $_POST['user_name'];
         $password = $_POST['password'];
         $password2 = $_POST['repassword'];
-        if(!empty($email) && !empty($user_name) && !empty($password) && ($password == $password2))
+        if(!empty($firstname) && !empty($lastname) && !empty($email) && !empty($user_name) && !empty($password) && ($password == $password2))
         {
             //save to database
             
             $hash = password_hash($password,PASSWORD_DEFAULT);
-            $query = "insert into users (username,password,email) values ('$user_name','$hash','$email')";
+            $query = "insert into staff (First_name,Last_name,Username,Password,Email) values ('$firstname','$lastname','$user_name','$hash','$email')";
             if(mysqli_query($con,$query)){          
                 echo '<script>
                 alert("Account succesfully created.");
@@ -70,6 +72,10 @@ session_start();
         <div id="box">
             <form method="post">
                 <div style="font-size: 20px;margin: 10px;color:white">Sign Up</div>
+                <label for="first_name">First name</label><br>
+                <input type="text" name="first_name" id="text" placeholder="first name"><br><br>
+                <label for="last_name">Last name</label><br>
+                <input type="text" name="last_name" id="text" placeholder="last name"><br><br>
                 <label for="email">email</label><br>
                 <input type="email" name="email" id="text" placeholder="email address"><br><br>
                 <label for="user_name">username</label><br>
