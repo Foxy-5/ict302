@@ -16,9 +16,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
         $query = "select * from staff where Username = '$user_name' limit 1";
         $result = mysqli_query($con,$query);
 
-        if($result && mysqli_num_rows($result) > 0){
+        if($result && mysqli_num_rows($result) > 0)
+        {
             $user_data = mysqli_fetch_assoc($result);
-            if(password_verify($password,$user_data['Password'])){
+            if(password_verify($password,$user_data['Password']))
+            {
                 $_SESSION['StaffID'] = $user_data['StaffID'];
                 header("Location: home.php");
                 die;
