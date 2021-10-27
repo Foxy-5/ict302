@@ -51,20 +51,24 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
         <div class="logobar">
             <img src="Image/MU Logo.png" class="logo"><a href="_self"></a>
         </div>
-            
         <form method="post">
-        <div class="logincontainerbox">
-            <input class="loginboxtext" type="text" name="user_name" placeholder="username">
-            </br>
-            </br>
-            <input class="loginboxtext" type="password" name="password" placeholder="password">
-            </br>
-            <div class="logincontainerbutton">
-                <input class="loginpagebutton" type="reset" value="Clear">
-                <input class="loginpagebutton" type="submit" value="Login"><br><br>
-                <a href="signup.php">Click to Sign Up</a>
+            <div>
+                <img src="Image/LoginBackground.jpg" class="loginimagebackground">
+                <div class="logincontainerbox">
+                    <input class="loginboxtext" type="text" name="user_name" placeholder="USERNAME">
+                    </br>
+                    </br>
+                    <input class="loginboxtext" type="password" name="password" placeholder="PASSWORD">
+                    </br>
+                    <div class="logincontainerbutton">
+                        <input class="loginpagebutton" type="reset" value="Clear">
+                        <input class="loginpagebutton" type="submit" value="Login"><br><br>
+                        <div class="loginsignup">
+                            Click <a href="signup.php"><em>here</em></a> to sign up
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
         </form>
     </body>
 </html>

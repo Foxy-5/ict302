@@ -66,11 +66,15 @@ form.editprofileform ul li > * {
     width: 100%;
     background-color: black;
     height: 100px;
+    position: sticky;
+    top: 0;
 }
 
 .logo{
     width: auto;
     height: 100px;
+    position: sticky;
+    top: 0;
 }
 
 .loginpagebutton{
@@ -91,13 +95,33 @@ form.editprofileform ul li > * {
 }
 
 .logincontainerbox{
-    text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .logincontainerbutton{
     text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+.loginimagebackground{
+    width: 100%;
+    object-fit: cover;
+}
+
+.loginsignup {
+    color: white;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-family: "Open Sans", sans-serif;
+}
+
+div.loginsignup > a{
+    color: white;
+    font-weight: bold;
 }
