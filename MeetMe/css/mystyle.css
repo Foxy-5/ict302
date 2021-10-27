@@ -53,3 +53,51 @@ form.editprofileform ul li {
 form.editprofileform ul li > * {
     width: 100%;
 }
+
+.loginboxtext{
+    height: 30px;
+    width: 300px;
+    border-radius: 5px;
+    border: solid thin #aaa;
+}
+
+.logobar{
+    display: block;
+    width: 100%;
+    background-color: black;
+    height: 100px;
+}
+
+.logo{
+    width: auto;
+    height: 100px;
+}
+
+.loginpagebutton{
+    padding: 15px;
+    width: 100px;
+    color: white;
+    background-color: #e12744;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-family: "Open Sans", sans-serif;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.loginpagebutton:hover{
+    background-color: #ac182f;
+}
+
+.logincontainerbox{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.logincontainerbutton{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
