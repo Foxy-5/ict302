@@ -46,43 +46,65 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login</title>
+        <title>Login | Meetme v2</title>
     </head>
     <body>
         <style type = "text/css"> 
             #text{
-                height: 25px;
+                height: 30px;
                 border-radius: 5px;
-                padding: 4px;
                 border: solid thin #aaa;
-                width: 100%;
             }
 
             #button{
-                padding: 10px;
+                padding: 15px;
                 width: 100px;
                 color: white;
-                background-color: orange;
+                background-color: #e12744;
+                text-transform: uppercase;
+                font-size: 14px;
+                font-family: "Open Sans", sans-serif;
+                border-radius: 8px;
                 border: none;
+                cursor: pointer;
             }
 
-            #box{
-                background-color: skyblue;
-                margin: auto;
-                width: 300px;
-                padding: 20px;
+            #button:hover{
+                background-color: #ac182f
             }
+
+            #logobar{
+                display: block;
+                width: 100%;
+                background-color: black;
+                height: auto;
+            }
+
+            #authenticationBox{
+                width: 400px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            #buttonBox{
+                text-align: center;
+            }
+
         </style>
-
-        <div id="box">
+            <div id="logobar">
+                <img src="Image/MU Logo.png"><a href="_self"></a>
+            </div>
             <form method="post">
-                <div style="font-size: 20px;margin: 10px;color:white">Login</div>
-                <input id="text" type="text" name="user_name" placeholder="username"><br><br>
-                <input id="text" type="password" name="password" placeholder="password"><br><br>
-
+            <div id="buttonBox">
+                <div id="authenticationBox">
+                    <input id="text" type="text" name="user_name" placeholder="username">
+                    </br>
+                    </br>
+                    <input id="text" type="password" name="password" placeholder="password">
+                </div>
+                <input id="button" type="reset" value="Clear">
                 <input id="button" type="submit" value="Login"><br><br>
-                <a href="signup.php">Click to Sign Up</a><br><br>
+                <a href="signup.php">Click to Sign Up</a>
+                </div>
             </form>
-        </div>
     </body>
 </html>
