@@ -19,7 +19,7 @@ session_start();
             
             $hash = password_hash($password,PASSWORD_DEFAULT);
             $query = "insert into staff (First_name,Last_name,Username,Password,Email) values ('$firstname','$lastname','$user_name','$hash','$email')";
-            if(mysqli_query($con,$query)){          
+            if(mysqli_query($con,$query)){
                 echo '<script>
                 alert("Account succesfully created.");
                 window.location.href="login.php";
@@ -34,7 +34,7 @@ session_start();
         }
         else
         {
-            echo "Please enter valid details";
+            echo '<script>alert("Please enter valid details.")</script>';
         }
     }
 ?>

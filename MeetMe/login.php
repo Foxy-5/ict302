@@ -16,11 +16,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
         $query = "select * from staff where Username = '$user_name' limit 1";
         $result = mysqli_query($con,$query);
 
-        if($result && mysqli_num_rows($result) > 0)
-        {
+        if($result && mysqli_num_rows($result) > 0){
             $user_data = mysqli_fetch_assoc($result);
-            if(password_verify($password,$user_data['Password']))
-            {
+            if(password_verify($password,$user_data['Password'])){
                 $_SESSION['StaffID'] = $user_data['StaffID'];
                 header("Location: home.php");
                 die;
@@ -46,65 +44,43 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login | Meetme v2</title>
+        <title>Login</title>
     </head>
     <body>
         <style type = "text/css"> 
             #text{
-                height: 30px;
+                height: 25px;
                 border-radius: 5px;
+                padding: 4px;
                 border: solid thin #aaa;
+                width: 100%;
             }
 
             #button{
-                padding: 15px;
+                padding: 10px;
                 width: 100px;
                 color: white;
-                background-color: #e12744;
-                text-transform: uppercase;
-                font-size: 14px;
-                font-family: "Open Sans", sans-serif;
-                border-radius: 8px;
+                background-color: orange;
                 border: none;
-                cursor: pointer;
             }
 
-            #button:hover{
-                background-color: #ac182f
+            #box{
+                background-color: skyblue;
+                margin: auto;
+                width: 300px;
+                padding: 20px;
             }
-
-            #logobar{
-                display: block;
-                width: 100%;
-                background-color: black;
-                height: auto;
-            }
-
-            #authenticationBox{
-                width: 400px;
-                padding-top: 20px;
-                padding-bottom: 20px;
-            }
-            #buttonBox{
-                text-align: center;
-            }
-
         </style>
-            <div id="logobar">
-                <img src="Image/MU Logo.png"><a href="_self"></a>
-            </div>
+
+        <div id="box">
             <form method="post">
-            <div id="buttonBox">
-                <div id="authenticationBox">
-                    <input id="text" type="text" name="user_name" placeholder="username">
-                    </br>
-                    </br>
-                    <input id="text" type="password" name="password" placeholder="password">
-                </div>
-                <input id="button" type="reset" value="Clear">
+                <div style="font-size: 20px;margin: 10px;color:white">Login</div>
+                <input id="text" type="text" name="user_name" placeholder="username"><br><br>
+                <input id="text" type="password" name="password" placeholder="password"><br><br>
+
                 <input id="button" type="submit" value="Login"><br><br>
-                <a href="signup.php">Click to Sign Up</a>
-                </div>
+                <a href="signup.php">Click to Sign Up</a><br><br>
             </form>
+        </div>
     </body>
 </html>

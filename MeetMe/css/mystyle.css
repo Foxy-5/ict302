@@ -1,0 +1,55 @@
+body {
+  background-color: lightblue;
+}
+
+.content {
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #080808;
+}
+
+/* th,
+td {
+  padding: 15px;
+} */
+
+hr.redbar {
+  border: 10px solid red;
+  border-radius: 5px;
+}
+table.userprofile {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table.userprofile td,
+th {
+  text-align: left;
+  padding: 8px;
+}
+
+.linktobutton {
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #eeeeee;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #cccccc;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #cccccc;
+}
+
+form.editprofileform ul {
+    width: 40%;
+}
+
+form.editprofileform ul li {
+    width: 49%;
+    display: inline-block;
+}
+
+form.editprofileform ul li > * {
+    width: 100%;
+}
