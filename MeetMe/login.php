@@ -49,11 +49,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     </head>
     <body>
         <div class="logobar">
-            <img src="Image/MU Logo.png" class="logo"><a href="_self"></a>
+            <div class="logintextbar">
+                Login
+            </div>
+            <a href="https://www.murdoch.edu.au"><img src="Image/MU Logo.png" class="logo"></a>
         </div>
         <form method="post">
             <div>
-                <img src="Image/LoginBackground.jpg" class="loginimagebackground">
+                <img src="Image/LoginBackground.jpg" class="imagebackground">
                 <div class="logincontainerbox">
                     <input class="loginboxtext" type="text" name="user_name" placeholder="USERNAME">
                     </br>

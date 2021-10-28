@@ -41,51 +41,44 @@ session_start();
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Signup</title>
+        <title>Signup | Meetme v2</title>
+        <link rel="stylesheet" href="css/mystyle.css">
     </head>
     <body>
         <style type = "text/css"> 
-            #text{
-                height: 25px;
-                border-radius: 5px;
-                padding: 4px;
-                border: solid thin #aaa;
-                width: 100%;
-            }
 
-            #button{
-                padding: 10px;
-                width: 100px;
-                color: white;
-                background-color: orange;
-                border: none;
-            }
-
-            #box{
-                background-color: skyblue;
-                margin: auto;
-                width: 300px;
-                padding: 20px;
-            }
         </style>
+        <div class="signupflexcontainer">
+            <div class="logobar">
+                <div class="signuptextbar">
+                    Registration Form
+                </div>
+                <a href="https://www.murdoch.edu.au"><img src="Image/MU Logo.png" class="logo"></a>
+            </div>
 
-        <div id="box">
+            <img src="Image/LoginBackground.jpg" class="imagebackground">
             <form method="post">
-                <div style="font-size: 20px;margin: 10px;color:white">Sign Up</div>
-                <label for="first_name">First name</label><br>
-                <input type="text" name="first_name" id="text" placeholder="first name"><br><br>
-                <label for="last_name">Last name</label><br>
-                <input type="text" name="last_name" id="text" placeholder="last name"><br><br>
-                <label for="email">email</label><br>
-                <input type="email" name="email" id="text" placeholder="email address"><br><br>
-                <label for="user_name">username</label><br>
-                <input id="text" type="text" name="user_name" placeholder="username"><br><br>
-                <label for="password">password</label><br>
-                <input id="text" type="password" name="password" placeholder="password"><br><br>
-                <label for="repassword">enter password again</label><br>
-                <input id="text" type="password" name="repassword" placeholder="reenter password"><br><br>
-                <input id="button" type="submit" value="Sign up"><br><br>
-                <a href="login.php">Click to Login</a><br><br>
+                <div class="signupcontainerbox">
+                    <label for="first_name" class="signuptext">First Name</label><br>
+                    <input class="signuptextbox" name="first_name" id="text" placeholder="FIRST NAME"><br><br>
+                    <label for="last_name" class="signuptext">Last Name</label><br>
+                    <input class="signuptextbox"" name="last_name" id="text" placeholder="LAST NAME/FAMILY NAME"><br><br>
+                    <label for="email" class="signuptext">Email</label><br>
+                    <input class="signuptextbox" name="email" id="text" placeholder="EMAIL ADDRESS"><br><br>
+                    <label for="user_name" class="signuptext">Username</label><br>
+                    <input class="signuptextbox" type="text" name="user_name" placeholder="USERNAME"><br><br>
+                    <label for="password" class="signuptext">Password</label><br>
+                    <input class="signuptextbox" type="password" name="password" placeholder="PASSWORD"><br><br>
+                    <label for="repassword" class="signuptext">Re-Enter Password</label><br>
+                    <input class="signuptextbox" type="password" name="repassword" placeholder="RE-ENTER PASSWORD"><br><br>
+
+                    <input class="signuppagebutton" type="reset" value="Clear">
+                    <input class="signuppagebutton" type="submit" value="Sign Up"><br><br>
+
+                    <div class="loginsignup">
+                        Click <a href="login.php"><em>here</em></a> back to Login
+                    </div>
+                </div>
             </form>
         </div>
     </body>
