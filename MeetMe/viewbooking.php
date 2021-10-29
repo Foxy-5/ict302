@@ -5,6 +5,11 @@ include("connection.php");
 include("function.php");
 
 $user_data = check_login($con);
+$bookingid = $_GET['bookingid'];
+$query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status from booking, student where booking.bookingID = '$bookingid' LIMIT 1";
+$result1 = mysqli_query($con, $query1);
+$bookingdata = mysqli_fetch_assoc($result1);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,37 +54,65 @@ $user_data = check_login($con);
         </div>
     </nav>
     <div class="content">
-        <h1>Staff Meeting Analytics</h1>
-        <br>
-        <table border="2">
+        <h1>View booking</h1>
+        <hr class="redbar">
+        Current Booking<br /><br>
+        <table class="userprofile">
             <tr>
-                <th>
-                    <a href="?orderBy=firstname">First Name</a>
-                </th>
-                <th>
-                    <a href="?orderBy=lastname">Last Name</a>
-                </th>
-                <th>
-                    <a href="?orderBy=meeting_duration">Meeting Duration</a>
-                </th>
+                <th>Booking ID</th>
+                <th>Previous meeting ID</th>
             </tr>
             <?php
-            $orderBy = array('firstname', 'lastname', 'meeting_duration', 'cancelled_meeting');
-            $order = 'firstname';
-            if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
-                $order = $_GET['orderBy'];
-            }
-            $query1 = "Select staff.First_name, staff.Last_name, staff.Meeting_duration FROM staff";
-            $result1 = mysqli_query($con, $query1);
-            while ($row = mysqli_fetch_array($result1)) {
-                echo "<tr>";
-                echo "<td>" . $row['First_name'] . "</td>";
-                echo "<td>" . $row['Last_name'] . "</td>";
-                echo "<td>" . $row['Meeting_duration'] . "</td>";
-                echo "</tr>";
-            }
+            echo "<tr>";
+            echo "<td>" . $bookingdata['BookingID'] . "</td>";
+            echo "<td>" . $bookingdata['PreviousMeetingID'] . "</td>";
+            echo "</tr>";
+            ?>
+            <tr>
+                <th>Student Name</th>
+                <th>Student ID</th>
+            </tr>
+            <?php
+            echo "<tr>";
+            echo "<td>" . $bookingdata['First_name'] . " " . $bookingdata['Last_name'] . "</td>";
+            echo "<td>" . $bookingdata['StudentID'] . "</td>";
+            echo "</tr>";
+            ?>
+            <tr>
+                <th>Booking date</th>
+                <th>Booking start</th>
+            </tr>
+            <?php
+            echo "<tr>";
+            echo "<td>" . $bookingdata['Booking_date'] . "</td>";
+            echo "<td>" . $bookingdata['Booking_start'] . "</td>";
+            echo "</tr>";
+            ?>
+            <tr>
+                <th>Duration</th>
+                <th>Comment</th>
+            </tr>
+            <?php
+            echo "<tr>";
+            echo "<td>" . $bookingdata['Duration'] . "</td>";
+            echo "<td>" . $bookingdata['Comment'] . "</td>";
+            echo "</tr>";
+            ?>
+             <tr>
+                <th>Status</th>
+                <th>Edit Booking</th>
+            </tr>
+            <?php
+            echo "<tr>";
+            echo "<td>" . $bookingdata['Status'] . "</td>";
+            ?>
+            <td><a class="linktobutton" href="#">Edit</a></td>
+            <?php
+            echo "</tr>";
             ?>
         </table>
+
+    </div>
 </body>
 
 </html>

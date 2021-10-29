@@ -33,7 +33,7 @@ $userid = $user_data['StaffID'];
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li class="item"><a href="uploadExcel.php">Upload Excel</a></li>
-                        <li class="item"><a href="#">View Appointment</a></li>
+                        <li class="item"><a href="calendar.php">View Calendar</a></li>
                     </ul>
                 </li>
                 <li><a href="analytics.php">Analytics</a></li>

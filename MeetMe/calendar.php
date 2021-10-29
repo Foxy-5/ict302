@@ -49,37 +49,15 @@ $user_data = check_login($con);
         </div>
     </nav>
     <div class="content">
-        <h1>Staff Meeting Analytics</h1>
-        <br>
-        <table border="2">
-            <tr>
-                <th>
-                    <a href="?orderBy=firstname">First Name</a>
-                </th>
-                <th>
-                    <a href="?orderBy=lastname">Last Name</a>
-                </th>
-                <th>
-                    <a href="?orderBy=meeting_duration">Meeting Duration</a>
-                </th>
-            </tr>
-            <?php
-            $orderBy = array('firstname', 'lastname', 'meeting_duration', 'cancelled_meeting');
-            $order = 'firstname';
-            if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
-                $order = $_GET['orderBy'];
-            }
-            $query1 = "Select staff.First_name, staff.Last_name, staff.Meeting_duration FROM staff";
-            $result1 = mysqli_query($con, $query1);
-            while ($row = mysqli_fetch_array($result1)) {
-                echo "<tr>";
-                echo "<td>" . $row['First_name'] . "</td>";
-                echo "<td>" . $row['Last_name'] . "</td>";
-                echo "<td>" . $row['Meeting_duration'] . "</td>";
-                echo "</tr>";
-            }
-            ?>
-        </table>
+        <h1>Calendar List</h1>
+        <hr class="redbar">
+        <p>View your Upcoming bookings</p>
+        <a href="upcoming.php"class="linktobutton">Upcoming booking</a>
+        <br><br>
+        <p>View all your bookings</p>
+        <a href="allbooking.php"class="linktobutton">All booking</a>
+        </p>
+    </div>
 </body>
 
 </html>

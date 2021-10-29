@@ -5,6 +5,7 @@ include("connection.php");
 include("function.php");
 
 $user_data = check_login($con);
+$userid = $user_data['StaffID'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,37 +50,34 @@ $user_data = check_login($con);
         </div>
     </nav>
     <div class="content">
-        <h1>Staff Meeting Analytics</h1>
-        <br>
-        <table border="2">
+        <h1>Upcoming booking</h1>
+        <hr class="redbar">
+        Upcoming Booking<br /><br>
+        <table class="upcomingbooking">
             <tr>
-                <th>
-                    <a href="?orderBy=firstname">First Name</a>
-                </th>
-                <th>
-                    <a href="?orderBy=lastname">Last Name</a>
-                </th>
-                <th>
-                    <a href="?orderBy=meeting_duration">Meeting Duration</a>
-                </th>
+                <th>Booking date</th>
+                <th>Booking start</th>
+                <th>Student name</th>
+                <th>View this booking</th>
             </tr>
             <?php
-            $orderBy = array('firstname', 'lastname', 'meeting_duration', 'cancelled_meeting');
-            $order = 'firstname';
-            if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
-                $order = $_GET['orderBy'];
-            }
-            $query1 = "Select staff.First_name, staff.Last_name, staff.Meeting_duration FROM staff";
+            $today = date("Y-m-d");
+            $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID from booking, student where (booking.ConvenerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID) and (booking.Booking_date >= '$today') ORDER BY booking_start ASC";
+
             $result1 = mysqli_query($con, $query1);
             while ($row = mysqli_fetch_array($result1)) {
-                echo "<tr>";
-                echo "<td>" . $row['First_name'] . "</td>";
-                echo "<td>" . $row['Last_name'] . "</td>";
-                echo "<td>" . $row['Meeting_duration'] . "</td>";
-                echo "</tr>";
+            ?>
+                <tr>
+                    <td><?php echo $row['Booking_date']; ?></td>
+                    <td><?php echo $row['Booking_start']; ?></td>
+                    <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
+                    <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>">View</a></td>
+                </tr>
+            <?php
             }
             ?>
         </table>
+    </div>
 </body>
 
 </html>

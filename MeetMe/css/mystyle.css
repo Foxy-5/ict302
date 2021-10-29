@@ -4,10 +4,13 @@
   color: #080808;
 }
 
-/* th,
-td {
-  padding: 15px;
-} */
+table.upcomingbooking table,td,th{
+    font-family: arial, sans-serif;
+    border: 2px solid black;
+    border-collapse: collapse;
+    padding: 15px;
+    width: 10%;
+  }
 
 hr.redbar {
   border: 10px solid red;
