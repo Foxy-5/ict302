@@ -16,7 +16,15 @@ $user_data = check_login($con);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="css/mystyle.css">
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
+
     <title>navbar</title>
 </head>
 
@@ -51,35 +59,33 @@ $user_data = check_login($con);
     <div class="content">
         <h1>Staff Meeting Analytics</h1>
         <br>
-        <table border="2">
-            <tr>
-                <th>
-                    <a href="?orderBy=firstname">First Name</a>
-                </th>
-                <th>
-                    <a href="?orderBy=lastname">Last Name</a>
-                </th>
-                <th>
-                    <a href="?orderBy=meeting_duration">Meeting Duration</a>
-                </th>
-            </tr>
-            <?php
-            $orderBy = array('firstname', 'lastname', 'meeting_duration', 'cancelled_meeting');
-            $order = 'firstname';
-            if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
-                $order = $_GET['orderBy'];
-            }
-            $query1 = "Select staff.First_name, staff.Last_name, staff.Meeting_duration FROM staff";
-            $result1 = mysqli_query($con, $query1);
-            while ($row = mysqli_fetch_array($result1)) {
-                echo "<tr>";
-                echo "<td>" . $row['First_name'] . "</td>";
-                echo "<td>" . $row['Last_name'] . "</td>";
-                echo "<td>" . $row['Meeting_duration'] . "</td>";
-                echo "</tr>";
-            }
-            ?>
-        </table>
+        <table id="myTable" class="upcomingbooking">
+            <thead>
+                <tr>
+                    <th>Staff ID</th>
+                    <th>Staff name</th>
+                    <th>Meeting hours(minutes)</th>
+                    <th>No. of Cancelled meeting</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $status = "confirmed";
+                $query1 = "Select staff.StaffID, staff.First_name, staff.Last_name, staff.Meeting_duration, COALESCE(sum(booking.Status='$status'),0) as Status from staff LEFT JOIN booking ON staff.StaffID=booking.convenerID GROUP BY staff.StaffID";
+
+                $result1 = mysqli_query($con, $query1);
+                while ($row = mysqli_fetch_array($result1)) {
+                ?>
+                    <tr>
+                        <td><?php echo $row['StaffID']; ?></td>
+                        <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
+                        <td><?php echo $row['Meeting_duration']; ?></td>
+                        <td><?php echo $row['Status'];?></td>
+                    </tr>
+                <?php
+                }
+                ?>
+            </tbody>
 </body>
 
 </html>
