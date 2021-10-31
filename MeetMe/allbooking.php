@@ -16,7 +16,15 @@ $user_data = check_login($con);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="css/mystyle.css">
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
+
     <title>navbar</title>
 </head>
 
@@ -52,33 +60,39 @@ $user_data = check_login($con);
         <h1>All booking</h1>
         <hr class="redbar">
         <p>All your bookings</p>
-        <table class="upcomingbooking">
-            <tr>
-                <th>Booking date</th>
-                <th>Booking start</th>
-                <th>Student name</th>
-                <th>View this booking</th>
-            </tr>
-            <?php
-            $today = date("Y-m-d");
-            $userid = $user_data['StaffID'];
-            $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID from booking, student where (booking.ConvenerID = '$userid') and (booking.StudentID = student.StudentID) ORDER BY booking_start ASC";
-
-            $result1 = mysqli_query($con, $query1);
-            while ($row = mysqli_fetch_array($result1)) {
-            ?>
+        <table id="myTable" class="upcomingbooking">
+            <thead>
                 <tr>
-                    <td><?php echo $row['Booking_date']; ?></td>
-                    <td><?php echo $row['Booking_start']; ?></td>
-                    <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
-                    <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>">View</a></td>
+                    <th>Booking date</th>
+                    <th>Booking start</th>
+                    <th>Student name</th>
+                    <th>View this booking</th>
                 </tr>
-            <?php
-            }
-            ?>
+            </thead>
+            <tbody>
+                <?php
+                $today = date("Y-m-d");
+                $userid = $user_data['StaffID'];
+                $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID from booking, student where (booking.ConvenerID = '$userid') and (booking.StudentID = student.StudentID) ORDER BY booking_start ASC";
+
+                $result1 = mysqli_query($con, $query1);
+                while ($row = mysqli_fetch_array($result1)) {
+                ?>
+                    <tr>
+                        <td><?php echo $row['Booking_date']; ?></td>
+                        <td><?php echo $row['Booking_start']; ?></td>
+                        <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
+                        <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>">View</a></td>
+                    </tr>
+                <?php
+                }
+                ?>
+            </tbody>
+
         </table>
         </p>
     </div>
+
 </body>
 
 </html>
