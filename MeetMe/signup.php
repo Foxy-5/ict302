@@ -53,7 +53,7 @@ session_start();
                 <div class="signuptextbar">
                     Registration Form
                 </div>
-                <a href="https://www.murdoch.edu.au"><img src="Image/MU Logo.png" class="logo"></a>
+                <a href="https://www.murdoch.edu.au" target="_blank"><img src="Image/MU Logo.png" class="logo"></a>
             </div>
 
             <img src="Image/LoginBackground.jpg" class="imagebackground">

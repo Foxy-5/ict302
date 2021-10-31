@@ -1,6 +1,6 @@
 .content {
-  margin-left: 10px;
-  margin-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   color: #080808;
 }
 
@@ -13,9 +13,9 @@ table.upcomingbooking table,td,th{
   }
 
 hr.redbar {
-  border: 10px solid red;
-  border-radius: 5px;
+    border-top: 5px solid #e12744;
 }
+
 table.userprofile {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -196,3 +196,4 @@ div.loginsignup > a{
     left: 50%;
     transform: translate(-50%, -50%);
 }
+

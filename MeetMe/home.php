@@ -17,14 +17,14 @@ $user_data = check_login($con);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/mystyle.css">
-    <title>navbar</title>
+    <title>Home | Meetme v2</title>
 </head>
 
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">MeetMe</a>
+                <a href="http://localhost/meetme/home.php"><img src="Image/MU Logo.png" height="100"></a>
             </div>
             <ul class="nav navbar-nav">
                 <li class="active"><a href="home.php">Home</a></li>
@@ -49,7 +49,7 @@ $user_data = check_login($con);
         </div>
     </nav>
     <div class="content">
-        <h1>Welcome back  <?php echo $user_data['First_name'];?> <?php echo $user_data['Last_name'];?></h1>
+        <h3>Welcome back  <?php echo $user_data['First_name'];?> <?php echo $user_data['Last_name'];?></h3>
         <br>
         <ol style="list-style-type: lower-alpha">
             <li>

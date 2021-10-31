@@ -52,7 +52,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             <div class="logintextbar">
                 Login
             </div>
-            <a href="https://www.murdoch.edu.au"><img src="Image/MU Logo.png" class="logo"></a>
+            <a href="https://www.murdoch.edu.au" target="_blank"><img src="Image/MU Logo.png" class="logo"></a>
         </div>
         <form method="post">
             <div>

@@ -16,15 +16,15 @@ $user_data = check_login($con);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Profile | Meetme v2</title>
     <link rel="stylesheet" href="css/mystyle.css">
-    <title>navbar</title>
 </head>
 
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">MeetMe</a>
+                <a href="http://localhost/meetme/home.php"><img src="Image/MU Logo.png" height="100"></a>
             </div>
             <ul class="nav navbar-nav">
                 <li class="active"><a href="home.php">Home</a></li>
@@ -49,9 +49,9 @@ $user_data = check_login($con);
         </div>
     </nav>
     <div class="content">
-        <h1>Your Profile</h1>
+        <h3>Your Profile</h3>
         <hr class="redbar">
-        <h3>Personal details</h3>
+        <h4>Personal Details</h4>
         <br>
         <table class="userprofile">
             <tr>
