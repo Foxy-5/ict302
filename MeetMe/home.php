@@ -22,10 +22,10 @@ $user_data = check_login($con);
 
 <body>
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="http://localhost/meetme/home.php"><img src="Image/MU Logo.png" height="100"></a>
-            </div>
+        <div class="navbar-header">
+            <a href="home.php"><img src="Image/MU Logo.png" height="80"></a>
+        </div>
+        <div class="navpaddingright">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="home.php">Home</a></li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointment <span class="caret"></span></a>
@@ -38,13 +38,8 @@ $user_data = check_login($con);
                 <li><a href="about.php">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="glyphicon glyphicon-user"></span><span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="profile.php">User Profile</a></li>
-                        <li><a href="logout.php">Logout</a></li>
-                    </ul>
-                </li>
+                <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+                <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
     </nav>
