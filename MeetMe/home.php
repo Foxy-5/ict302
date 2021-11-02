@@ -18,7 +18,14 @@ $userid = $user_data['StaffID'];
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/mystyle.css">
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
     <title>Home | Meetme v2</title>
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
 </head>
 
 <body>
@@ -47,7 +54,7 @@ $userid = $user_data['StaffID'];
     <div class="content">
         <h1>Welcome back  <?php echo $user_data['First_name'];?> <?php echo $user_data['Last_name'];?>!</h1>
         <br>
-        <h3>Upcoming booking</h3>
+        <h3>Today's booking</h3>
         <hr class="redbar">
         <br>
         <table id="myTable" class="upcomingbooking">
@@ -62,7 +69,7 @@ $userid = $user_data['StaffID'];
             <tbody>
                 <?php
                 $today = date("Y-m-d");
-                $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID from booking, student where (booking.ConvenerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID) and (booking.Booking_date >= '$today') ORDER BY booking_start ASC";
+                $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID from booking, student where (booking.ConvenerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID) and (booking.Booking_date = '$today') ORDER BY booking_start ASC";
 
                 $result1 = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result1)) {
