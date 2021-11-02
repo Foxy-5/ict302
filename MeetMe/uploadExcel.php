@@ -135,8 +135,14 @@ if(isset($_POST["import"])){
         </div>
     </nav>
     <div class="content">
-        <h3>Upload excel file</h3><br>
-		<h4>Welcome <?php echo $user_data['First_name'];?> <?php echo $user_data['Last_name'];?>, to the excel upload page. </h4><br>
+        <h3>Upload Excel File</h3>
+        <br>
+		<h4>Welcome <?php echo $user_data['First_name'];?> <?php echo $user_data['Last_name'];?></h4>
+        <br>
+        <h5>Upload your CSV file with meeting details.
+            <br>
+            Example: <em>filename</em>.csv
+        </h5>
         <form action="" method="POST" enctype="multipart/form-data">
         <input type="file" id="excel" name="excel" onchange="return fileValidation()"/><br>
         <input id="import" name="import" type="submit"/>

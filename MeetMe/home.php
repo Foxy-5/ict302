@@ -5,6 +5,7 @@ include("connection.php");
 include("function.php");
 
 $user_data = check_login($con);
+$userid = $user_data['StaffID'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,29 +45,40 @@ $user_data = check_login($con);
         </div>
     </nav>
     <div class="content">
-        <h3>Welcome back  <?php echo $user_data['First_name'];?> <?php echo $user_data['Last_name'];?></h3>
+        <h1>Welcome back  <?php echo $user_data['First_name'];?> <?php echo $user_data['Last_name'];?>!</h1>
         <br>
-        <ol style="list-style-type: lower-alpha">
-            <li>
-                Use Strong Passwords<br />
-                Cyber criminals can conduct dictionary or brute-force attacks
-                to guess your password. Always keep your password random by
-                ensuring that your password does not have a pattern and is
-                unpredictable.
-            </li>
-            <li>
-                Enable MFA When Available<br />
-                Multi-Factor Authentication (MFA) provides an additional layer
-                of security in countering phishing, fake websites, spamming,
-                viruses, worms, Trojans, keystroke loggers and spyware.
-            </li>
-            <li>
-                Maintain Good Password Hygeiene<br />
-                Don't provide your passwords or OTP in response to a phone
-                call, email or suspicious website as it could be a phishing
-                scam
-            </li>
-        </ol>
+        <h3>Upcoming booking</h3>
+        <hr class="redbar">
+        <br>
+        <table id="myTable" class="upcomingbooking">
+            <thead>
+                <tr>
+                    <th>Booking date</th>
+                    <th>Booking start</th>
+                    <th>Student name</th>
+                    <th>View this booking</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $today = date("Y-m-d");
+                $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID from booking, student where (booking.ConvenerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID) and (booking.Booking_date >= '$today') ORDER BY booking_start ASC";
+
+                $result1 = mysqli_query($con, $query1);
+                while ($row = mysqli_fetch_array($result1)) {
+                ?>
+                    <tr>
+                        <td><?php echo $row['Booking_date']; ?></td>
+                        <td><?php echo $row['Booking_start']; ?></td>
+                        <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
+                        <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>">View</a></td>
+                    </tr>
+                <?php
+                }
+                ?>
+            </tbody>
+
+        </table>
     </div>
 </body>
 
