@@ -14,7 +14,7 @@ $bookingdata = mysqli_fetch_assoc($result1);
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $previousid = $_POST['previousid'];
     $newbookingend = date("Y-m-d H:i:s", strtotime($_POST['newbookingend']));
-    if ($newbookingend == '0000-00-00 00:00:00') {
+    if ($newbookingend != '0000-00-00 00:00:00') {
         $bookingend = $_POST['newbookingend'];
         $bookingenddate = date("Y-m-d H:i:s", strtotime($bookingend));
     } else {
