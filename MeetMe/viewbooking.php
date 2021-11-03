@@ -6,7 +6,7 @@ include("function.php");
 
 $user_data = check_login($con);
 $bookingid = $_GET['bookingid'];
-$query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status from booking, student where booking.bookingID = '$bookingid' LIMIT 1";
+$query1 = "Select Booking_date, Booking_start, Booking_end, student.First_name, student.Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status from booking, student where booking.bookingID = '$bookingid' and booking.StudentID = student.StudentID LIMIT 1";
 $result1 = mysqli_query($con, $query1);
 $bookingdata = mysqli_fetch_assoc($result1);
 
@@ -27,10 +27,10 @@ $bookingdata = mysqli_fetch_assoc($result1);
 
 <body>
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">MeetMe</a>
-            </div>
+        <div class="navbar-header">
+            <a href="home.php"><img src="Image/MU Logo.png" height="80"></a>
+        </div>
+        <div class="navpaddingright">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="home.php">Home</a></li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointment <span class="caret"></span></a>
@@ -43,13 +43,8 @@ $bookingdata = mysqli_fetch_assoc($result1);
                 <li><a href="about.php">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="glyphicon glyphicon-user"></span><span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="profile.php">User Profile</a></li>
-                        <li><a href="logout.php">Logout</a></li>
-                    </ul>
-                </li>
+                <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+                <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -89,28 +84,33 @@ $bookingdata = mysqli_fetch_assoc($result1);
             echo "</tr>";
             ?>
             <tr>
-                <th>Duration</th>
-                <th>Comment</th>
+                <th>Booking End</th>
+                <th>Duration (Minutes)</th>
             </tr>
             <?php
             echo "<tr>";
+            echo "<td>" . $bookingdata['Booking_end'] . "</td>";
             echo "<td>" . $bookingdata['Duration'] . "</td>";
-            echo "<td>" . $bookingdata['Comment'] . "</td>";
             echo "</tr>";
             ?>
-             <tr>
+            <tr>
+                <th>Comment</th>
                 <th>Status</th>
-                <th>Edit Booking</th>
             </tr>
             <?php
             echo "<tr>";
+            echo "<td>" . $bookingdata['Comment'] . "</td>";
             echo "<td>" . $bookingdata['Status'] . "</td>";
             ?>
-            <td><a class="linktobutton" href="#">Edit</a></td>
             <?php
             echo "</tr>";
             ?>
         </table>
+        <br>
+        <label for="editbooking">Edit Booking</label>
+        <a class="linktobutton" href="editbooking.php?bookingid=<?php echo $bookingdata['BookingID']; ?>">Edit</a>
+        <br>
+        <br>
 
     </div>
 </body>

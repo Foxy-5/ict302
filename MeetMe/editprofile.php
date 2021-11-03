@@ -92,7 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 </li>
             </ul>
             <br>
-            <input id="button" type="submit" value="Update profile"><br><br>
+            <input id="button" type="submit" value="Update profile">
+            <input type="button" value = "cancel update" onclick="location.href = 'profile.php'"><br>
         </form>
     </div>
 </body>
