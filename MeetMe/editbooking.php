@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $bstart = $bookingdata['Booking_start'];
     $bstartd = date_create($bstart);
     $bookingend = date_create($bookingenddate);
-    $duration = date_diff($bstartd,$bookingend);
+    $duration = date_diff($bstartd, $bookingend);
     $elapsed = $duration->days * 24 * 60;
     $elapsed += $duration->h * 60;
     $elapsed += $duration->i;
@@ -126,7 +126,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 </li>
                 <li>
                     <label for="status">Status</label>
-                    <select name="status" id="text"value="<?php echo $bookingdata['Status'] ?>">
+                    <?php $defaultstate = $bookingdata['Status'];?>
+                    <select name="status" id="text" selected="selected">
+                        <option value='<?php echo $defaultstate ?>' selected='selected'><?php echo $defaultstate ?></option>
                         <option value="confirmed">confirmed</option>
                         <option value="cancelled">cancelled</option>
                         <option value="ended">ended</option>
