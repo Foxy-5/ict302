@@ -65,17 +65,16 @@ $user_data = check_login($con);
             </thead>
             <tbody>
                 <?php
-                $status = "confirmed";
-                $query1 = "Select staff.StaffID, staff.First_name, staff.Last_name, staff.Meeting_duration, COALESCE(sum(booking.Status='$status'),0) as Status from staff LEFT JOIN booking ON staff.StaffID=booking.convenerID GROUP BY staff.StaffID";
-
+                $status = "cancelled";
+                $query1 = "Select staff.StaffID, staff.First_name, staff.Last_name, sum(booking.duration) as duration, COALESCE(sum(booking.Status='$status'),0) as Status from staff LEFT JOIN booking ON staff.StaffID=booking.convenerID GROUP BY staff.StaffID";
                 $result1 = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result1)) {
                 ?>
                     <tr>
                         <td><?php echo $row['StaffID']; ?></td>
                         <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
-                        <td><?php echo $row['Meeting_duration']; ?></td>
-                        <td><?php echo $row['Status'];?></td>
+                        <td><?php echo $row['duration']; ?></td>
+                        <td><?php echo $row['Status']; ?></td>
                     </tr>
                 <?php
                 }
