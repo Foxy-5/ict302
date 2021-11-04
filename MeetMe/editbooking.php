@@ -14,7 +14,8 @@ $bookingdata = mysqli_fetch_assoc($result1);
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $previousid = $_POST['previousid'];
     $newbookingend = date("Y-m-d H:i:s", strtotime($_POST['newbookingend']));
-    if ($newbookingend != '0000-00-00 00:00:00') {
+    //echo $newbookingend;
+    if ($newbookingend != '1970-01-01 01:00:00') {
         $bookingend = $_POST['newbookingend'];
         $bookingenddate = date("Y-m-d H:i:s", strtotime($bookingend));
     } else {
@@ -30,11 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $elapsed = $duration->days * 24 * 60;
     $elapsed += $duration->h * 60;
     $elapsed += $duration->i;
+    if($status != "ended"){
+        $elapsed = 0;
+    }
     // echo "start date" . $bstart ."\r\n";
     // echo "end date" . $bookingenddate . "\r\n";
     //echo $elapsed;
     $query = "UPDATE booking SET Status = '$status', Booking_end = '$bookingenddate', PreviousMeetingID = '$previousid', Comment = '$comment', Duration = '$elapsed' WHERE BookingID= '$bookingid'";
-
     if (mysqli_query($con, $query)) {
         echo '<script>
         alert("Bookings details was succesfully updated.");

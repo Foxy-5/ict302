@@ -66,7 +66,22 @@ $user_data = check_login($con);
             <tbody>
                 <?php
                 $status = "cancelled";
-                $query1 = "Select staff.StaffID, staff.First_name, staff.Last_name, sum(booking.duration) as duration, COALESCE(sum(booking.Status='$status'),0) as Status from staff LEFT JOIN booking ON staff.StaffID=booking.convenerID GROUP BY staff.StaffID";
+                $query1 = "Select
+                staff.StaffID,
+                staff.First_name,
+                staff.Last_name,
+                sum(CASE 
+                WHEN booking.Status = 'ended' 
+                THEN booking.duration 
+                ELSE 0 END) as duration,
+                COALESCE(sum(booking.Status = 'cancelled'), 0) as Status
+            from
+                staff
+            LEFT JOIN booking ON
+                staff.StaffID = booking.convenerID
+            GROUP BY
+                staff.StaffID";
+                // $query1 = "Select staff.StaffID, staff.First_name, staff.Last_name, sum(booking.duration) as duration, COALESCE(sum(booking.Status='$status'),0) as Status from staff LEFT JOIN booking ON staff.StaffID=booking.convenerID GROUP BY staff.StaffID";
                 $result1 = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result1)) {
                 ?>

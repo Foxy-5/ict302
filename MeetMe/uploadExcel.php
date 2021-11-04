@@ -140,7 +140,7 @@ if (isset($_POST["import"])) {
         <br>
         <h5>Upload your CSV file with meeting details.
             <br>
-            Example: <em>filename</em>.csv
+            Example: <a href="uploads/example.csv" download="example.csv">example.csv</a>
             <br>
             In format: Student_number, student_email, first_name,last_name
         </h5>
