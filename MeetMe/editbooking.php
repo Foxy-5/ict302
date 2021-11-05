@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $elapsed = $duration->days * 24 * 60;
     $elapsed += $duration->h * 60;
     $elapsed += $duration->i;
-    if($status != "ended"){
+    if ($status != "ended") {
         $elapsed = 0;
     }
     // echo "start date" . $bstart ."\r\n";
@@ -40,9 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $query = "UPDATE booking SET Status = '$status', Booking_end = '$bookingenddate', PreviousMeetingID = '$previousid', Comment = '$comment', Duration = '$elapsed' WHERE BookingID= '$bookingid'";
     if (mysqli_query($con, $query)) {
         echo '<script>
-        alert("Bookings details was succesfully updated.");
-        </script>';
-        header("Location: viewbooking.php?bookingid=$bookingid");
+            alert("Booking details was succesfully updated.");
+            window.location.href="viewbooking.php?bookingid='.$bookingid.'";
+            </script>';
         die;
     } else {
         echo '<script>alert("An error has occured.")</script>';
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 </li>
                 <li>
                     <label for="status">Status</label>
-                    <?php $defaultstate = $bookingdata['Status'];?>
+                    <?php $defaultstate = $bookingdata['Status']; ?>
                     <select name="status" id="text" selected="selected">
                         <option value='<?php echo $defaultstate ?>' selected='selected'><?php echo $defaultstate ?></option>
                         <option value="confirmed">confirmed</option>
