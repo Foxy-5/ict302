@@ -47,7 +47,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
         <title>Login | Meetme v2</title>
         <link rel="stylesheet" href="css/mystyle.css">
     </head>
-    <body>
+    <body style="background-color:black">
         <div class="logobar">
             <div class="logintextbar">
                 Login
