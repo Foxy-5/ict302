@@ -4,20 +4,22 @@
   color: #080808;
 }
 
-table.upcomingbooking table,td,th{
-    font-family: arial, sans-serif;
-    border: 2px solid black;
-    border-collapse: collapse;
-    padding: 15px;
-    width: 10%;
-  }
+table.upcomingbooking table,
+td,
+th {
+  font-family: "Open Sans", sans-serif;
+  border: 2px solid black;
+  border-collapse: collapse;
+  padding: 15px;
+  width: 10%;
+}
 
 hr.redbar {
-    border-top: 5px solid #e12744;
+  border-top: 5px solid #e12744;
 }
 
 table.userprofile {
-  font-family: arial, sans-serif;
+  font-family: "Open Sans", sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
@@ -29,174 +31,188 @@ th {
 }
 
 .linktobutton {
-  font: bold 11px Arial;
-  text-decoration: none;
-  background-color: #eeeeee;
-  color: #333333;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #cccccc;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #cccccc;
+  padding: 6px;
+  width: 100px;
+  color: white;
+  background-color: #e12744;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  border-radius: 8px;
+}
+
+.linktobutton:hover {
+  background-color: #ac182f;
+  color: white;
 }
 
 form.editprofileform ul {
-    width: 40%;
+  width: 40%;
 }
 
 form.editprofileform ul li {
-    width: 49%;
-    display: inline-block;
+  width: 49%;
+  display: inline-block;
 }
 
 form.editprofileform ul li > * {
-    width: 100%;
+  width: 100%;
 }
 
-.loginboxtext{
-    height: 30px;
-    width: 300px;
-    border-radius: 5px;
-    border: solid thin #aaa;
-    z-index: 1;
+.loginboxtext {
+  height: 30px;
+  width: 300px;
+  border-radius: 5px;
+  border: solid thin #aaa;
+  z-index: 1;
 }
 
-.logobar{
-    display: block;
-    width: 100%;
-    background-color: black;
-    height: 100px;
-    position: sticky;
-    top: 0;
-    z-index: 1;
+.logobar {
+  display: block;
+  width: 100%;
+  background-color: black;
+  height: 100px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
-.logo{
-    width: auto;
-    height: 100px;
-    position: sticky;
-    top: 0;
+.logo {
+  width: auto;
+  height: 100px;
+  position: sticky;
+  top: 0;
 }
 
-.loginpagebutton{
-    padding: 15px;
-    width: 100px;
-    color: white;
-    background-color: #e12744;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-family: "Open Sans", sans-serif;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
+.loginpagebutton {
+  padding: 15px;
+  width: 100px;
+  color: white;
+  background-color: #e12744;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
 
-.loginpagebutton:hover{
-    background-color: #ac182f;
+.loginpagebutton:hover {
+  background-color: #ac182f;
 }
 
-.logincontainerbox{
-    padding-top: 20px;
-    padding-bottom: 20px;
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.logincontainerbox {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.logincontainerbutton{
-    text-align: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
+.logincontainerbutton {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
-.imagebackground{
-    width: 100%;
-    object-fit: cover;
+.imagebackground {
+  width: 100%;
+  object-fit: cover;
 }
 
 .loginsignup {
-    color: white;
-    text-transform: uppercase;
-    font-size: 13px;
-    font-family: "Open Sans", sans-serif;
+  color: white;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-family: "Open Sans", sans-serif;
 }
 
-.logintextbar{
-    position: absolute;
-    z-index: 1;
-    color: white;
-    text-transform: uppercase;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    top: 80px;
-    left: 290px;
-    z-index: 1;
+.logintextbar {
+  position: absolute;
+  z-index: 1;
+  color: white;
+  text-transform: uppercase;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  top: 80px;
+  left: 290px;
+  z-index: 1;
 }
 
-div.loginsignup > a{
-    color: white;
-    font-weight: bold;
+div.loginsignup > a {
+  color: white;
+  font-weight: bold;
 }
 
-.signupflexcontainer{
-    display: flex;
-    flex-direction: column;
+.signupflexcontainer {
+  display: flex;
+  flex-direction: column;
 }
 
-.signuptextbar{
-    position: absolute;
-    z-index: 1;
-    color: white;
-    text-transform: uppercase;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    top: 80px;
-    left: 290px;
+.signuptextbar {
+  position: absolute;
+  z-index: 1;
+  color: white;
+  text-transform: uppercase;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  top: 80px;
+  left: 290px;
 }
 
-.signuppagebutton{
-    padding: 15px;
-    width: 100px;
-    color: white;
-    background-color: #e12744;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-family: "Open Sans", sans-serif;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
+.signuppagebutton {
+  padding: 15px;
+  width: 100px;
+  color: white;
+  background-color: #e12744;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
 
-.signuppagebutton:hover{
-    background-color: #ac182f;
+.signuppagebutton:hover {
+  background-color: #ac182f;
 }
 
-.signuptextbox{
-    height: 30px;
-    border-radius: 5px;
-    width: 500px;
-    padding: 4px;
-    border: solid thin #aaa;
+.signuptextbox {
+  height: 30px;
+  border-radius: 5px;
+  width: 500px;
+  padding: 4px;
+  border: solid thin #aaa;
 }
 
-.signuptext{
-    color: white;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-family: "Open Sans", sans-serif;
+.signuptext {
+  color: white;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
 }
 
-.signupcontainerbox{
-    text-align: center;
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.signupcontainerbox {
+  text-align: center;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.navpaddingright{
-    padding-right: 15px;
+.navpaddingright {
+  padding-right: 15px;
+}
+
+.uploadexceltext {
+  font-family: "Open Sans", sans-serif;
+}
+
+.uploadfilecontainer {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }

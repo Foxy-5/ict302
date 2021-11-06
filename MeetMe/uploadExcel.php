@@ -134,20 +134,33 @@ if (isset($_POST["import"])) {
         </div>
     </nav>
     <div class="content">
+        <h5>Hi <?php echo $user_data['First_name']; ?> <?php echo $user_data['Last_name']; ?>!</h5>
         <h3>Upload Excel File</h3>
-        <br>
-        <h4>Welcome <?php echo $user_data['First_name']; ?> <?php echo $user_data['Last_name']; ?></h4>
-        <br>
-        <h5>Upload your CSV file with meeting details.
+        <hr class="redbar">
+        <div class="uploadfilecontainer">
+            <div>
+                <p>
+                    <b><em>Instructions</em></b>
+                    <br> 
+                    1)
+                    <br> 
+                    2)
+                    <br> 
+                </p>
+            </div>
+            <h5>Upload your CSV file with meeting details.
             <br>
             Example: <a href="uploads/example.csv" download="example.csv">example.csv</a>
             <br>
             In format: Student_number, student_email, first_name,last_name
-        </h5>
-        <form action="" method="POST" enctype="multipart/form-data">
-            <input type="file" id="excel" name="excel" onchange="return fileValidation()" /><br>
-            <input id="import" name="import" type="submit" />
-        </form>
+            </h5>
+            <img src="Image/UploadFileExample.png">
+            <br>
+            <form action="" method="POST" enctype="multipart/form-data">
+                <input type="file" id="excel" name="excel" onchange="return fileValidation()" /><br>
+                <input id="import" name="import" type="submit" />
+            </form>
+        </div>
     </div>
 </body>
 

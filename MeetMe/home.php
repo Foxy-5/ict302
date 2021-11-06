@@ -60,10 +60,10 @@ $userid = $user_data['StaffID'];
         <table id="myTable" class="upcomingbooking">
             <thead>
                 <tr>
-                    <th>Booking date</th>
-                    <th>Booking start</th>
-                    <th>Student name</th>
-                    <th>View this booking</th>
+                    <th>Booking Date</th>
+                    <th>Booking Date/Start Time</th>
+                    <th>Student Name</th>
+                    <th>Manage Booking</th>
                 </tr>
             </thead>
             <tbody>
@@ -78,7 +78,7 @@ $userid = $user_data['StaffID'];
                         <td><?php echo $row['Booking_date']; ?></td>
                         <td><?php echo $row['Booking_start']; ?></td>
                         <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
-                        <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>">View</a></td>
+                        <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>">View Booking</a></td>
                     </tr>
                 <?php
                 }
