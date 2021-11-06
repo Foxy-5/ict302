@@ -52,7 +52,7 @@ $userid = $user_data['StaffID'];
         </div>
     </nav>
     <div class="content">
-        <h1>Welcome back  <?php echo $user_data['First_name'];?> <?php echo $user_data['Last_name'];?>!</h1>
+        <h1>Welcome back <?php echo $user_data['First_name']; ?> <?php echo $user_data['Last_name']; ?>!</h1>
         <br>
         <h3>Today's booking</h3>
         <hr class="redbar">
@@ -84,9 +84,22 @@ $userid = $user_data['StaffID'];
                 }
                 ?>
             </tbody>
-
         </table>
+        <p>
+            <input type="button" value="Print Table" onclick="myApp.printTable()" />
+        </p>
     </div>
 </body>
+<script>
+    var myApp = new function() {
+        this.printTable = function() {
+            var tab = document.getElementById('myTable');
+            var win = window.open('', '', 'height=700,width=700');
+            win.document.write(tab.outerHTML);
+            win.document.close();
+            win.print();
+        }
+    }
+</script>
 
 </html>
