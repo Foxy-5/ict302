@@ -86,7 +86,7 @@ $userid = $user_data['StaffID'];
             </tbody>
         </table>
         <p>
-            <input type="button" value="Print Table" onclick="myApp.printTable()" />
+            <input class="linktobutton" type="button" value="Print Table" onclick="myApp.printTable()" />
         </p>
     </div>
 </body>

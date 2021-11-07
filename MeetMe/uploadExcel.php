@@ -138,28 +138,28 @@ if (isset($_POST["import"])) {
         <h3>Upload Excel File</h3>
         <hr class="redbar">
         <div class="uploadfilecontainer">
-            <div>
-                <p>
-                    <b><em>Instructions</em></b>
-                    <br> 
-                    1)
-                    <br> 
-                    2)
-                    <br> 
-                </p>
-            </div>
-            <h5>Upload your CSV file with meeting details.
-            <br>
-            Example: <a href="uploads/example.csv" download="example.csv">example.csv</a>
-            <br>
-            In format: Student_number, student_email, first_name,last_name
+            <p>
+                <b><em>Instructions</em></b>
+                <br> 
+                1) Open up Microsoft Excel
+                <br> 
+                2) Fill up Student's Details accordingly in a horizontal manner (Number, Email, First Name, Family Name/Last Name)
+                <br>
+                3) Save file as <b><em>filename.csv</em></b>
+                <br>
+            </p>
+            <h5>
+                <p><i>You are allow to download the templete below or refer to the image below for more details</i></p>
+                Example: <a href="uploads/example.csv" download="example.csv">example.csv</a>
             </h5>
             <img src="Image/UploadFileExample.png">
             <br>
+            <br>
             <form action="" method="POST" enctype="multipart/form-data">
                 <input type="file" id="excel" name="excel" onchange="return fileValidation()" /><br>
-                <input id="import" name="import" type="submit" />
+                <input class="linktobutton" id="import" name="import" type="submit" />
             </form>
+           
         </div>
     </div>
 </body>

@@ -31,8 +31,8 @@ th {
 }
 
 .linktobutton {
-  padding: 6px;
-  width: 100px;
+  padding: 8px;
+  width: 130px;
   color: white;
   background-color: #e12744;
   text-transform: uppercase;
@@ -216,3 +216,21 @@ div.loginsignup > a {
   margin-left: auto;
   margin-right: auto;
 }
+
+/*
+>> Trying to style change on Upload Excel page on "Choose File" button
+input[type=file]::file-selector-button {
+  padding: 6px;
+  width: 100px;
+  color: white;
+  background-color: #e12744;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  border-radius: 8px;
+} 
+
+input[type=file]::file-selector-button:hover {
+  background-color: #ac182f;
+}
+*/

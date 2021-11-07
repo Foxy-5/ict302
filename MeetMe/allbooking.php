@@ -52,16 +52,16 @@ $user_data = check_login($con);
         </div>
     </nav>
     <div class="content">
-        <h1>All booking</h1>
+        <h5>Hi <?php echo $user_data['First_name']; ?> <?php echo $user_data['Last_name']; ?>!</h5>
+        <h1>All Bookings</h1>
         <hr class="redbar">
-        <p>All your bookings</p>
         <table id="myTable" class="upcomingbooking">
             <thead>
                 <tr>
-                    <th>Booking date</th>
-                    <th>Booking start</th>
-                    <th>Student name</th>
-                    <th>View this booking</th>
+                    <th>Booking Date</th>
+                    <th>Booking Date/Start Time</th>
+                    <th>Student Name</th>
+                    <th>Manage Booking</th>
                 </tr>
             </thead>
             <tbody>
@@ -77,7 +77,7 @@ $user_data = check_login($con);
                         <td><?php echo $row['Booking_date']; ?></td>
                         <td><?php echo $row['Booking_start']; ?></td>
                         <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
-                        <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>">View</a></td>
+                        <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>">View Booking</a></td>
                     </tr>
                 <?php
                 }
@@ -86,7 +86,7 @@ $user_data = check_login($con);
 
         </table>
         <p>
-            <input type="button" value="Print Table" onclick="myApp.printTable()" />
+            <input class="linktobutton" type="button" value="Print Table" onclick="myApp.printTable()" />
         </p>
     </div>
 
