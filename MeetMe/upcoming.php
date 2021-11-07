@@ -25,6 +25,29 @@ $userid = $user_data['StaffID'];
             $('#myTable').DataTable();
         });
     </script>
+    <style id="table_style" type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+
+        table th {
+            background-color: #F7F7F7;
+            color: #333;
+            font-weight: bold;
+        }
+
+        table th,
+        table td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
     <title>Upcoming Bookings | Meetme v2</title>
 </head>
 
@@ -84,20 +107,31 @@ $userid = $user_data['StaffID'];
             </tbody>
 
         </table>
-        <p>
-            <input type="button" value="Print Table" onclick="myApp.printTable()" />
-        </p>
+        <input type="button" onclick="PrintTable();" value="Print" />
     </div>
 </body>
-<script>
-    var myApp = new function() {
-        this.printTable = function() {
-            var tab = document.getElementById('myTable');
-            var win = window.open('', '', 'height=700,width=700');
-            win.document.write(tab.outerHTML);
-            win.document.close();
-            win.print();
-        }
+<script type="text/javascript">
+    function PrintTable() {
+        var printWindow = window.open('', '', 'height=700,width=700');
+        printWindow.document.write('<html><head><title>Table Contents</title>');
+
+        //Print the Table CSS.
+        var table_style = document.getElementById("table_style").innerHTML;
+        printWindow.document.write('<style type = "text/css">');
+        printWindow.document.write(table_style);
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head>');
+
+        //Print the DIV contents i.e. the HTML Table.
+        printWindow.document.write('<body>');
+        var divContents = document.getElementById("myTable").outerHTML;
+        printWindow.document.write(divContents);
+        printWindow.document.write('</body>');
+
+        printWindow.document.write('</html>');
+        printWindow.document.close();
+        printWindow.print();
     }
 </script>
+
 </html>
