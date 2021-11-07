@@ -20,14 +20,9 @@
 		$startTimeInput = $_POST['startTime'];
 		$endTimeInput = $_POST['endTime'];
 		$timezoneoffset = $_POST['timezone'];
-		$allqueries = '';
-
-		echo "timezone '$timezoneoffset'";
-		echo "\nsystem time zone '$systemoffset'";
 
 		$timeZoneDiff = $systemoffset - $timezoneoffset;
-		echo $timeZoneDiff;
-
+		
 		$changeDateToTimeZone = false;
 
 		if($timezoneoffset!=$systemoffset){
