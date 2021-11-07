@@ -43,8 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             alert("Booking details was succesfully updated.");
             window.location.href="viewbooking.php?bookingid='.$bookingid.'";
             </script>';
-        die;
-    } else {
+            mysqli_commit($con);
+            die;
+    } 
+    else {
         echo '<script>alert("An error has occured.")</script>';
     }
 }
