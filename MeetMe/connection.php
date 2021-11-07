@@ -9,5 +9,5 @@ if(!$con = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname))
     die("failed to connect!");
 }
 
-mysqli_autcommit($con,FALSE);
+mysqli_autocommit($con,FALSE);
 ?>
