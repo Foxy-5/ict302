@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             alert("Account details was succesfully updated.");
             window.location.href="profile.php";
             </script>';
+            mysqli_commit($con);
             die;
         }
         else{

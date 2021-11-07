@@ -24,6 +24,7 @@ session_start();
                 alert("Account succesfully created.");
                 window.location.href="login.php";
                 </script>';
+                mysqli_commit($con);
                 die;
             }
             else{
