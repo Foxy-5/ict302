@@ -91,18 +91,6 @@
 	        <div class="navpaddingright">
 	            <ul class="nav navbar-nav">
 	                <li class="active"><a href="home.php">Home</a></li>
-	                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointment <span class="caret"></span></a>
-	                    <ul class="dropdown-menu">
-	                        <li class="item"><a href="uploadExcel.php">Upload Excel</a></li>
-	                        <li class="item"><a href="calendar.php">View Calendar</a></li>
-	                    </ul>
-	                </li>
-	                <li><a href="analytics.php">Analytics</a></li>
-	                <li><a href="about.php">About</a></li>
-	            </ul>
-	            <ul class="nav navbar-nav navbar-right">
-	                <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
-	                <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 	            </ul>
 	        </div>
     	</nav>
