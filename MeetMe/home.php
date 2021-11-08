@@ -108,7 +108,7 @@ $userid = $user_data['StaffID'];
                 ?>
             </tbody>
         </table>
-        <input type="button" onclick="PrintTable();" value="Print" />
+        <input class="linktobutton" type="button" onclick="PrintTable();" value="Print" />
     </div>
 </body>
 <script type="text/javascript">

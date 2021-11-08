@@ -107,7 +107,7 @@ $user_data = check_login($con);
             </tbody>
 
         </table>
-        <input type="button" onclick="PrintTable();" value="Print" />
+        <input class="linktobutton" type="button" onclick="PrintTable();" value="Print" />
     </div>
 
 </body>
