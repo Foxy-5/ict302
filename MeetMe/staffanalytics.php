@@ -59,6 +59,8 @@ $user_data = check_login($con);
                 <tr>
                     <th>Staff ID</th>
                     <th>Staff name</th>
+                    <th>Standard Hour Meeting %</th>
+                    <th>After Hour Meeting %</th>
                     <th>Meeting hours(minutes)</th>
                     <th>No. of Cancelled meeting</th>
                 </tr>
@@ -74,20 +76,51 @@ $user_data = check_login($con);
                 WHEN booking.Status = 'ended' 
                 THEN booking.duration 
                 ELSE 0 END) as duration,
+                sum(CASE
+                WHEN booking.Status = 'ended'
+                THEN 1
+                ELSE 0
+                END) as total,
+                COUNT(
+                    CASE 
+                    WHEN(booking.Status = 'ended') 
+                    THEN 
+                        CASE 
+                        WHEN (DAYOFWEEK(booking.Booking_date) = '1' OR DAYOFWEEK(booking.Booking_date) = '7')
+                            THEN 1 
+                            ELSE 0
+                        END
+                    END
+                ) AS afterhour,
                 COALESCE(sum(booking.Status = 'cancelled'), 0) as Status
-            from
-                staff
-            LEFT JOIN booking ON
-                staff.StaffID = booking.convenerID
-            GROUP BY
-                staff.StaffID";
+                from
+                    staff
+                LEFT JOIN booking ON
+                    staff.StaffID = booking.convenerID
+                GROUP BY
+                    staff.StaffID";
                 // $query1 = "Select staff.StaffID, staff.First_name, staff.Last_name, sum(booking.duration) as duration, COALESCE(sum(booking.Status='$status'),0) as Status from staff LEFT JOIN booking ON staff.StaffID=booking.convenerID GROUP BY staff.StaffID";
                 $result1 = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result1)) {
+                    $total = $row['total'];
+                    if($total != 0){
+                        $afterpercentage = ($row['afterhour']/$total) * 100;
+                    }
+                    else{
+                        $afterpercentage = 0;
+                    }
+                    if($total != 0){
+                        $duringpercentage = (($total - $row['afterhour'])/$total) * 100;
+                    }
+                    else{
+                        $duringpercentage = 0;
+                    }
                 ?>
                     <tr>
                         <td><?php echo $row['StaffID']; ?></td>
                         <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
+                        <td><?php echo $duringpercentage . "%"; ?></td>
+                        <td><?php echo $afterpercentage. "%"; ?></td>
                         <td><?php echo $row['duration']; ?></td>
                         <td><?php echo $row['Status']; ?></td>
                     </tr>
