@@ -43,44 +43,61 @@ $user_data = check_login($con);
             </ul>
         </div>
     </nav>
+    
     <div class="content">
         <h3>Your Profile</h3>
         <hr class="redbar">
         <h4>Personal Details</h4>
         <br>
-        <table class="userprofile">
-            <tr>
-                <th>Staff ID</th>
-                <th>Username</th>
-            </tr>
-            <?php
-            echo "<tr>";
-            echo "<td>" . $user_data['StaffID'] . "</td>";
-            echo "<td>" . $user_data['Username'] . "</td>";
-            echo "</tr>";
-            ?>
-            <tr>
-                <th>First name</th>
-                <th>Last name</th>
-            </tr>
-            <?php
-            echo "<tr>";
-            echo "<td>" . $user_data['First_name'] . "</td>";
-            echo "<td>" . $user_data['Last_name'] . "</td>";
-            echo "</tr>";
-            ?>
-            <tr>
-                <th>Registered email</th>
-            </tr>
-            <?php
-            echo "<tr>";
-            echo "<td>" . $user_data['Email'] . "</td>";
-            echo "</tr>";
-            ?>
-        </table>
+        <!-- comment here -->
+
+
+
+        <div class="containerprofile">
+            <a href="editprofile.php?" class="linktobutton">Edit personal details</a>
+        </div>
+
+
+        <!--
+        <div class="containerprofile">
+            <a href="editprofile.php?" class="linktobutton">Edit personal details</a>
+        </div>
+            <table class="userprofile">
+                <tr>
+                    <th>Staff ID</th>
+                    <th>Username</th>
+                </tr>
+                <?php
+                echo "<tr>";
+                echo "<td>" . $user_data['StaffID'] . "</td>";
+                echo "<td>" . $user_data['Username'] . "</td>";
+                echo "</tr>";
+                ?>
+
+                <tr>
+                    <th>First name</th>
+                    <th>Last name</th>
+                </tr>
+                <?php
+                echo "<tr>";
+                echo "<td>" . $user_data['First_name'] . "</td>";
+                echo "<td>" . $user_data['Last_name'] . "</td>";
+                echo "</tr>";
+                ?>
+                <tr>
+                    <th>Registered email</th>
+                </tr>
+                <?php
+                echo "<tr>";
+                echo "<td>" . $user_data['Email'] . "</td>";
+                echo "</tr>";
+                ?>
+            </table>
         <br>
         <br>
-        <a href="editprofile.php?"class="linktobutton">Edit personal details</a>
+        <a href="editprofile.php?" class="linktobutton">Edit personal details</a>
+        -->
+        
         <!-- <a href="editprofile.php?StaffID=<?php echo $user_data['StaffID']; ?>"class="linktobutton">Edit personal details</a> -->
     </div>
 </body>

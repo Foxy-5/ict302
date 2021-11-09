@@ -41,6 +41,10 @@ th {
   border-radius: 8px;
 }
 
+.containerprofile{
+  text-align: center;
+}
+
 .linktobutton:hover {
   background-color: #ac182f;
   color: white;
