@@ -48,6 +48,7 @@ if (isset($_POST["import"])) {
         alert("an error with insert list has occurred.");
         </script>';
         }
+        mysqli_commit($con);
         $listquery = "select ListID from list where (UserID = '$userid') AND (ListDate = '$date')";
         $result = mysqli_query($con, $listquery);
         if ($result) {
@@ -76,6 +77,7 @@ if (isset($_POST["import"])) {
             alert("an error with insert studentlist has occurred.");
             </script>';
         }
+        mysqli_commit($con);
     }
 }
 ?>
@@ -140,9 +142,9 @@ if (isset($_POST["import"])) {
         <div class="uploadfilecontainer">
             <p>
                 <b><em>Instructions</em></b>
-                <br> 
+                <br>
                 1) Open up Microsoft Excel
-                <br> 
+                <br>
                 2) Fill up Student's Details accordingly in a horizontal manner (Number, Email, First Name, Family Name/Last Name)
                 <br>
                 3) Save file as <b><em>filename.csv</em></b>
@@ -159,7 +161,7 @@ if (isset($_POST["import"])) {
                 <input type="file" id="excel" name="excel" onchange="return fileValidation()" /><br>
                 <input class="linktobutton" id="import" name="import" type="submit" />
             </form>
-           
+
         </div>
     </div>
 </body>
