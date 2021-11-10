@@ -18,7 +18,14 @@ $userid = $user_data['StaffID'];
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="css/mystyle.css">
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
     <title>Data Dashboard | Meetme v2</title>
 </head>
 
@@ -46,37 +53,50 @@ $userid = $user_data['StaffID'];
         </div>
     </nav>
     <div class="content">
-        <h1>Meeting Analytics</h1>
+        <h1>student Analytics</h1>
         <hr class="redbar">
-        <a href="staffanalytics.php"class="linktobutton">Staff meeting Analytics</a>
-        <a href="studentlisting.php"class="linktobutton">Student Analytics</a>
-        <br>
-        <br>
-        <ul>
-            <li>
-                Upcoming meetings <br />
-                <?php
-                $query1 = "Select Booking_date, Booking_start, First_name, Last_name from booking, student where (booking.OrganizerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID)";
-
-                $result1 = mysqli_query($con, $query1);
-
-                echo "<table border='2'>
+        <?php
+        $query1 = "Select * from student";
+        $result1 = mysqli_query($con, $query1);
+        ?>
+        <table id="myTable" class="upcomingbooking">
+            <thead>
                 <tr>
-                <th>Booking date</th>
-                <th>Booking start</th>
-                <th>Student name</th>
-                </tr>";
+                    <th>Student ID</th>
+                    <th>Student name</th>
+                    <th>Email</th>
+                    <th>Meeting hours</th>
+                    <th>Meeting count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
                 while ($row = mysqli_fetch_array($result1)) {
-                    echo "<tr>";
-                    echo "<td>" . $row['Booking_date'] . "</td>";
-                    echo "<td>" . $row['Booking_start'] . "</td>";
-                    echo "<td>" . $row['First_name'] . $row['Last_name'] . "</td>";
-                    echo "</tr>";
-                }
-                echo "</table>";
+                    if($row['Meeting_duration'] === NULL){
+                        $hours = 0;
+                    }
+                    else{
+                        $hours = $row['Meeting_duration'];
+                    }
+                    if($row['Appcount'] === NULL){
+                        $count = 0;
+                    }
+                    else{
+                        $count = $row['Appcount'];
+                    }
                 ?>
-            </li>
-        </ul>
+                    <tr>
+                        <td><?php echo $row['StudentID']; ?></td>
+                        <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                        <td><?php echo $hours; ?></td>
+                        <td><?php echo $count; ?></td>
+                    </tr>
+                <?php
+                }
+                ?>
+            </tbody>
+        </table>
     </div>
 </body>
 
