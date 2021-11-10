@@ -47,7 +47,7 @@ $userid = $user_data['StaffID'];
     </nav>
     <div class="content">
         <h1>Meeting Analytics</h1>
-        <br>
+        <hr class="redbar">
         <a href="staffanalytics.php"class="linktobutton">Staff meeting Analytics</a>
         <a href="staffanalytics.php"class="linktobutton">another button</a>
         <br>

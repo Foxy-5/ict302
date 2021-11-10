@@ -69,32 +69,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
     </nav>
     <div class="content">
-        <h1>Edit Your Profile</h1>
+        <h3>Edit Your Profile</h3>
         <hr class="redbar">
-        <h3>Personal details</h3>
+        <h4>Personal Details</h4>
         <br>
         <form class="editprofileform" method="post">
-            <ul>
-                <li>
-                    <label for="first_name">First name</label>
-                    <input type="text" name="first_name" id="text" value="<?php echo $user_data['First_name'] ?>">
-                </li>
-                <li>
-                    <label for="last_name">Last name</label>
-                    <input type="text" name="last_name" id="text" value="<?php echo $user_data['Last_name'] ?>">
-                </li>
-                <li>
-                    <label for="email">email</label>
-                    <input type="email" name="email" id="text" value="<?php echo $user_data['Email'] ?>">
-                </li>
-                <li>
-                    <label for="user_name">username</label>
-                    <input id="text" type="text" name="user_name" value="<?php echo $user_data['Username'] ?>">
-                </li>
-            </ul>
-            <br>
-            <input id="button" type="submit" value="Update profile">
-            <input type="button" value = "cancel update" onclick="location.href = 'profile.php'"><br>
+            <div class="containerprofile">
+                <label for="first_name" class="ediprofiletext">First Name</label><br>
+                <input class="ediprofilebox" name="first_name" id="text" value="<?php echo $user_data['First_name'] ?>"><br><br>
+
+                <label for="last_name" class="ediprofiletext">Last Name</label><br>
+                <input class="ediprofilebox"" name="last_name" id="text" value="<?php echo $user_data['Last_name'] ?>"><br><br>
+
+                <label for="email" class="ediprofiletext">Email</label><br>
+                <input class="ediprofilebox" name="email" id="text" value="<?php echo $user_data['Email'] ?>"><br><br>
+
+                <label for="user_name" class="ediprofiletext">Username</label><br>
+                <input class="ediprofilebox" type="text" name="user_name" value="<?php echo $user_data['Username'] ?>"><br><br>
+                
+                <input class="linktobutton" id="button" type="submit" value="Update Profile">
+                <input class="linktobutton" type="button" value = "Cancel Update" onclick="location.href = 'profile.php'">
+            </div>
         </form>
     </div>
 </body>
