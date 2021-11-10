@@ -19,15 +19,23 @@ hr.redbar {
 }
 
 table.userprofile {
+  margin-left : auto;
+  margin-right: auto;
+  text-align: center;
+
   font-family: "Open Sans", sans-serif;
   border-collapse: collapse;
-  width: 100%;
+  width: 50%;
 }
 
 table.userprofile td,
 th {
-  text-align: left;
+  text-align: center;
   padding: 8px;
+}
+
+table.userprofile th {
+  background: lightgrey;
 }
 
 .linktobutton {
@@ -232,7 +240,7 @@ input[type=file]::file-selector-button {
   font-size: 14px;
   font-family: "Open Sans", sans-serif;
   border-radius: 8px;
-} 
+}
 
 input[type=file]::file-selector-button:hover {
   background-color: #ac182f;

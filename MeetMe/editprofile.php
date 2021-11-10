@@ -74,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <h4>Personal Details</h4>
         <br>
         <form class="editprofileform" method="post">
+
             <div class="containerprofile">
                 <label for="first_name" class="ediprofiletext">First Name</label><br>
                 <input class="ediprofilebox" name="first_name" id="text" value="<?php echo $user_data['First_name'] ?>"><br><br>
@@ -86,10 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                 <label for="user_name" class="ediprofiletext">Username</label><br>
                 <input class="ediprofilebox" type="text" name="user_name" value="<?php echo $user_data['Username'] ?>"><br><br>
-                
+
                 <input class="linktobutton" id="button" type="submit" value="Update Profile">
                 <input class="linktobutton" type="button" value = "Cancel Update" onclick="location.href = 'profile.php'">
             </div>
+        
         </form>
     </div>
 </body>
