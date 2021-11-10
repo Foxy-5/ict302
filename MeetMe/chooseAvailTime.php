@@ -5,10 +5,28 @@
 	include("function.php");
 
 	$user_data = check_login($con);
-	$userid = $user_data['StaffID'];
 
 	if($_SERVER['REQUEST_METHOD'] == "POST"){
-		
+		if(empty($_POST['staffid'])){
+			$userid = $user_data['StaffID'];
+		}
+		else{
+			$userid = $_POST['staffid'];
+
+			$staffidquery = "SELECT `staffid` FROM `staff` WHERE `staffid` = '$userid' limit 1";
+			if(!$result = mysqli_query($con,$query)){
+				echo "<script>alert('There's something wrong while trying to connect to the database');</script>";
+				exit();
+			}
+
+			if(!mysqli_num_rows($staffidquery)>0){
+				echo "<script>alert('Staff id cannot be found!');</script>";
+				exit();
+			}
+
+		}
+
+
 		//sets the time when the server receives the form
 		$dateValidate = new DateTime("now");
 		$dateReceived = $dateValidate->format('Y-m-d');
@@ -22,7 +40,7 @@
 		$timezoneoffset = $_POST['timezone'];
 
 		$timeZoneDiff = $systemoffset - $timezoneoffset;
-		
+
 		$changeDateToTimeZone = false;
 
 		if($timezoneoffset!=$systemoffset){
@@ -39,8 +57,7 @@
 			}
 			catch (Exception $e) {
 				echo "<script>alert('There's something wrong while receiving your input');</script>";
-				echo $e->getMessage();
-				//exit(1);
+				die;
 			}
 
 			//validate date
@@ -50,7 +67,7 @@
 
 			//if the start time is earlier than the end time
 			if($startTimeHolder<$endTimeHolder){
-
+				//do nothing as it is the same day
 			}
 			//assumes that the time is the next day if the end time is earlier than the start time
 			else if($startTimeHolder>$endTimeHolder){
@@ -84,14 +101,20 @@
 
 			//after validation
 
+			//creating a unique id and then hashed to generate a unique identifier for each booking and saved in the database
+			$uniqueid = $userid.$dateReceived.uniqid("booking",true);
+			$longHashedAuthKey = hash('sha256',$uniqueid);
+			$halfHashedAuthKey = str_split($longHashedAuthKey,32)[0];
 
-			$query = "INSERT INTO `booking` (`ConvenerID`,`Booking_date`, `Booking_start`, `Booking_end`) VALUES ('$userid','$dateReceived', '$startTimeQuery', '$endTimeQuery');";
+
+
+			$query = "INSERT INTO `booking` (`ConvenerID`,`Booking_date`, `Booking_start`, `Booking_end`,`Auth_Key`) VALUES ('$userid','$dateReceived', '$startTimeQuery', '$endTimeQuery','$halfHashedAuthKey');";
 			if(!mysqli_query($con,$query)){
 	            $commitToDatabase = false;
 	            break;
 	    	}
 		}
-
+		
 		if($commitToDatabase){
 			echo '<script>alert("Time slots added successfully");
 	            			window.location.href="chooseAvailTime.php";
@@ -104,7 +127,7 @@
 		}
 
 
-		die;
+		exit();
 	}
 	
 	
@@ -153,6 +176,9 @@
 		<hr class="redbar">
 		<p>Indicate ur available timeslot for students to start booking!</p>
 		<form method="post">
+			<label>Staff to indicate for (empty for yourself)</label>
+			<input type="text" name="staffid"/>
+			<br>
 			<label>Date:</label>
 			<input type="date" name="date[]" required/>
 			<label>Start Time:</label>
