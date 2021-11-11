@@ -23,17 +23,22 @@ $user_data = check_login($con);
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse">
+     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
             <a href="home.php"><img src="Image/MU Logo.png" height="80"></a>
         </div>
-        <div class="navpaddingright">
+        <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
                 <li><a href="home.php">Home</a></li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointment <span class="caret"></span></a>
+                <li id="appointment" class="dropdown"><a href="#">Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li class="item"><a href="uploadExcel.php">Upload Excel</a></li>
-                        <li class="item"><a href="calendar.php">View Calendar</a></li>
+                        <li><a href="uploadExcel.php">Upload Excel</a></li>
+                        <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
+                            <ul id="sub-dropdown-menu" class="dropdown-menu">
+                                <li><a href="upcoming.php">View Upcoming Bookings</a></li>
+                                <li><a href="allbooking.php">View All Bookings</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li><a href="analytics.php">Analytics</a></li>

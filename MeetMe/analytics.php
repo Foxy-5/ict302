@@ -19,6 +19,29 @@ $userid = $user_data['StaffID'];
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/mystyle.css">
+    <style id="table_style" type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+
+        table th {
+            background-color: #F7F7F7;
+            color: #333;
+            font-weight: bold;
+        }
+
+        table th,
+        table td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
     <title>Data Dashboard | Meetme v2</title>
 </head>
 
@@ -27,13 +50,18 @@ $userid = $user_data['StaffID'];
         <div class="navbar-header">
             <a href="home.php"><img src="Image/MU Logo.png" height="80"></a>
         </div>
-        <div class="navpaddingright">
+        <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
                 <li><a href="home.php">Home</a></li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointment <span class="caret"></span></a>
+                <li id="appointment" class="dropdown"><a href="#">Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li class="item"><a href="uploadExcel.php">Upload Excel</a></li>
-                        <li class="item"><a href="calendar.php">View Calendar</a></li>
+                        <li><a href="uploadExcel.php">Upload Excel</a></li>
+                        <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
+                            <ul id="sub-dropdown-menu" class="dropdown-menu">
+                                <li><a href="upcoming.php">View Upcoming Bookings</a></li>
+                                <li><a href="allbooking.php">View All Bookings</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="active"><a href="analytics.php">Analytics</a></li>
@@ -48,13 +76,12 @@ $userid = $user_data['StaffID'];
     <div class="content">
         <h1>Meeting Analytics</h1>
         <hr class="redbar">
-        <a href="staffanalytics.php"class="linktobutton">Staff meeting Analytics</a>
+        <a href="staffanalytics.php"class="linktobutton">Staff Meeting Analytics</a>
         <a href="studentlisting.php"class="linktobutton">Student Analytics</a>
         <br>
         <br>
         <ul>
             <li>
-                Upcoming meetings <br />
                 <?php
                 $query1 = "Select Booking_date, Booking_start, First_name, Last_name from booking, student where (booking.OrganizerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID)";
 
@@ -62,9 +89,9 @@ $userid = $user_data['StaffID'];
 
                 echo "<table border='2'>
                 <tr>
-                <th>Booking date</th>
-                <th>Booking start</th>
-                <th>Student name</th>
+                <th>Booking Date</th>
+                <th>Booking Date/Start Time</th>
+                <th>Student Name</th>
                 </tr>";
                 while ($row = mysqli_fetch_array($result1)) {
                     echo "<tr>";

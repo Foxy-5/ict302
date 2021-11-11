@@ -24,7 +24,29 @@ $user_data = check_login($con);
             $('#myTable').DataTable();
         });
     </script>
+    <style id="table_style" type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
 
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+
+        table th {
+            background-color: #F7F7F7;
+            color: #333;
+            font-weight: bold;
+        }
+
+        table th,
+        table td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
     <title>Staff Analytics | Meetme v2</title>
 </head>
 
@@ -33,13 +55,18 @@ $user_data = check_login($con);
         <div class="navbar-header">
             <a href="home.php"><img src="Image/MU Logo.png" height="80"></a>
         </div>
-        <div class="navpaddingright">
+        <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
                 <li><a href="home.php">Home</a></li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointment <span class="caret"></span></a>
+                <li id="appointment" class="dropdown"><a href="#">Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li class="item"><a href="uploadExcel.php">Upload Excel</a></li>
-                        <li class="item"><a href="calendar.php">View Calendar</a></li>
+                        <li><a href="uploadExcel.php">Upload Excel</a></li>
+                        <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
+                            <ul id="sub-dropdown-menu" class="dropdown-menu">
+                                <li><a href="upcoming.php">View Upcoming Bookings</a></li>
+                                <li><a href="allbooking.php">View All Bookings</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="active"><a href="analytics.php">Analytics</a></li>
@@ -58,10 +85,10 @@ $user_data = check_login($con);
             <thead>
                 <tr>
                     <th>Staff ID</th>
-                    <th>Staff name</th>
+                    <th>Staff Name</th>
                     <th>Standard Hour Meeting %</th>
                     <th>After Hour Meeting %</th>
-                    <th>Meeting hours(minutes)</th>
+                    <th>Meeting Hours(Minutes)</th>
                     <th>No. of Cancelled meeting</th>
                 </tr>
             </thead>

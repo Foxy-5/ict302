@@ -261,3 +261,45 @@ input[type=file]::file-selector-button:hover {
   padding: 4px;
   border: solid thin #aaa;
 }
+
+#mynavbar :hover{
+  color: #e12744;
+}
+
+#mynavbar #appointment{
+  transition: all 0.3s ease-in-out;
+}
+
+.dropdown-menu{
+  display: none;
+  position: absolute;
+  background-color: #f0f0f0;
+  box-shadow: 2px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+#sub-dropdown-menu{
+  display: none;
+  position: absolute;
+  background-color: #f0f0f0;
+  margin-left: 164px;
+  margin-top: -26px;
+}
+
+#sub-dropdown-menu a, .dropdown-menu a{
+  color: black;
+  font-size: 16px;
+}
+
+.dropdown:hover .dropdown-menu{
+  display: block;
+  transition: all 0.5s ease-in-out;
+}
+
+.dropdown .dropdown-menu #hover{
+  background-color: #080808;
+}
+
+#sub-dropdown:hover #sub-dropdown-menu{
+  display: block;
+}

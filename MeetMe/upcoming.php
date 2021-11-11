@@ -56,13 +56,18 @@ $userid = $user_data['StaffID'];
         <div class="navbar-header">
             <a href="home.php"><img src="Image/MU Logo.png" height="80"></a>
         </div>
-        <div class="navpaddingright">
+        <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
                 <li><a href="home.php">Home</a></li>
-                <li class="dropdown active"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Appointment <span class="caret"></span></a>
+                <li id="appointment" class="dropdown active"><a href="#">Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li class="item"><a href="uploadExcel.php">Upload Excel</a></li>
-                        <li class="item"><a href="calendar.php">View Calendar</a></li>
+                        <li><a href="uploadExcel.php">Upload Excel</a></li>
+                        <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
+                            <ul id="sub-dropdown-menu" class="dropdown-menu">
+                                <li><a href="upcoming.php">View Upcoming Bookings</a></li>
+                                <li><a href="allbooking.php">View All Bookings</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li><a href="analytics.php">Analytics</a></li>
@@ -75,16 +80,16 @@ $userid = $user_data['StaffID'];
         </div>
     </nav>
     <div class="content">
-        <h1>Upcoming booking</h1>
+        <h5>Hi <?php echo $user_data['First_name']; ?> <?php echo $user_data['Last_name']; ?>!</h5>
+        <h1>Upcoming Booking</h1>
         <hr class="redbar">
-        Upcoming Booking<br /><br>
         <table id="myTable" class="upcomingbooking">
             <thead>
                 <tr>
-                    <th>Booking date</th>
-                    <th>Booking start</th>
-                    <th>Student name</th>
-                    <th>View this booking</th>
+                    <th>Booking Date</th>
+                    <th>Booking Start</th>
+                    <th>Student Name</th>
+                    <th>View Bookings</th>
                 </tr>
             </thead>
             <tbody>
