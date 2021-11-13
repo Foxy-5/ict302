@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2021 at 02:13 PM
+-- Generation Time: Nov 14, 2021 at 01:34 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -59,7 +59,7 @@ INSERT INTO `booking` (`BookingID`, `ConvenerID`, `OrganizerID`, `StudentID`, `B
 
 CREATE TABLE `list` (
   `ListID` int(40) NOT NULL,
-  `UserID` int(40) NOT NULL,
+  `StaffID` int(40) NOT NULL,
   `ListDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -67,7 +67,7 @@ CREATE TABLE `list` (
 -- Dumping data for table `list`
 --
 
-INSERT INTO `list` (`ListID`, `UserID`, `ListDate`) VALUES
+INSERT INTO `list` (`ListID`, `StaffID`, `ListDate`) VALUES
 (5, 1, '2021-10-23 11:38:06'),
 (6, 1, '2021-10-23 11:39:20'),
 (7, 1, '2021-11-02 10:52:44'),
@@ -163,7 +163,7 @@ ALTER TABLE `booking`
 --
 ALTER TABLE `list`
   ADD PRIMARY KEY (`ListID`),
-  ADD KEY `StaffListFK` (`UserID`);
+  ADD KEY `StaffListFK` (`StaffID`) USING BTREE;
 
 --
 -- Indexes for table `staff`
@@ -203,7 +203,7 @@ ALTER TABLE `booking`
 -- AUTO_INCREMENT for table `list`
 --
 ALTER TABLE `list`
-  MODIFY `ListID` int(40) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ListID` int(40) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `staff`
@@ -227,7 +227,7 @@ ALTER TABLE `booking`
 -- Constraints for table `list`
 --
 ALTER TABLE `list`
-  ADD CONSTRAINT `StaffListFK` FOREIGN KEY (`UserID`) REFERENCES `staff` (`StaffID`);
+  ADD CONSTRAINT `StaffListFK` FOREIGN KEY (`StaffID`) REFERENCES `staff` (`StaffID`);
 
 --
 -- Constraints for table `studentlist`
