@@ -2,7 +2,7 @@
  RewriteBase / 
  RewriteCond %{REQUEST_FILENAME} !-d
  RewriteCond %{REQUEST_FILENAME} !-f 
-RewriteRule ^(.*)$ http://localhost/error404.php [R,NC,L]
+RewriteRule ^(.*)$ http://localhost/MeetMe/error404.php [R,NC,L]
 
 <FilesMatch /include(/?|/.*)>
     Order allow,deny
@@ -11,5 +11,5 @@ RewriteRule ^(.*)$ http://localhost/error404.php [R,NC,L]
 
 RedirectMatch 404 ^/include(/?|/.*)$
 
-ErrorDocument 403 http://localhost/error404.php 
-ErrorDocument 404 http://localhost/error404.php 
+ErrorDocument 403 http://localhost/MeetMe/error404.php 
+ErrorDocument 404 http://localhost/MeetMe/error404.php 

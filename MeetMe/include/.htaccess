@@ -1,5 +1,5 @@
 Order allow,deny
 Deny from all
 
-ErrorDocument 403 http://localhost/error404.php 
-ErrorDocument 404 http://localhost/error404.php 
+ErrorDocument 403 http://localhost/MeetMe/error404.php 
+ErrorDocument 404 http://localhost/MeetMe/error404.php 
