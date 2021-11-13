@@ -1,0 +1,15 @@
+ RewriteEngine on 
+ RewriteBase / 
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteRule ^(.*)$ http://localhost/error404.php [R,NC,L]
+
+<FilesMatch /include(/?|/.*)>
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+RedirectMatch 404 ^/include(/?|/.*)$
+
+ErrorDocument 403 http://localhost/error404.php 
+ErrorDocument 404 http://localhost/error404.php 
