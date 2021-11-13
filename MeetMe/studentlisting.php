@@ -62,7 +62,21 @@ $userid = $user_data['StaffID'];
         <h1>Student Analytics</h1>
         <hr class="redbar">
         <?php
-        $query1 = "Select * from student";
+        $query1 = "Select
+        student.StudentID,
+        student.First_name,
+        student.Last_name,
+        student.Email,
+        sum(CASE 
+            WHEN booking.Status = 'ended' 
+            THEN booking.duration 
+            ELSE 0 END) as duration,
+        sum(CASE
+            WHEN booking.Status = 'ended'
+            THEN 1
+            ELSE 0
+            END) as total
+        from student LEFT JOIN booking ON student.StudentID = booking.StudentID GROUP BY student.StudentID";
         $result1 = mysqli_query($con, $query1);
         ?>
         <table id="myTable" class="upcomingbooking">
@@ -78,25 +92,13 @@ $userid = $user_data['StaffID'];
             <tbody>
                 <?php
                 while ($row = mysqli_fetch_array($result1)) {
-                    if($row['Meeting_duration'] === NULL){
-                        $hours = 0;
-                    }
-                    else{
-                        $hours = $row['Meeting_duration'];
-                    }
-                    if($row['Appcount'] === NULL){
-                        $count = 0;
-                    }
-                    else{
-                        $count = $row['Appcount'];
-                    }
                 ?>
                     <tr>
                         <td><?php echo $row['StudentID']; ?></td>
                         <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
                         <td><?php echo $row['Email']; ?></td>
-                        <td><?php echo $hours; ?></td>
-                        <td><?php echo $count; ?></td>
+                        <td><?php echo $row['duration']; ?></td>
+                        <td><?php echo $row['total']; ?></td>
                     </tr>
                 <?php
                 }
