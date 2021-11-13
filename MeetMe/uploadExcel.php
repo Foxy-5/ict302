@@ -1,8 +1,10 @@
 <?php
+define('access', TRUE);
 session_start();
 
-include("connection.php");
-include("function.php");
+include("include/connection.php");
+include("include/function.php");
+include("email.php");
 
 $user_data = check_login($con);
 
@@ -45,39 +47,67 @@ if (isset($_POST["import"])) {
         $result3 = mysqli_query($con, $query3);
         if (!$result3) {
             echo '<script>
-        alert("an error with insert list has occurred.");
-        </script>';
+            alert("an error with insert list has occurred.");
+            </script>';
+            exit();
         }
         mysqli_commit($con);
         $listquery = "select ListID from list where (UserID = '$userid') AND (ListDate = '$date')";
         $result = mysqli_query($con, $listquery);
-        if ($result) {
+        if (!$result) {
+            echo '<script>
+            alert("an error with insert list has occurred.");
+            </script>';
+            exit();
+        }
+        else{
             $fetch = mysqli_fetch_assoc($result);
             $listid = $fetch['ListID'];
         }
+
+        $commitToDatabase = true;
+        $listOfAuthKey = array();
+
         while (($csv = fgetcsv($file_open, 1000, ",")) !== FALSE) {
             //insert row into mysql database
+
+            //check for empty input/invalid input
             $StudentID = $csv[0];
             $Email = $csv[1];
             $Firstname = $csv[2];
             $Lastname = $csv[3];
+
+            //bug: inserting 0 for some duplicate keys
             $query1 = "INSERT IGNORE into student(StudentID,Email,First_name,Last_name) VALUES ('$StudentID','$Email','$Firstname','$Lastname')";
             $result1 = mysqli_query($con, $query1);
             if (!$result1) {
                 echo '<script>
             alert("an error with insert student has occurred.");
             </script>';
+                $commitToDatabase = false;
+                break;
+            }
+
+            $uniqueid = $StudentID.$listid.uniqid("user",true);
+            $hashedAuthKey = str_split(hash('sha256',$uniqueid),32)[0];
+
+            $query2 = "INSERT into studentlist(ListID,StudentID,Auth_Key) VALUES ('$listid','$StudentID','$hashedAuthKey')";
+            $result2 = mysqli_query($con, $query2);
+            if (!$result2) {
+                echo '<script>
+                alert("an error with insert studentlist has occurred.");
+                </script>';
+                $commitToDatabase = false;
+                break;
+            }
+            $listOfAuthKey[] = $hashedAuthKey;
+        }
+        if($commitToDatabase){
+            mysqli_commit($con);
+            for($emailLoop = 0;$emailLoop < sizeof($listOfAuthKey);$emailLoop++){
+                sendConfirmationEmail($listOfAuthKey[$emailLoop]);
             }
         }
-
-        $query2 = "INSERT into studentlist(ListID,StudentID) VALUES ('$listid','$StudentID')";
-        $result2 = mysqli_query($con, $query2);
-        if (!$result2) {
-            echo '<script>
-            alert("an error with insert studentlist has occurred.");
-            </script>';
-        }
-        mysqli_commit($con);
     }
 }
 ?>

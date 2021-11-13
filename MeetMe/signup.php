@@ -1,8 +1,9 @@
 <?php
+define('access', TRUE);
 session_start();
 
-    include("connection.php");
-    include("function.php");
+    include("include/connection.php");
+    include("include/function.php");
 
     if($_SERVER['REQUEST_METHOD'] == "POST")
     {

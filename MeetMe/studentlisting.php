@@ -1,8 +1,9 @@
 <?php
+define('access', TRUE);
 session_start();
 
-include("connection.php");
-include("function.php");
+include("include/connection.php");
+include("include/function.php");
 
 $user_data = check_login($con);
 $userid = $user_data['StaffID'];
