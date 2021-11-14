@@ -161,7 +161,12 @@ if (isset($_POST["import"])) {
                         </li>
                     </ul>
                 </li>
-                <li><a href="analytics.php">Analytics</a></li>
+                <li id="analytics" class="dropdown"><a href="#">Analytics <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="staffanalytics.php">Staff Analytics</a></li>
+                        <li><a href="studentlisting.php">Student Analytics</a></li>
+                    </ul>
+                </li>
                 <li><a href="about.php">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

@@ -40,7 +40,12 @@ $user_data = check_login($con);
                         </li>
                     </ul>
                 </li>
-                <li><a href="analytics.php">Analytics</a></li>
+                <li id="analytics" class="dropdown"><a href="#">Analytics <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="staffanalytics.php">Staff Analytics</a></li>
+                        <li><a href="studentlisting.php">Student Analytics</a></li>
+                    </ul>
+                </li>
                 <li><a href="about.php">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -55,59 +60,24 @@ $user_data = check_login($con);
         <hr class="redbar">
         <h4>Personal Details</h4>
         <br>
-        <!-- comment here -->
-
-
-<!--
         <div class="containerprofile">
-            <a href="editprofile.php?" class="linktobutton">Edit personal details</a>
+            <label for="StaffID" class="editprofiletext">Staff ID</label><br>
+            <input class="myprofilebox" type="text" value=" <?php echo $user_data['StaffID']?>" readonly><br><br>
+
+            <label for="UserName" class="editprofiletext">UserName</label><br>
+            <input class="myprofilebox" type="text" value=" <?php echo $user_data['Username']?>" readonly><br><br>
+
+            <label for="FirstName" class="editprofiletext">First Name</label><br>
+            <input class="myprofilebox" type="text" value=" <?php echo $user_data['First_name']?>" readonly><br><br>
+
+            <label for="LastName" class="editprofiletext">Last Name/Family Name</label><br>
+            <input class="myprofilebox" type="text" value=" <?php echo $user_data['Last_name']?>" readonly><br><br>
+
+            <label for="Email" class="editprofiletext">Registered Email</label><br>
+            <input class="myprofilebox" type="text" value=" <?php echo $user_data['Email']?>" readonly><br><br>
+        
+            <a href="editprofile.php?" class="linktobutton">Edit Personal Details</a>
         </div>
--->
-
-
-
-            <table class="userprofile">
-
-                <tr>
-                    <th>Staff ID:</th>
-                    <th>Username:</th>
-                </tr>
-
-                <?php
-                echo "<tr>";
-                echo "<td>" . $user_data['StaffID'] . "</td>";
-                echo "<td>" . $user_data['Username'] . "</td>";
-                echo "</tr>";
-                ?>
-
-                <tr>
-                    <th>First name:</th>
-                    <th>Last name:</th>
-                </tr>
-                <?php
-                echo "<tr>";
-                echo "<td>" . $user_data['First_name'] . "</td>";
-                echo "<td>" . $user_data['Last_name'] . "</td>";
-                echo "</tr>";
-                ?>
-                <tr>
-                    <th>Registered email:</th>
-                </tr>
-                <?php
-                echo "<tr>";
-                echo "<td>" . $user_data['Email'] . "</td>";
-                echo "</tr>";
-                ?>
-            </table>
-        <br>
-        <br>
-
-        <div class="containerprofile">
-            <a href="editprofile.php?" class="linktobutton">Edit personal details</a>
-        </div>
-
-
-        <!-- <a href="editprofile.php?StaffID=<?php echo $user_data['StaffID']; ?>"class="linktobutton">Edit personal details</a> -->
     </div>
 </body>
 

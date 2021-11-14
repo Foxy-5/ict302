@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
                 <li><a href="home.php">Home</a></li>
-                <li id="appointment" class="dropdown"><a href="#">Appointment <span class="caret"></span></a>
+                <li id="appointment" class="dropdown active"><a href="#">Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="uploadExcel.php">Upload Excel</a></li>
                         <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -84,8 +84,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         </li>
                     </ul>
                 </li>
-                <li><a href="analytics.php">Analytics</a></li>
-                <li class="active"><a href="about.php">About</a></li>
+                <li id="analytics" class="dropdown"><a href="#">Analytics <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="staffanalytics.php">Staff Analytics</a></li>
+                        <li><a href="studentlisting.php">Student Analytics</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.php">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
@@ -94,66 +99,86 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
     </nav>
     <div class="content">
-        <h1>Edit booking</h1>
+        <h1>Edit Booking</h1>
         <hr class="redbar">
-        <form class="editprofileform" method="post">
-            <ul>
-                <li>
-                    <label for="bookingid">BookingID</label>
-                    <p><?php echo $bookingdata['BookingID'] ?></p>
-                </li>
-                <li>
-                    <label for="studentname">Student Name</label>
-                    <p><?php echo $bookingdata['First_name'] . " " . $bookingdata['Last_name'] ?></p>
-                </li>
-                <li>
-                    <label for="studentid">Student ID</label>
-                    <p><?php echo $bookingdata['StudentID'] ?></p>
-                </li>
-                <li>
-                    <label for="bookingdate">Booking date</label>
-                    <p><?php echo $bookingdata['Booking_date'] ?></p>
-                </li>
-                <li>
-                    <label for="Bookingstart">Booking Start</label>
-                    <p><?php echo $bookingdata['Booking_start'] ?></p>
-                </li>
-                <li>
-                    <label for="duration">Duration</label>
-                    <p><?php echo $bookingdata['Duration'] ?></p>
-                </li>
-                <li>
-                    <label for="Bookingend">Booking End</label>
-                    <p><?php echo $bookingdata['Booking_end'] ?></p>
-                </li>
-                <li>
-                    <label for="NewBookingend">Change booking end</label>
-                    <input type="datetime-local" name="newbookingend" id="text" value="">
-                </li>
-                <li>
-                    <label for="previousid">Previous bookingID</label>
-                    <input type="text" name="previousid" id="text" value="<?php echo $bookingdata['PreviousMeetingID'] ?>">
-                </li>
-                <li>
-                    <label for="status">Status</label>
-                    <?php $defaultstate = $bookingdata['Status']; ?>
-                    <select name="status" id="text" selected="selected">
-                        <option value='<?php echo $defaultstate ?>' selected='selected'><?php echo $defaultstate ?></option>
-                        <option value="confirmed">confirmed</option>
-                        <option value="cancelled">cancelled</option>
-                        <option value="ended">ended</option>
-                    </select>
-                </li>
-                <li>
-                    <label for="comment">Comment</label>
-                    <textarea name="comment" id="comment" cols="10" rows="2"><?php echo $bookingdata['Comment'] ?></textarea>
-                </li>
-            </ul>
-            <br>
-            <input id="button" type="submit" value="Update booking">
-            <input type="button" value="cancel update" onclick="location.href = 'viewbooking.php?bookingid=<?php echo $bookingdata['BookingID']; ?>'"><br>
-            <br>
-        </form>
+
+        <table class="userprofile">
+            <tr>
+                <th>Booking ID</th>
+                <th>Student Name</th>
+            </tr>
+            <?php
+            echo "<tr>";
+            echo "<td>" . $bookingdata['BookingID'] . "</td>";
+            echo "<td>" . $bookingdata['First_name'] . " " . $bookingdata['Last_name']."</td>";
+            echo "</tr>";
+            ?>
+            <tr>
+                <th>Student ID</th>
+                <th>Booking Date</th>
+            </tr>
+            <?php
+            echo "<tr>";
+            echo "<td>" . $bookingdata['StudentID'] . "</td>";
+            echo "<td>" . $bookingdata['Booking_date'] . "</td>";
+            echo "</tr>";
+            ?>
+            <tr>
+                <th>Booking Start (Date/Time)</th>
+                <th>Duration</th>
+            </tr>
+            <?php
+            echo "<tr>";
+            echo "<td>" . $bookingdata['Booking_start'] . "</td>";
+            echo "<td>" . $bookingdata['Duration'] . "</td>";
+            echo "</tr>";
+            ?>
+            <tr>
+                <th>Booking End (Date/Time)</th>
+                <th>Change Booking End (Date/Time)</th>
+            </tr>
+            <?php
+            echo "<tr>";
+            echo "<td>" . $bookingdata['Booking_end'] . "</td>";?>
+            <td><input type="datetime-local" name="newbookingend" id="text" value=""></td>
+            <?php
+            echo "</tr>";
+            ?>
+            <tr>
+                <th>Previous Booking ID</th>
+                <th>Status</th>
+            </tr>
+            <?php
+            echo "<tr>";
+            ?>
+            <td><input type="text" name="previousid" id="text" value="<?php echo $bookingdata['PreviousMeetingID'] ?>"></td>           
+            <td><?php $defaultstate = $bookingdata['Status']; ?>
+                <select name="status" id="text" selected="selected">
+                    <option value='<?php echo $defaultstate ?>' selected='selected'><?php echo $defaultstate ?></option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="cancelled">Cancelled</option>
+                    <option value="ended">Ended</option>
+                </select>
+            </td>
+            <?php
+            echo "</tr>";
+            ?>
+            <tr>
+                <th colspan="2">Comment</th>
+            </tr>
+            <?php
+            echo "<tr>";
+            ?>
+            <td colspan="2"><textarea class="commentbox" name="comment" id="comment" cols="10" rows="2"><?php echo $bookingdata['Comment'] ?></textarea></td>
+            <?php
+            echo "</tr>";
+            ?>
+        </table>
+        <br>
+        <div class="containerprofile">
+            <input class="linktobutton" type="button" value="Cancel Update" onclick="location.href = 'viewbooking.php?bookingid=<?php echo $bookingdata['BookingID']; ?>'">
+            <input class="linktobutton" id="button" type="submit" value="Update Booking">
+        </div>
     </div>
 </body>
 

@@ -70,7 +70,12 @@ $user_data = check_login($con);
                         </li>
                     </ul>
                 </li>
-                <li class="active"><a href="analytics.php">Analytics</a></li>
+                <li id="analytics" class="dropdown active"><a href="#">Analytics <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="staffanalytics.php">Staff Analytics</a></li>
+                        <li><a href="studentlisting.php">Student Analytics</a></li>
+                    </ul>
+                </li>
                 <li><a href="about.php">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -81,15 +86,16 @@ $user_data = check_login($con);
     </nav>
     <div class="content">
         <h1>Staff Meeting Analytics</h1>
+        <hr class="redbar">
         <br>
         <table id="myTable" class="upcomingbooking">
             <thead>
                 <tr>
                     <th>Staff ID</th>
                     <th>Staff Name</th>
-                    <th>Standard Hour Meeting %</th>
-                    <th>After Hour Meeting %</th>
-                    <th>Meeting Hours(Minutes)</th>
+                    <th>Standard Hour Meeting (%)</th>
+                    <th>After Hour Meeting (%)</th>
+                    <th>Meeting Hours (Mins)</th>
                     <th>No. of Cancelled meeting</th>
                 </tr>
             </thead>

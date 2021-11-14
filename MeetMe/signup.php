@@ -46,10 +46,7 @@ session_start();
         <title>Signup | Meetme v2</title>
         <link rel="stylesheet" href="css/mystyle.css">
     </head>
-    <body>
-        <style type = "text/css"> 
-
-        </style>
+    <body style="background-color:black">
         <div class="signupflexcontainer">
             <div class="logobar">
                 <div class="signuptextbar">

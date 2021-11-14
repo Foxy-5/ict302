@@ -71,7 +71,12 @@ $userid = $user_data['StaffID'];
                         </li>
                     </ul>
                 </li>
-                <li><a href="analytics.php">Analytics</a></li>
+                <li id="analytics" class="dropdown"><a href="#">Analytics <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="staffanalytics.php">Staff Analytics</a></li>
+                        <li><a href="studentlisting.php">Student Analytics</a></li>
+                    </ul>
+                </li>
                 <li><a href="about.php">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -83,7 +88,7 @@ $userid = $user_data['StaffID'];
     <div class="content">
         <h1>Welcome back <?php echo $user_data['First_name']; ?> <?php echo $user_data['Last_name']; ?>!</h1>
         <br>
-        <h3>Today's booking</h3>
+        <h3>Today's Booking</h3>
         <hr class="redbar">
         <br>
         <table id="myTable" class="upcomingbooking">

@@ -27,6 +27,29 @@ $userid = $user_data['StaffID'];
             $('#myTable').DataTable();
         });
     </script>
+    <style id="table_style" type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+
+        table th {
+            background-color: #F7F7F7;
+            color: #333;
+            font-weight: bold;
+        }
+
+        table th,
+        table td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
     <title>Data Dashboard | Meetme v2</title>
 </head>
 
@@ -49,7 +72,12 @@ $userid = $user_data['StaffID'];
                         </li>
                     </ul>
                 </li>
-                <li class="active"><a href="analytics.php">Analytics</a></li>
+                <li id="analytics" class="dropdown"><a href="#">Analytics <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="staffanalytics.php">Staff Analytics</a></li>
+                        <li><a href="studentlisting.php">Student Analytics</a></li>
+                    </ul>
+                </li>
                 <li><a href="about.php">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

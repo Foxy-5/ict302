@@ -71,7 +71,12 @@ $userid = $user_data['StaffID'];
                         </li>
                     </ul>
                 </li>
-                <li><a href="analytics.php">Analytics</a></li>
+                <li id="analytics" class="dropdown"><a href="#">Analytics <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="staffanalytics.php">Staff Analytics</a></li>
+                        <li><a href="studentlisting.php">Student Analytics</a></li>
+                    </ul>
+                </li>
                 <li><a href="about.php">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -88,16 +93,16 @@ $userid = $user_data['StaffID'];
             <thead>
                 <tr>
                     <th>Booking Date</th>
-                    <th>Booking Start</th>
+                    <th>Booking Date/Start Time</th>
                     <th>Student Name</th>
-                    <th>View Bookings</th>
+                    <th>Manage Booking</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $today = date("Y-m-d");
                 $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID from booking, student where (booking.ConvenerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID) and (booking.Booking_date >= '$today') ORDER BY booking_start ASC";
-
+                
                 $result1 = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result1)) {
                 ?>
@@ -105,7 +110,7 @@ $userid = $user_data['StaffID'];
                         <td><?php echo $row['Booking_date']; ?></td>
                         <td><?php echo $row['Booking_start']; ?></td>
                         <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
-                        <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>">View</a></td>
+                        <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>">View Booking</a></td>
                     </tr>
                 <?php
                 }
@@ -113,7 +118,7 @@ $userid = $user_data['StaffID'];
             </tbody>
 
         </table>
-        <input type="button" onclick="PrintTable();" value="Print" />
+        <input class="linktobutton" type="button" onclick="PrintTable();" value="Print" />
     </div>
 </body>
 <script type="text/javascript">

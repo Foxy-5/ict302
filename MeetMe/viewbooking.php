@@ -34,7 +34,7 @@ $bookingdata = mysqli_fetch_assoc($result1);
         <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
                 <li><a href="home.php">Home</a></li>
-                <li id="appointment" class="dropdown"><a href="#">Appointment <span class="caret"></span></a>
+                <li id="appointment" class="dropdown active"><a href="#">Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="uploadExcel.php">Upload Excel</a></li>
                         <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -45,8 +45,13 @@ $bookingdata = mysqli_fetch_assoc($result1);
                         </li>
                     </ul>
                 </li>
-                <li><a href="analytics.php">Analytics</a></li>
-                <li class="active"><a href="about.php">About</a></li>
+                <li id="analytics" class="dropdown"><a href="#">Analytics <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="staffanalytics.php">Staff Analytics</a></li>
+                        <li><a href="studentlisting.php">Student Analytics</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.php">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
@@ -55,13 +60,13 @@ $bookingdata = mysqli_fetch_assoc($result1);
         </div>
     </nav>
     <div class="content">
-        <h1>View booking</h1>
+        <h1>View Booking</h1>
         <hr class="redbar">
         Current Booking<br /><br>
         <table class="userprofile">
             <tr>
                 <th>Booking ID</th>
-                <th>Previous meeting ID</th>
+                <th>Previous Meeting ID</th>
             </tr>
             <?php
             echo "<tr>";
@@ -80,8 +85,8 @@ $bookingdata = mysqli_fetch_assoc($result1);
             echo "</tr>";
             ?>
             <tr>
-                <th>Booking date</th>
-                <th>Booking start</th>
+                <th>Booking Date</th>
+                <th>Booking Start</th>
             </tr>
             <?php
             echo "<tr>";
@@ -113,8 +118,11 @@ $bookingdata = mysqli_fetch_assoc($result1);
             ?>
         </table>
         <br>
-        <label for="editbooking">Edit Booking</label>
-        <a class="linktobutton" href="editbooking.php?bookingid=<?php echo $bookingdata['BookingID']; ?>">Edit</a>
+        <!--<label for="editbooking">Edit Booking</label>-->
+        <div class="containerprofile">
+            <a class="linktobutton" href="allbooking.php">Back</a>
+            <a class="linktobutton" href="editbooking.php?bookingid=<?php echo $bookingdata['BookingID']; ?>">Edit</a>
+        </div>
         <br>
         <br>
 

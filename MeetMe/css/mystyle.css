@@ -39,8 +39,8 @@ table.userprofile th {
 }
 
 .linktobutton {
-  padding: 8px;
-  width: 140px;
+  padding: 15px;
+  width: 180px;
   color: white;
   background-color: #e12744;
   text-transform: uppercase;
@@ -56,19 +56,6 @@ table.userprofile th {
 .linktobutton:hover {
   background-color: #ac182f;
   color: white;
-}
-
-form.editprofileform ul {
-  width: 40%;
-}
-
-form.editprofileform ul li {
-  width: 49%;
-  display: inline-block;
-}
-
-form.editprofileform ul li > * {
-  width: 100%;
 }
 
 .loginboxtext {
@@ -98,7 +85,7 @@ form.editprofileform ul li > * {
 
 .loginpagebutton {
   padding: 15px;
-  width: 100px;
+  width: 180px;
   color: white;
   background-color: #e12744;
   text-transform: uppercase;
@@ -247,19 +234,29 @@ input[type=file]::file-selector-button:hover {
 }
 */
 
-.ediprofiletext {
+.editprofiletext {
   color: black;
   text-transform: uppercase;
   font-size: 14px;
   font-family: "Open Sans", sans-serif;
 }
 
-.ediprofilebox {
+.editprofilebox {
   height: 30px;
   border-radius: 5px;
   width: 500px;
   padding: 4px;
-  border: solid thin #aaa;
+  border: solid thin rgb(133, 133, 133);
+  box-shadow: 5px 5px 6px #aaaaaa;
+}
+
+.myprofilebox {
+  height: 30px;
+  border-radius: 5px;
+  width: 500px;
+  padding: 4px;
+  border: solid thin rgb(226, 226, 226);
+  box-shadow: 5px 5px 6px #aaaaaa;
 }
 
 #mynavbar :hover{
@@ -267,6 +264,10 @@ input[type=file]::file-selector-button:hover {
 }
 
 #mynavbar #appointment{
+  transition: all 0.3s ease-in-out;
+}
+
+#mynavbar #analytics{
   transition: all 0.3s ease-in-out;
 }
 
@@ -302,4 +303,15 @@ input[type=file]::file-selector-button:hover {
 
 #sub-dropdown:hover #sub-dropdown-menu{
   display: block;
+}
+
+.containerbooking{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.commentbox{
+  height: 200px;
+  width: 50%;
 }

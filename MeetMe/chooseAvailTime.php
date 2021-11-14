@@ -168,8 +168,13 @@ include("include/function.php");
                         </li>
                     </ul>
                 </li>
-                <li><a href="analytics.php">Analytics</a></li>
-                <li class="active"><a href="about.php">About</a></li>
+                <li id="analytics" class="dropdown"><a href="#">Analytics <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="staffanalytics.php">Staff Analytics</a></li>
+                        <li><a href="studentlisting.php">Student Analytics</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.php">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
@@ -178,9 +183,17 @@ include("include/function.php");
         </div>
     </nav>
     <div class="content">
-		<h1>Available timeslot</h1>
+		<h1>Available Timeslot</h1>
 		<hr class="redbar">
-		<p>Indicate ur available timeslot for students to start booking!</p>
+		<p>Indicate your available timeslot for students to start booking!</p>
+		<div class="containerprofile">
+			<form method="post">
+				<!--
+					<label>Staff to indicate for (empty for yourself)</label>
+					<input type="text" name="staffid"/>
+					//What's this??? Staff ID? Or let the staff to write on their own?
+				-->
+		<!--
 		<form method="post">
 			<label>Staff to indicate for (empty for yourself)</label>
 			<input type="text" name="staffid"/>
@@ -195,9 +208,48 @@ include("include/function.php");
 			<div id="dynamic_field"></div>
 			<input type="hidden" name="timezone">
 
-			<button type="button" name="add_time_slot" id="add" onclick="addFields()">Add timeslot</button>
-			<input type="submit" value="Update timeslot"/>
+			<button type="button" name="add_time_slot" id="add" onclick="addFields()">Add Timeslot</button>
+			<input type="submit" value="Update Timeslot"/>
 		</form>
+		-->
+				<label class="editprofiletext">Staff ID</label><br>
+            	<input class="myprofilebox" type="text" value=" <?php echo $user_data['StaffID']?>"><br><br>
+
+				<label class="editprofiletext">Date</label><br>
+            	<input class="myprofilebox" type="date" name="date[]" required/><br><br>
+
+				<label class="editprofiletext">Start Time</label><br>
+            	<input class="myprofilebox" type="time" name="startTime[]" required/><br><br>
+
+				<label class="editprofiletext">End Time</label><br>
+            	<input class="myprofilebox" type="time" name="endTime[]" required/><br><br>
+
+				<div id="dynamic_field"></div>
+				<input type="hidden" name="timezone">
+
+				<button class="linktobutton" type="button" name="add_time_slot" id="add" onclick="addFields()">Add Timeslot</button>
+				<input class="linktobutton" type="submit" value="Update Timeslot"/>
+			</form>
+		</div>
+		<!--
+		<form method="post">
+			<label>Staff to indicate for (empty for yourself)</label>
+			<input type="text" name="staffid"/>
+			<br>
+			<label>Date:</label>
+			<input type="date" name="date[]" required/>
+			<label>Start Time:</label>
+			<input type="time" name="startTime[]" required/>
+			<label>End Time:</label>
+			<input type="time" name="endTime[]" required/>
+
+			<div id="dynamic_field"></div>
+			<input type="hidden" name="timezone">
+
+			<button type="button" name="add_time_slot" id="add" onclick="addFields()">Add Timeslot</button>
+			<input type="submit" value="Update Timeslot"/>
+		</form>
+		-->
 	</div>
 
 	<script>
