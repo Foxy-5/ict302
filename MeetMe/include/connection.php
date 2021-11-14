@@ -14,4 +14,6 @@ if(!$con = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname))
 }
 
 mysqli_autocommit($con,FALSE);
+
+$siteURL = "localhost";
 ?>
