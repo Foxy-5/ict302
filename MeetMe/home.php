@@ -77,6 +77,7 @@ $userid = $user_data['StaffID'];
                         <li><a href="studentlisting.php">Student Analytics</a></li>
                     </ul>
                 </li>
+                <li><a href="calendar.php">Calendar</a></li>
                 <li><a href="about.php">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

@@ -19,7 +19,7 @@ hr.redbar {
 }
 
 table.userprofile {
-  margin-left : auto;
+  margin-left: auto;
   margin-right: auto;
   text-align: center;
 
@@ -39,8 +39,8 @@ table.userprofile th {
 }
 
 .linktobutton {
-  padding: 15px;
-  width: 180px;
+  padding: 8px;
+  width: 150px;
   color: white;
   background-color: #e12744;
   text-transform: uppercase;
@@ -49,7 +49,7 @@ table.userprofile th {
   border-radius: 8px;
 }
 
-.containerprofile{
+.containerprofile {
   text-align: center;
 }
 
@@ -84,8 +84,8 @@ table.userprofile th {
 }
 
 .loginpagebutton {
-  padding: 15px;
-  width: 180px;
+  padding: 8px;
+  width: 150px;
   color: white;
   background-color: #e12744;
   text-transform: uppercase;
@@ -259,27 +259,27 @@ input[type=file]::file-selector-button:hover {
   box-shadow: 5px 5px 6px #aaaaaa;
 }
 
-#mynavbar :hover{
+#mynavbar :hover {
   color: #e12744;
 }
 
-#mynavbar #appointment{
+#mynavbar #appointment {
   transition: all 0.3s ease-in-out;
 }
 
-#mynavbar #analytics{
+#mynavbar #analytics {
   transition: all 0.3s ease-in-out;
 }
 
-.dropdown-menu{
+.dropdown-menu {
   display: none;
   position: absolute;
   background-color: #f0f0f0;
-  box-shadow: 2px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 2px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
-#sub-dropdown-menu{
+#sub-dropdown-menu {
   display: none;
   position: absolute;
   background-color: #f0f0f0;
@@ -287,31 +287,112 @@ input[type=file]::file-selector-button:hover {
   margin-top: -26px;
 }
 
-#sub-dropdown-menu a, .dropdown-menu a{
+#sub-dropdown-menu a,
+.dropdown-menu a {
   color: black;
   font-size: 16px;
 }
 
-.dropdown:hover .dropdown-menu{
+.dropdown:hover .dropdown-menu {
   display: block;
   transition: all 0.5s ease-in-out;
 }
 
-.dropdown .dropdown-menu #hover{
+.dropdown .dropdown-menu #hover {
   background-color: #080808;
 }
 
-#sub-dropdown:hover #sub-dropdown-menu{
+#sub-dropdown:hover #sub-dropdown-menu {
   display: block;
 }
 
-.containerbooking{
+.containerbooking {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
 
-.commentbox{
+.commentbox {
   height: 200px;
   width: 50%;
+}
+
+.calendar {
+  display: flex;
+  flex-flow: column;
+}
+.calendar .header .month-year {
+  font-size: 20px;
+  font-weight: bold;
+  color: #636e73;
+  padding: 20px 0;
+}
+.calendar .days {
+  display: flex;
+  flex-flow: wrap;
+}
+.calendar .days .day_name {
+  width: calc(100% / 7);
+  border-right: 1px solid #2c7aca;
+  padding: 20px;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+  color: #818589;
+  color: #fff;
+  background-color: #448cd6;
+}
+.calendar .days .day_name:nth-child(7) {
+  border: none;
+}
+.calendar .days .day_num {
+  display: flex;
+  flex-flow: column;
+  width: calc(100% / 7);
+  border-right: 1px solid #e6e9ea;
+  border-bottom: 1px solid #e6e9ea;
+  padding: 15px;
+  font-weight: bold;
+  color: #7c878d;
+  cursor: pointer;
+  min-height: 100px;
+}
+.calendar .days .day_num span {
+  display: inline-flex;
+  width: 30px;
+  font-size: 14px;
+}
+.calendar .days .day_num .event {
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background-color: #f7c30d;
+  color: #fff;
+  word-wrap: break-word;
+}
+.calendar .days .day_num .event.green {
+  background-color: #51ce57;
+}
+.calendar .days .day_num .event.blue {
+  background-color: #518fce;
+}
+.calendar .days .day_num .event.red {
+  background-color: #ce5151;
+}
+.calendar .days .day_num:nth-child(7n + 1) {
+  border-left: 1px solid #e6e9ea;
+}
+.calendar .days .day_num:hover {
+  background-color: #fdfdfd;
+}
+.calendar .days .day_num.ignore {
+  background-color: #fdfdfd;
+  color: #ced2d4;
+  cursor: inherit;
+}
+.calendar .days .day_num.selected {
+  background-color: #f1f2f3;
+  cursor: inherit;
 }
