@@ -4,9 +4,11 @@ session_start();
 //must be connected to the database before running the website
 require_once("include/connection.php");
 require_once("include/email.php");
+require_once("include/info_retrieve.php");
 
 if(isset($_GET['authkey'])){
 	$authKey = $_GET['authkey'];
+	$_SESSION['stdtAuthKey'] = $authKey;
 	//can use function from email.php
 	/*$authkeyquery = "SELECT StudentID FROM studentlist WHERE Auth_Key = '$authkey' limit 1;";
 	$authenticate = mysqli_query($con,$authkeyquery);*/
@@ -16,7 +18,7 @@ if(isset($_GET['authkey'])){
 
 	//getting student id based on the unique authentication key
 	//function in : include/email.php
-	$stdtId = getStudentId($authKey);
+	$stdtId = getStudentId(0,$authKey);
 
 	//if empty, means authentication key does not exist in database
 	if(empty($stdtId)){
@@ -36,7 +38,7 @@ if(isset($_GET['authkey'])){
         }*/
 
     //getting staff id that assigned the booking request from the same authentication key
-    $bkStaffId = getStaffId($authKey);
+    $bkStaffId = getStaffId(0,$authKey);
 
     if(empty($bkStaffId)){
     	http_response_code(404);

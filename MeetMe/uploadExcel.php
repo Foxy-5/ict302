@@ -1,6 +1,6 @@
 <?php
 //files that can access the include files
-define('access', TRUE);
+define('access', true);
 session_start();
 
 //including needed files
@@ -154,7 +154,6 @@ if (isset($_POST["import"])) {
                 if(sizeof($csv) == 4){
                     //gets data from each entry
                     preg_match_all('/[0-9]+/',$csv[0],$number);
-                    echo empty($number[0][0]) ? 'true' : 'false';
                     $studentId = (string)$number[0][0];
                     $email = $csv[1];
                     $firstName = $csv[2];
@@ -282,7 +281,7 @@ if (isset($_POST["import"])) {
             mysqli_commit($con);
             //sends student booking request email
             for($emailLoop = 0;$emailLoop < sizeof($listOfAuthKey);$emailLoop++){
-                sendCfmEmailStudent($listOfAuthKey[$emailLoop],0);
+                sendEmailStudent(0,$listOfAuthKey[$emailLoop]);
             }
             echo "<script>
                     alert('Upload Successful');
