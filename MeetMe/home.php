@@ -108,10 +108,11 @@ $userid = $user_data['StaffID'];
 
                 $result1 = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result1)) {
+                    $starttime = date("h:i:s a", strtotime($bookingdata['Booking_start']));
                 ?>
                     <tr>
                         <td><?php echo $row['Booking_date']; ?></td>
-                        <td><?php echo $row['Booking_start']; ?></td>
+                        <td><?php echo $starttime; ?></td>
                         <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
                         <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>">View Booking</a></td>
                     </tr>

@@ -89,9 +89,10 @@ $bookingdata = mysqli_fetch_assoc($result1);
                 <th>Booking Start</th>
             </tr>
             <?php
+            $starttime = date("h:i:s a", strtotime($bookingdata['Booking_start']));
             echo "<tr>";
-            echo "<td>" . $bookingdata['Booking_date'] . "</td>";
-            echo "<td>" . $bookingdata['Booking_start'] . "</td>";
+            echo "<td>" . $bookingdata["Booking_date"] . "</td>";
+            echo "<td>" . $starttime . "</td>";
             echo "</tr>";
             ?>
             <tr>
@@ -99,8 +100,9 @@ $bookingdata = mysqli_fetch_assoc($result1);
                 <th>Duration (Minutes)</th>
             </tr>
             <?php
+            $endtime = date("h:i:s a", strtotime($bookingdata['Booking_end']));
             echo "<tr>";
-            echo "<td>" . $bookingdata['Booking_end'] . "</td>";
+            echo "<td>" . $endtime . "</td>";
             echo "<td>" . $bookingdata['Duration'] . "</td>";
             echo "</tr>";
             ?>
