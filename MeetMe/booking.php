@@ -56,6 +56,8 @@
 		sendEmailStaff(1,$stdtAuthKey,$bkAuthKey);
 		mysqli_commit($con);
 
+		header("Location: SuccessfulBooking.php");
+
 	}
 	
 	if(!(isset($_SESSION['stdtId'])||empty($_SESSION['studentid']))){
