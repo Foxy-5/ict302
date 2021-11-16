@@ -17,23 +17,23 @@
 		//$submitButtonCheck = $_POST['submit']
 
 		//gets the booking id by entering authentication key from booking
-		$bkIdQuery = "SELECT bookingid FROM booking WHERE Auth_Key = '$bookingKey' limit 1;";
+		$bkIdQuery = "SELECT bookingid FROM booking WHERE Auth_Key = '$bkKey' limit 1;";
 
 		if(!$bkIdResult = mysqli_query($con,$bkIdQuery)){
 			header("Location: connectionError.php");
 			exit();
 		}
 		
-		if(!mysqli_num_rows($bkIdResult)>0){
+		if(!mysqli_num_rows($bkIdResult)>0||empty($bkIdResult)){
 			echo "<script>alert('Error: Booking cannot be found');</script>";
 		}
 
 		$stdtId = $_SESSION['stdtId'];
-		$bkIdArray = mysqli_fetch_assoc($result);
-		$bkId = $output['bookingid'];
+		$bkIdArray = mysqli_fetch_assoc($bkIdResult);
+		$bkId = $bkIdArray['bookingid'];
 
 		//creates new authkey for booking after booked
-		$bkUniqId = $stdtid.$bkId.uniqid("booking",true);
+		$bkUniqId = $stdtId.$bkId.uniqid("booking",true);
     	$bkAuthKey = str_split(hash('sha256',$bkUniqId),32)[0];
     	
 		$bkUpdateQuery = "UPDATE booking SET StudentID = '$stdtId', Status = 'confirmed', Auth_key = '$bkAuthKey' WHERE bookingid = '$bkId';";
@@ -45,15 +45,18 @@
 
 		//gets authentication key of student
 		$stdtAuthKey = $_SESSION['stdtAuthKey'];
+
+		$stdtMail = prepEmailStudent(1,$stdtAuthKey,$bkAuthKey);
+		$lectMail = prepEmailStaff(1,$stdtAuthKey,$bkAuthKey);
+
 		$removeQuery = "DELETE from studentlist WHERE Auth_Key = '$stdtAuthKey'";
 
 		if(!mysqli_query($con,$removeQuery)){
 			header("Location: connectionError.php");
 			exit();
 		}
-		
-		sendEmailStudent(1,$stdtAuthKey,$bkAuthKey);
-		sendEmailStaff(1,$stdtAuthKey,$bkAuthKey);
+		sendEmail($stdtMail);
+		sendEmail($lectMail);
 		mysqli_commit($con);
 
 		header("Location: SuccessfulBooking.php");
@@ -65,7 +68,7 @@
 		exit();
 	}
 
-	if(!(isset($_SESSION['bkStaffId'])||empty($_SESSION['bkStaffId']))){
+	if(!isset($_SESSION['bkStaffId'])||empty($_SESSION['bkStaffId'])){
 		http_response_code(404);
 		exit();
 	}
@@ -87,7 +90,7 @@
 	if(!$bkDets = mysqli_query($con,$bkDetsQuery)){
 		echo "<script>alert('Error: Connection error with the system.')</script>";
 		//header("Location: connectionError.php");
-		if(!(isset($_SESSION['stdtAuthKey'])||empty($_SESSION['stdtAuthKey']))){
+		if(!isset($_SESSION['stdtAuthKey'])||empty($_SESSION['stdtAuthKey'])){
 			http_response_code(404);
 			exit();
 		}
