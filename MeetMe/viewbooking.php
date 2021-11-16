@@ -1,15 +1,19 @@
 <?php
-define('access', TRUE);
+define('access', true);
 session_start();
 
 include("include/connection.php");
 include("include/function.php");
 
 $user_data = check_login($con);
-$bookingid = $_GET['bookingid'];
+$bookingId = $_GET['bookingid'];
 // $query1 = "Select Booking_date, Booking_start, Booking_end, student.First_name, student.Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status from booking, student where booking.bookingID = '$bookingid' and booking.StudentID = student.StudentID LIMIT 1";
-$query1 = "Select Booking_date, Booking_start, Booking_end, case WHEN booking.StudentID is NULL THEN NULL ELSE student.First_name end as First_name, case WHEN booking.StudentID is NULL THEN NULL ELSE student.Last_name end as Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status from booking, student where booking.bookingID = '$bookingid' LIMIT 1";
+$query1 = "Select Booking_date, Booking_start, Booking_end, case WHEN booking.StudentID is NULL THEN NULL ELSE student.First_name end as First_name, case WHEN booking.StudentID is NULL THEN NULL ELSE student.Last_name end as Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status from booking, student where booking.Auth_key = '$bookingId' LIMIT 1";
 $result1 = mysqli_query($con, $query1);
+if(!mysqli_num_rows($result1)>0){
+    echo "<script>alert('Invalid meeting')</script>";
+    exit();
+}
 $bookingdata = mysqli_fetch_assoc($result1);
 
 ?>
@@ -24,7 +28,7 @@ $bookingdata = mysqli_fetch_assoc($result1);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/mystyle.css">
-    <title>navbar</title>
+    <title>Booking Details | MeetMe v2</title>
 </head>
 
 <body>
@@ -125,7 +129,7 @@ $bookingdata = mysqli_fetch_assoc($result1);
         <!--<label for="editbooking">Edit Booking</label>-->
         <div class="containerprofile">
             <a class="linktobutton" href="allbooking.php">Back</a>
-            <a class="linktobutton" href="editbooking.php?bookingid=<?php echo $bookingdata['BookingID']; ?>">Edit</a>
+            <a class="linktobutton" href="editbooking.php?bookingid=<?php echo $bookingId; ?>">Edit</a>
         </div>
         <br>
         <br>

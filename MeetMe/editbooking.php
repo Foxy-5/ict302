@@ -1,5 +1,5 @@
 <?php
-define('access', TRUE);
+define('access', true);
 session_start();
 
 include("include/connection.php");
@@ -7,8 +7,8 @@ include("include/function.php");
 
 $user_data = check_login($con);
 $userid = $user_data['StaffID'];
-$bookingid = $_GET['bookingid'];
-$query1 = "Select Booking_date, Booking_start, Booking_end, case WHEN booking.StudentID is NULL THEN NULL ELSE student.First_name end as First_name, case WHEN booking.StudentID is NULL THEN NULL ELSE student.Last_name end as Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status from booking, student where booking.bookingID = '$bookingid' LIMIT 1";
+$bookingId = $_GET['bookingid'];
+$query1 = "Select Booking_date, Booking_start, Booking_end, case WHEN booking.StudentID is NULL THEN NULL ELSE student.First_name end as First_name, case WHEN booking.StudentID is NULL THEN NULL ELSE student.Last_name end as Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status from booking, student where booking.Auth_key = '$bookingId' LIMIT 1";
 $result1 = mysqli_query($con, $query1);
 $bookingdata = mysqli_fetch_assoc($result1);
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -37,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // echo "start date" . $bstart ."\r\n";
     // echo "end date" . $bookingenddate . "\r\n";
     //echo $elapsed;
-    $query = "UPDATE booking SET Status = '$status', Booking_end = '$bookingenddate', PreviousMeetingID = '$previousid', Comment = '$comment', Duration = '$elapsed' WHERE BookingID= '$bookingid'";
+    $query = "UPDATE booking SET Status = '$status', Booking_end = '$bookingenddate', PreviousMeetingID = '$previousid', Comment = '$comment', Duration = '$elapsed' WHERE Auth_key= '$bookingId'";
     if (mysqli_query($con, $query)) {
         echo '<script>
             alert("Booking details was succesfully updated.");
-            window.location.href="viewbooking.php?bookingid=' . $bookingid . '";
+            window.location.href="viewbooking.php?bookingid=' . $bookingId . '";
             </script>';
         mysqli_commit($con);
         die;
@@ -178,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </table>
             <br>
             <div class="containerprofile">
-                <input class="linktobutton" type="button" value="Cancel Update" onclick="location.href = 'viewbooking.php?bookingid=<?php echo $bookingdata['BookingID']; ?>'">
+                <input class="linktobutton" type="button" value="Cancel Update" onclick="location.href = 'viewbooking.php?bookingid=<?php echo $bookingId; ?>'">
                 <input class="linktobutton" id="button" type="submit" value="Update Booking">
             </div>
         </form>
