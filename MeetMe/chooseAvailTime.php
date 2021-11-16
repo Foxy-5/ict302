@@ -164,6 +164,7 @@ include("include/function.php");
                             <ul id="sub-dropdown-menu" class="dropdown-menu">
                                 <li><a href="upcoming.php">View Upcoming Bookings</a></li>
                                 <li><a href="allbooking.php">View Concluded Bookings</a></li>
+								<li><a href="openbooking.php">View Open Bookings</a></li>
                             </ul>
                         </li>
                     </ul>

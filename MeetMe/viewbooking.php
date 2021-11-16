@@ -50,6 +50,7 @@ $bookingdata = mysqli_fetch_assoc($result1);
                     <ul class="dropdown-menu">
                         <li><a href="staffanalytics.php">Staff Analytics</a></li>
                         <li><a href="studentlisting.php">Student Analytics</a></li>
+                        <li><a href="openbooking.php">View Open Bookings</a></li>
                     </ul>
                 </li>
                 <li><a href="about.php">About</a></li>

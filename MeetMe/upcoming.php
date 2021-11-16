@@ -67,6 +67,7 @@ $userid = $user_data['StaffID'];
                             <ul id="sub-dropdown-menu" class="dropdown-menu">
                                 <li><a href="upcoming.php">View Upcoming Bookings</a></li>
                                 <li><a href="allbooking.php">View Concluded Bookings</a></li>
+                                <li><a href="openbooking.php">View Open Bookings</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -87,7 +88,7 @@ $userid = $user_data['StaffID'];
     </nav>
     <div class="content">
         <h5>Hi <?php echo $user_data['First_name']; ?> <?php echo $user_data['Last_name']; ?>!</h5>
-        <h1>Upcoming Booking</h1>
+        <h1>Upcoming Booking(s)</h1>
         <hr class="redbar">
         <table id="myTable" class="upcomingbooking">
             <thead>

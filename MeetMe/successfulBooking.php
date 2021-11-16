@@ -9,6 +9,6 @@
 	</head>
 
 	<body>
-		<p>Ur booking is successful, u may close the browser</p>
+		<p>Your booking is successful, you may close the browser</p>
 	</body>
 </html>
