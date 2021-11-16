@@ -40,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $query = "UPDATE booking SET Status = '$status', Booking_end = '$bookingenddate', PreviousMeetingID = '$previousid', Comment = '$comment', Duration = '$elapsed' WHERE Auth_key= '$bookingId'";
     if (mysqli_query($con, $query)) {
         echo '<script>
-            alert("Booking details was succesfully updated.");
-            window.location.href="viewbooking.php?bookingid=' . $bookingId . '";
+                alert("Booking details was succesfully updated.");
+                window.location.href="viewbooking.php?bookingid=' . $bookingId . '";
             </script>';
         mysqli_commit($con);
         die;
@@ -153,15 +153,24 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <?php
                 echo "<tr>";
                 ?>
-                <td><input type="text" name="previousid" id="text" value="<?php echo $bookingdata['PreviousMeetingID'] ?>"></td>
-                <td><?php $defaultstate = $bookingdata['Status']; ?>
-                    <select name="status" id="text" selected="selected">
-                        <option value='<?php echo $defaultstate ?>' selected='selected'><?php echo $defaultstate ?></option>
-                        <option value="confirmed">Confirmed</option>
-                        <option value="cancelled">Cancelled</option>
-                        <option value="ended">Ended</option>
-                    </select>
-                </td>
+                    <td><input type="text" name="previousid" id="text" value="<?php echo $bookingdata['PreviousMeetingID'] ?>"></td>
+                    <td><?php 
+                            $defaultState = array($bookingdata['Status']); 
+                            $options = array("Confirmed","Cancelled","Ended");
+                            $selections = array_diff($options,$defaultState);
+                        ?>
+
+                        <select name="status" id="text" selected="selected">
+                            <?php 
+                                echo "<option value=$defaultState[0] selected=\"selected\">$defaultState[0]</option>";
+                                for($opCount=0;$opCount<sizeof($selections);$opCount++){
+                                    $tempSelect = $selections[$opCount];
+                                    echo "<option value=$tempSelect>$tempSelect</option>";
+                                }
+                            ?>
+
+                        </select>
+                    </td>
                 <?php
                 echo "</tr>";
                 ?>
