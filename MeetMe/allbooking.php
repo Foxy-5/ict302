@@ -65,7 +65,7 @@ $user_data = check_login($con);
                         <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
                             <ul id="sub-dropdown-menu" class="dropdown-menu">
                                 <li><a href="upcoming.php">View Upcoming Bookings</a></li>
-                                <li><a href="allbooking.php">View All Bookings</a></li>
+                                <li><a href="allbooking.php">View Concluded Bookings</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -86,7 +86,7 @@ $user_data = check_login($con);
     </nav>
     <div class="content">
         <h5>Hi <?php echo $user_data['First_name']; ?> <?php echo $user_data['Last_name']; ?>!</h5>
-        <h1>All Bookings</h1>
+        <h1>Concluded Bookings</h1>
         <hr class="redbar">
         <table id="myTable" class="upcomingbooking">
             <thead>

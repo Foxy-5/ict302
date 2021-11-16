@@ -6,8 +6,6 @@ include("include/connection.php");
 include("include/function.php");
 
 $user_data = check_login($con);
-$userid = $user_data['StaffID'];
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +17,14 @@ $userid = $user_data['StaffID'];
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="css/mystyle.css">
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
     <style id="table_style" type="text/css">
         body {
             font-family: Arial;
@@ -43,7 +48,7 @@ $userid = $user_data['StaffID'];
             border: 1px solid #ccc;
         }
     </style>
-    <title>Data Dashboard | Meetme v2</title>
+    <title>Open Bookings | Meetme v2</title>
 </head>
 
 <body>
@@ -54,7 +59,7 @@ $userid = $user_data['StaffID'];
         <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
                 <li><a href="home.php">Home</a></li>
-                <li id="appointment" class="dropdown"><a href="#">Appointment <span class="caret"></span></a>
+                <li id="appointment" class="dropdown active"><a href="#">Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="uploadExcel.php">Upload Excel</a></li>
                         <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -65,7 +70,7 @@ $userid = $user_data['StaffID'];
                         </li>
                     </ul>
                 </li>
-                <li id="analytics" class="dropdown active"><a href="#">Analytics <span class="caret"></span></a>
+                <li id="analytics" class="dropdown"><a href="#">Analytics <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="staffanalytics.php">Staff Analytics</a></li>
                         <li><a href="studentlisting.php">Student Analytics</a></li>
@@ -80,37 +85,64 @@ $userid = $user_data['StaffID'];
         </div>
     </nav>
     <div class="content">
-        <h1>Meeting Analytics</h1>
+        <h5>Hi <?php echo $user_data['First_name']; ?> <?php echo $user_data['Last_name']; ?>!</h5>
+        <h1>Open Bookings</h1>
         <hr class="redbar">
-        <a href="staffanalytics.php"class="linktobutton">Staff Meeting Analytics</a>
-        <a href="studentlisting.php"class="linktobutton">Student Analytics</a>
-        <br>
-        <br>
-        <ul>
-            <li>
+        <table id="myTable" class="upcomingbooking">
+            <thead>
+                <tr>
+                    <th>Booking Date</th>
+                    <th>Start Time</th>
+                    <th>Manage Booking</th>
+                </tr>
+            </thead>
+            <tbody>
                 <?php
-                $query1 = "Select Booking_date, Booking_start, First_name, Last_name from booking, student where (booking.OrganizerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID)";
+                $today = date("Y-m-d");
+                $userid = $user_data['StaffID'];
+                $query1 = "Select Booking_date, Booking_start, BookingID from booking where (booking.ConvenerID = '$userid') and booking.StudentID is NULL ORDER BY booking_start ASC";
 
                 $result1 = mysqli_query($con, $query1);
-
-                echo "<table border='2'>
-                <tr>
-                <th>Booking Date</th>
-                <th>Booking Date/Start Time</th>
-                <th>Student Name</th>
-                </tr>";
                 while ($row = mysqli_fetch_array($result1)) {
-                    echo "<tr>";
-                    echo "<td>" . $row['Booking_date'] . "</td>";
-                    echo "<td>" . $row['Booking_start'] . "</td>";
-                    echo "<td>" . $row['First_name'] . $row['Last_name'] . "</td>";
-                    echo "</tr>";
-                }
-                echo "</table>";
+                    $starttime = date("h:i:s a", strtotime($row['Booking_start']));
                 ?>
-            </li>
-        </ul>
+                    <tr>
+                        <td><?php echo $row['Booking_date']; ?></td>
+                        <td><?php echo $starttime; ?></td>
+                        <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>">View Booking</a></td>
+                    </tr>
+                <?php
+                }
+                ?>
+            </tbody>
+
+        </table>
+        <input class="linktobutton" type="button" onclick="PrintTable();" value="Print" />
     </div>
+
 </body>
+<script type="text/javascript">
+    function PrintTable() {
+        var printWindow = window.open('', '', 'height=700,width=700');
+        printWindow.document.write('<html><head><title>Table Contents</title>');
+
+        //Print the Table CSS.
+        var table_style = document.getElementById("table_style").innerHTML;
+        printWindow.document.write('<style type = "text/css">');
+        printWindow.document.write(table_style);
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head>');
+
+        //Print the DIV contents i.e. the HTML Table.
+        printWindow.document.write('<body>');
+        var divContents = document.getElementById("myTable").outerHTML;
+        printWindow.document.write(divContents);
+        printWindow.document.write('</body>');
+
+        printWindow.document.write('</html>');
+        printWindow.document.close();
+        printWindow.print();
+    }
+</script>
 
 </html>

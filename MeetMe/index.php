@@ -1,8 +1,8 @@
 <?php
-//session_start();
-
-    include("connection.php");
-    include("function.php");
+//session_start();  
+    define('access',TRUE);
+    include("include/connection.php");
+    include("include/function.php");
 
     //$user_data = check_login($con);
 ?>

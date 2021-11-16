@@ -336,7 +336,7 @@ if (isset($_POST["import"])) {
                         <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
                             <ul id="sub-dropdown-menu" class="dropdown-menu">
                                 <li><a href="upcoming.php">View Upcoming Bookings</a></li>
-                                <li><a href="allbooking.php">View All Bookings</a></li>
+                                <li><a href="allbooking.php">View Concluded Bookings</a></li>
                             </ul>
                         </li>
                     </ul>
