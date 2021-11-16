@@ -53,8 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
         <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
-                <li><a href="home.php">Home</a></li>
-                <li id="appointment" class="dropdown"><a href="#">Appointment <span class="caret"></span></a>
+                <li><a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                <li id="appointment" class="dropdown"><a href="#"><span class="glyphicon glyphicon-calendar"></span> Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="uploadExcel.php">Upload Excel</a></li>
                         <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -66,13 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         </li>
                     </ul>
                 </li>
-                <li id="analytics" class="dropdown"><a href="#">Analytics <span class="caret"></span></a>
+                <li id="analytics" class="dropdown"><a href="#"><span class="glyphicon glyphicon-tasks"></span> Analytics <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="staffanalytics.php">Staff Analytics</a></li>
                         <li><a href="studentlisting.php">Student Analytics</a></li>
                     </ul>
                 </li>
-                <li><a href="about.php">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="profile.php"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
@@ -100,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <label for="email" class="editprofiletext">Email</label><br>
                 <input class="editprofilebox" name="email" id="text" value="<?php echo $user_data['Email'] ?>"><br><br>
 
-                <input class="linktobutton" type="button" value = "Cancel Update" onclick="location.href = 'profile.php'">
+                <input class="linktobutton" type="button" value = "Cancel" onclick="location.href = 'profile.php'">
                 <input class="linktobutton" id="button" type="submit" value="Update Profile">
             </div>
         
