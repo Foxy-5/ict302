@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $acptStatus = array("Cancelled","Ended","Not confirmed");
     
     if(!in_array($status,$acptStatus)){
-        echo "<script>alert('Invalid input')</script>"
+        echo "<script>alert('Invalid input')</script>";
     }
 
     $comment = $_POST['comment'];
