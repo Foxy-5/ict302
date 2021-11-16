@@ -1,26 +1,26 @@
 <?php
-	define('access', TRUE);
+	define('access', true);
 	session_start();
 
 	include("include/connection.php");
-include("include/function.php");
+	include("include/function.php");
 
 	$user_data = check_login($con);
 
 	if($_SERVER['REQUEST_METHOD'] == "POST"){
 		if(empty($_POST['staffid'])){
-			$userid = $user_data['StaffID'];
+			$staffId = $user_data['StaffID'];
 		}
 		else{
-			$userid = $_POST['staffid'];
+			$staffId = $_POST['staffid'];
 
-			$staffidquery = "SELECT `staffid` FROM `staff` WHERE `staffid` = '$userid' limit 1";
+			$staffIdQuery = "SELECT `staffid` FROM `staff` WHERE `staffid` = '$staffId' limit 1";
 			if(!$result = mysqli_query($con,$query)){
 				echo "<script>alert('There's something wrong while trying to connect to the database');</script>";
 				exit();
 			}
 
-			if(!mysqli_num_rows($staffidquery)>0){
+			if(!mysqli_num_rows($staffIdQuery)>0){
 				echo "<script>alert('Staff id cannot be found!');</script>";
 				exit();
 			}
@@ -103,13 +103,11 @@ include("include/function.php");
 			//after validation
 
 			//creating a unique id and then hashed to generate a unique identifier for each booking and saved in the database
-			$uniqueid = $userid.$dateReceived.uniqid("booking",true);
-			$longHashedAuthKey = hash('sha256',$uniqueid);
-			$halfHashedAuthKey = str_split($longHashedAuthKey,32)[0];
+			$uniqueId = $staffId.$dateReceived.uniqid("booking",true);
+			$hashedAuthKey = str_split(hash('sha256',$uniqueid),32)[0];
 
 
-
-			$query = "INSERT INTO `booking` (`ConvenerID`,`Booking_date`, `Booking_start`, `Booking_end`,`Auth_Key`) VALUES ('$userid','$dateReceived', '$startTimeQuery', '$endTimeQuery','$halfHashedAuthKey');";
+			$query = "INSERT INTO `booking` (`ConvenerID`,`Booking_date`, `Booking_start`, `Booking_end`,`Auth_Key`) VALUES ('$staffId','$dateReceived', '$startTimeQuery', '$endTimeQuery','$hashedAuthKey');";
 			if(!mysqli_query($con,$query)){
 	            $commitToDatabase = false;
 	            break;
@@ -189,41 +187,18 @@ include("include/function.php");
 		<p>Indicate your available timeslot for students to start booking!</p>
 		<div class="containerprofile">
 			<form method="post">
-				<!--
-					<label>Staff to indicate for (empty for yourself)</label>
-					<input type="text" name="staffid"/>
-					//What's this??? Staff ID? Or let the staff to write on their own?
-				-->
-		<!--
-		<form method="post">
-			<label>Staff to indicate for (empty for yourself)</label>
-			<input type="text" name="staffid"/>
-			<br>
-			<label>Date:</label>
-			<input type="date" name="date[]" required/>
-			<label>Start Time:</label>
-			<input type="time" name="startTime[]" required/>
-			<label>End Time:</label>
-			<input type="time" name="endTime[]" required/>
 
-			<div id="dynamic_field"></div>
-			<input type="hidden" name="timezone">
+				<label>Staff ID</label>
+            	<input type="text" value="<?php echo $user_data['StaffID']?>"><br><br>
 
-			<button type="button" name="add_time_slot" id="add" onclick="addFields()">Add Timeslot</button>
-			<input type="submit" value="Update Timeslot"/>
-		</form>
-		-->
-				<label class="editprofiletext">Staff ID</label><br>
-            	<input class="myprofilebox" type="text" value=" <?php echo $user_data['StaffID']?>"><br><br>
+				<label>Date</label>
+            	<input type="date" name="date[]" required/>
 
-				<label class="editprofiletext">Date</label><br>
-            	<input class="myprofilebox" type="date" name="date[]" required/><br><br>
+				<label>Start Time</label>
+            	<input type="time" name="startTime[]" required/>
 
-				<label class="editprofiletext">Start Time</label><br>
-            	<input class="myprofilebox" type="time" name="startTime[]" required/><br><br>
-
-				<label class="editprofiletext">End Time</label><br>
-            	<input class="myprofilebox" type="time" name="endTime[]" required/><br><br>
+				<label>End Time</label>
+            	<input type="time" name="endTime[]" required/><br><br>
 
 				<div id="dynamic_field"></div>
 				<input type="hidden" name="timezone">
@@ -232,25 +207,6 @@ include("include/function.php");
 				<input class="linktobutton" type="submit" value="Update Timeslot"/>
 			</form>
 		</div>
-		<!--
-		<form method="post">
-			<label>Staff to indicate for (empty for yourself)</label>
-			<input type="text" name="staffid"/>
-			<br>
-			<label>Date:</label>
-			<input type="date" name="date[]" required/>
-			<label>Start Time:</label>
-			<input type="time" name="startTime[]" required/>
-			<label>End Time:</label>
-			<input type="time" name="endTime[]" required/>
-
-			<div id="dynamic_field"></div>
-			<input type="hidden" name="timezone">
-
-			<button type="button" name="add_time_slot" id="add" onclick="addFields()">Add Timeslot</button>
-			<input type="submit" value="Update Timeslot"/>
-		</form>
-		-->
 	</div>
 
 	<script>
@@ -379,7 +335,6 @@ include("include/function.php");
 			endTimeContainer.setAttribute("required", "");
 
 			var deleteContainer = document.createElement("a");
-			deleteContainer.class = "delete";
 			deleteContainer.innerHTML = "Delete";
 			deleteContainer.href = "#";
 			//deleteContainer.setAttribute("onclick","removeFromWebsite(fieldToDelete(this),document.getElementById(\"dynamic_field\"))");
@@ -422,6 +377,8 @@ include("include/function.php");
 
 			//adding breakline to segregate different input boxes
 			innerContainer.appendChild(document.createElement("br"));
+			innerContainer.appendChild(document.createElement("br"));
+
 
 			//adding sub division to the parent division
 			div.appendChild(innerContainer);
@@ -429,29 +386,11 @@ include("include/function.php");
 
 		//cna change to one div for one set of input
 		function deleteSubForm(item){
-			/*var endTimeInputHolder = item.previousElementSibling;
-			var endTimeLabelHolder = endTimeInputHolder.previousElementSibling;
-			var startTimeInputHolder = endTimeLabelHolder.previousElementSibling;
-			var startTimeLabelHolder = startTimeInputHolder.previousElementSibling;
-			var dateInputHolder = startTimeLabelHolder.previousElementSibling;
-			var dateLabelHolder = dateInputHolder.previousElementSibling;
-			var brHolder = item.nextElementSibling;*/
 
-			//remove the div that contains represents one entry of timing
 			item.parentNode.remove();
 			fieldCounter--;
-			
-			//var holderArray = [item,brHolder,dateLabelHolder,dateInputHolder,startTimeLabelHolder,
-								//startTimeInputHolder,endTimeLabelHolder,endTimeInputHolder];
-			//return holderArray;
-		}
 
-		/*function removeFromWebsite(holders,div){
-			for(var i=0;i<holders.length;i++){
-				div.removeChild(holders[i]);
-			}
-			fieldCounter--;
-		}*/
+		}
 
 		function checkDate(e){
 			var flag = 0;
