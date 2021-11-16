@@ -101,8 +101,8 @@ $user_data = check_login($con);
                 <?php
                 $today = date("Y-m-d");
                 $userid = $user_data['StaffID'];
-                $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID from booking, student where (booking.ConvenerID = '$userid') and (booking.StudentID = student.StudentID) ORDER BY booking_start ASC";
-
+                // $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID from booking, student where (booking.ConvenerID = '$userid') and (booking.StudentID = student.StudentID) ORDER BY booking_start ASC";
+                $query1 = "Select Booking_date, Booking_start, case WHEN booking.StudentID is NULL THEN NULL ELSE student.First_name end as First_name, case WHEN booking.StudentID is NULL THEN NULL ELSE student.Last_name end as Last_name, BookingID from booking LEFT JOIN student on booking.StudentID = student.StudentID where booking.ConvenerID = '$userid' order by booking_start asc";
                 $result1 = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result1)) {
                     $starttime = date("h:i:s a", strtotime($row['Booking_start']));
