@@ -11,6 +11,7 @@ $bookingId = $_GET['bookingid'];
 $query1 = "Select Booking_date, Booking_start, Booking_end, case WHEN booking.StudentID is NULL THEN NULL ELSE student.First_name end as First_name, case WHEN booking.StudentID is NULL THEN NULL ELSE student.Last_name end as Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status from booking, student where booking.Auth_key = '$bookingId' LIMIT 1";
 $result1 = mysqli_query($con, $query1);
 $bookingdata = mysqli_fetch_assoc($result1);
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $previousid = $_POST['previousid'];
     $newbookingend = date("Y-m-d H:i:s", strtotime($_POST['newbookingend']));
@@ -156,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     <td><input type="text" name="previousid" id="text" value="<?php echo $bookingdata['PreviousMeetingID'] ?>"></td>
                     <td><?php 
                             $defaultState = array($bookingdata['Status']); 
-                            $options = array("Confirmed","Cancelled","Ended");
+                            $options = array("Cancelled","Ended");
                             $selections = array_diff($options,$defaultState);
                         ?>
 
