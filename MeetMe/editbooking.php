@@ -37,9 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $elapsed = $duration->days * 24 * 60;
     $elapsed += $duration->h * 60;
     $elapsed += $duration->i;
-    /*if ($status != "ended") {
+    if ($status != "ended") {
         $elapsed = 0;
-    }*/
+    }
     // echo "start date" . $bstart ."\r\n";
     // echo "end date" . $bookingenddate . "\r\n";
     //echo $elapsed;
