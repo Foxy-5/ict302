@@ -106,7 +106,7 @@ $userid = $user_data['StaffID'];
                 
                 $result1 = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result1)) {
-                    $starttime = date("h:i:s a", strtotime($bookingdata['Booking_start']));
+                    $starttime = date("h:i:s a", strtotime($row['Booking_start']));
                 ?>
                     <tr>
                         <td><?php echo $row['Booking_date']; ?></td>
