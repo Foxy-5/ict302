@@ -198,7 +198,7 @@
             	<input type="time" name="startTime[]" required/>
 
 				<label>End Time</label>
-            	<input type="time" name="endTime[]" required/><br><br>
+            	<input type="time" name="endTime[]" required/><br>
 
 				<div id="dynamic_field"></div>
 				<input type="hidden" name="timezone">
@@ -376,7 +376,6 @@
 			}
 
 			//adding breakline to segregate different input boxes
-			innerContainer.appendChild(document.createElement("br"));
 			innerContainer.appendChild(document.createElement("br"));
 
 
