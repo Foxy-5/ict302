@@ -99,7 +99,7 @@ function fgCfmBody($recipient,...$AuthKeys){
 
     $cnclLink = fgCnclLink($bkAuthKey);
 
-    $bodyMsg = "Dear {RCP_NAME},\n\nYour meeting with {ORCP_NAME} is confirmed. Attached is the calendar meeting invitation.\n\nIf you wish to cancel your booking, please click on the following link.\n\n https://localhost/cancelBooking.php?authkey=$cnclLink\n\nAdvise on cancellation: {ADVISE_MESSAGE}\n\nThank you,\nMurodch University Meet Me.\n\nThis is an auto generated email. Please do not reply\n\n\nMurdoch Singapore\n390 Havelock Road #03-01 King’s Centre Singapore 169662.";
+    $bodyMsg = "Dear {RCP_NAME},\n\nYour meeting with {ORCP_NAME} is confirmed. Attached is the calendar meeting invitation.\n\nIf you wish to cancel your booking, please click on the following link.\n\n$cnclLink\n\nAdvise on cancellation: {ADVISE_MESSAGE}\n\nThank you,\nMurodch University Meet Me.\n\nThis is an auto generated email. Please do not reply\n\n\nMurdoch Singapore\n390 Havelock Road #03-01 King’s Centre Singapore 169662.";
     
     //if it's students
     if($recipient==0){
@@ -157,7 +157,7 @@ function fgCnclBody($receipient,$bkAuthKey){
 //mode 0 for booking request
 //mode 1 for booking confirmed
 //mode 2 for booking canceled
-function sendEmailStudent($mode,...$AuthKeys){
+function prepEmailStudent($mode,...$AuthKeys){
     if(sizeof($AuthKeys)>2){
         return false;
     }
@@ -170,7 +170,6 @@ function sendEmailStudent($mode,...$AuthKeys){
         $studentId = getStudentId(0,$AuthKeys[0]);
         $studentEmail = getStudentEmail($studentId);
         $studentName = getStudentName($studentId);
-
         $staffId = getStaffId(0,$AuthKeys[0]);
         $staffName = getStaffName($staffId);
 
@@ -207,6 +206,7 @@ function sendEmailStudent($mode,...$AuthKeys){
             }
 
             $subject = "Your meeting is confirmed!";
+            $mail->AddStringAttachment(craftInvite($AuthKeys[1]),'invite.ics');
 
         }
     }
@@ -230,7 +230,6 @@ function sendEmailStudent($mode,...$AuthKeys){
         $mail->addAddress($studentEmail,$studentName);
         $mail->Subject = $subject;
         $mail->Body = $emailcontent;
-        $mail->send();
     }
     catch (phpmailerException $e) {
         //echo $e->errorMessage();
@@ -241,13 +240,16 @@ function sendEmailStudent($mode,...$AuthKeys){
         return false;
     }
     
-    return true;
+    return $mail;
 }
 
+function sendEmail($mail){
+    $mail->send();
+}
 
 //mode 1 for booking confirmation
 //mode 2 for booking cancellation
-function sendEmailStaff($mode,...$AuthKeys){
+function prepEmailStaff($mode,...$AuthKeys){
     if(sizeof($AuthKeys)>2){
         return false;
     }
@@ -282,6 +284,7 @@ function sendEmailStaff($mode,...$AuthKeys){
         }
 
         $subject = "Your meeting is confirmed!";
+        $mail->AddStringAttachment(craftInvite($AuthKeys[1]),'invite.ics');
 
     }
 
@@ -319,45 +322,51 @@ function sendEmailStaff($mode,...$AuthKeys){
 }
 
 function craftInvite($bkAuthKey){
-    //VERSION:2.0 = RFC 5545 format
-    //ORGANIZER;CN= {The person that organizes}
-    //uid = (utctimestamp)+(student's email)
-    //ical info
-    $query = "SELECT * FROM";
-    $string = '';
-    return $string;
-}
-/*$calendar = "BEGIN:VCALENDAR\r\n
-VERSION:2.0\r\n
-PRODID:-//hacksw/handcal//NONSGML v1.0//EN\r\n
-BEGIN:VTIMEZONE\r\n
-TZID:Singapore Standard Time\r\n
-BEGIN:STANDARD\r\n
-DTSTART:16010101T000000\r\n
-TZOFFSETFROM:+0800\r\n
-TZOFFSETTO:+0800\r\n
-END:STANDARD\r\n
-BEGIN:DAYLIGHT\r\n
-DTSTART:16010101T000000\r\n
-TZOFFSETFROM:+0800\r\n
-TZOFFSETTO:+0800\r\n
-END:DAYLIGHT\r\n
-END:VTIMEZONE\r\n
-BEGIN:VEVENT\r\n
-UID:20211114T000000-twotirt@gmail.com\r\n
-DTSTAMP:19970610T172345Z\r\n
-ORGANIZER;CN=Tiffany:mailto:tiffwonglh@gmail.com\r\n
-DTSTART;TZID=Singapore Standard Time:20211114T000000\r\n
-DTEND;TZID=Singapore Standard Time:20211114T010000\r\n
-SUMMARY;LANGUAGE=en-US:Online Meeting\r\n
-LOCATION;LANGUAGE=en-US:Microsoft Teams Meeting\r\n
-BEGIN:VALARM\r\n
-DESCRIPTION:REMINDER\r\n
-TRIGGER;RELATED=START:-PT15M\r\n
-ACTION:DISPLAY\r\n
-END:VALARM\r\n
-END:VEVENT\r\n
+    $date = new DateTime();
+    $timeZone = $date->getTimezone();
+    $strTimeZone = $timeZone->getName();
+    $offset = $date->format('O');
+    $strCurrentDate = $date->format('Ymd\THis');
+    $staffEmail = getStaffEmail(getStaffId(1,$bkAuthKey));
+    $staffName = getStaffName(getStaffId(1,$bkAuthKey));
+    $startTime = new DateTime(getStartTime($bkAuthKey));
+    $strStartTime = $startTime->format('Ymd\THis');
+    $endTime = new DateTime(getEndTime($bkAuthKey));
+    $strEndTime = $endTime->format('Ymd\THis');
+
+    $icalBody="BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//hacksw/handcal//NONSGML v1.0//EN
+BEGIN:VTIMEZONE
+TZID:$strTimeZone
+BEGIN:STANDARD
+DTSTART:16010101T000000
+TZOFFSETFROM:$offset
+TZOFFSETTO:$offset
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:16010101T000000
+TZOFFSETFROM:$offset
+TZOFFSETTO:$offset
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:$strStartTime-$staffEmail
+DTSTAMP:$strStartTime
+ORGANIZER;CN=$staffName:mailto:$staffEmail
+DTSTART;TZID=$strTimeZone:$strStartTime
+DTEND;TZID=$strTimeZone:$strEndTime
+SUMMARY;LANGUAGE=en-US:Online Meeting
+LOCATION;LANGUAGE=en-US:Microsoft Teams Meeting
+BEGIN:VALARM
+DESCRIPTION:REMINDER
+TRIGGER;RELATED=START:-PT15M
+ACTION:DISPLAY
+END:VALARM
+END:VEVENT
 END:VCALENDAR";
-        $mail->AddStringAttachment($calendar,'invite.ics');*/
+    
+    return $icalBody;
+}
 
 ?>

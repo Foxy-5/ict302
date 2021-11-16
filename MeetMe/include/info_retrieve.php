@@ -126,4 +126,24 @@ function getStaffEmail($staffid){
     return '';
 }
 
+function getStartTime($bkAuthKey){
+    global $con;
+    $query = "SELECT Booking_start FROM booking WHERE Auth_key = '$bkAuthKey';";
+    $result = mysqli_query($con,$query);
+    if($result && mysqli_num_rows($result) > 0){
+        $output = mysqli_fetch_assoc($result);
+        return $output['booking_start'];
+    }
+}
+
+function getEndTime($bkAuthKey){
+    global $con;
+    $query = "SELECT Booking_end FROM booking WHERE Auth_key = '$bkAuthKey';";
+    $result = mysqli_query($con,$query);
+    if($result && mysqli_num_rows($result) > 0){
+        $output = mysqli_fetch_assoc($result);
+        return $output['booking_end'];
+    }
+}
+
 ?>
