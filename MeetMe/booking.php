@@ -1,5 +1,5 @@
 <?php
-	define('access', TRUE);	
+	define('access', true);	
 	//change at configuration file to logout after browser closes
 	session_start();
 
@@ -164,7 +164,7 @@
 						<td><?php echo "$endDate $endTime"?></td>
 						<td><form method="post">
 								<input type = "hidden" name="bookingKey" value=<?php echo "$secretId"?>>
-								<input type="submit" name="button" value="book">
+								<input type="submit" name="button" value="Book">
 							</form>
 						</td>
 					</tr>
