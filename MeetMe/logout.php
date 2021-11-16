@@ -1,8 +1,14 @@
 <?php
 session_start();
 
-if(isset($_SESSION['StaffID'])){
-    unset($_SESSION['StaffID']);
+//if staff is not logged in
+if(!isset($_SESSION['StaffID'])) {
+    http_response_code(404);
+    exit();
 }
+
+//destroy session
+unset($_SESSION);
+session_destroy();
 header("Location: login.php");
 ?>
