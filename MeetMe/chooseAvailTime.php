@@ -16,10 +16,10 @@
 		else{
 			$staffId = $_POST['staffid'];
 
-			if($staffId!=$_SESSION['staffid']){
-				$staffIdQuery = "SELECT `staffid` FROM `staff` WHERE `staffid` = '$staffId' limit 1";
+			if($staffId!=$user_data['StaffID']){
+				$staffIdQuery = "SELECT `StaffID` FROM `staff` WHERE `StaffID` = '$staffId' limit 1";
 				
-				if(!$result = mysqli_query($con,$query)){
+				if(!$result = mysqli_query($con,$staffIdQuery)){
 					echo "<script>alert('There's something wrong while trying to connect to the database');</script>";
 					exit();
 				}
