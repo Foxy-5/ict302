@@ -9,14 +9,6 @@ require_once("include/info_retrieve.php");
 if(isset($_GET['authkey'])){
 	$authKey = $_GET['authkey'];
 	$_SESSION['stdtAuthKey'] = $authKey;
-	//can use function from email.php
-	/*$authkeyquery = "SELECT StudentID FROM studentlist WHERE Auth_Key = '$authkey' limit 1;";
-	$authenticate = mysqli_query($con,$authkeyquery);*/
-
-	/*if($authenticate && mysqli_num_rows($authenticate) > 0){
-		$studentData = mysqli_fetch_assoc($authenticate);*/
-
-	//getting student id based on the unique authentication key
 	//function in : include/email.php
 	$stdtId = getStudentId(0,$authKey);
 
@@ -28,14 +20,6 @@ if(isset($_GET['authkey'])){
 
 	//sets student id to current session
 	$_SESSION['stdtId'] = $stdtId;
-		//$_SESSION['studentid'] = $studentData['StudentID'];
-
-		/*$query = "SELECT staffid FROM list WHERE listid = (SELECT listid FROM studentlist WHERE Auth_key = '$authkey' limit 1)limit 1;";
-        $result = mysqli_query($con,$query);
-        if($result && mysqli_num_rows($result) > 0){
-            $output = mysqli_fetch_assoc($result);
-            $_SESSION['bookingstaffid'] = $output['userid'];
-        }*/
 
     //getting staff id that assigned the booking request from the same authentication key
     $bkStaffId = getStaffId(0,$authKey);
@@ -61,21 +45,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
 	//if the input is not empty
 	if(!empty($stdtIdInput)){
-		//crafts query and queries from server database
-		/*$query = "select * from student where StudentID = '$studentid' limit 1";
-		$result = mysqli_query($con,$query);
-
-		//if the data is found
-		if($result && mysqli_num_rows($result) > 0)
-		{
-
-			$studentData = mysqli_fetch_assoc($result);*/
 
 		if($stdtIdInput == $_SESSION['stdtId']){
-
-			//saves the student id into current session and brings user to the booking page
-			//$_SESSION['StudentID'] = $studentData['StudentID'];
-
 			//redirects to booking page if the student id input corresponds
 			//to the student id retrieved via the authentication key
 			header("Location: booking.php");
