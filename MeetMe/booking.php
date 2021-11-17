@@ -52,6 +52,7 @@
 		$removeQuery = "DELETE from studentlist WHERE Auth_Key = '$stdtAuthKey'";
 
 		if(!mysqli_query($con,$removeQuery)){
+			mysqli_rollback($con);
 			header("Location: connectionError.php");
 			exit();
 		}
@@ -59,11 +60,11 @@
 		sendEmail($lectMail);
 		mysqli_commit($con);
 
-		header("Location: SuccessfulBooking.php");
+		header("Location: successfulbooking.php");
 
 	}
 	
-	if(!(isset($_SESSION['stdtId'])||empty($_SESSION['studentid']))){
+	if(!(isset($_SESSION['studentId'])||empty($_SESSION['studentId']))){
 		http_response_code(404);
 		exit();
 	}
@@ -83,8 +84,7 @@
 	$streBkDate = $eBkDate->format("Y-m-d H:i");
 	$staffId = $_SESSION['bkStaffId'];
 
-	//order by
-	//
+	//get time zone then output
 	$bkDetsQuery = "SELECT `booking`.`Auth_Key`, DATE_FORMAT(`booking`.`booking_start`,'%Y-%m-%d %h:%i %p') AS Start_Date, DATE_FORMAT(`booking`.`booking_end`,'%Y-%m-%d %h:%i %p') AS End_Date FROM `booking` WHERE `booking`.`ConvenerID` = '$staffId' AND `booking`.`booking_start` >= '$streBkDate' AND `booking`.`StudentID` IS NULL ORDER BY `booking`.`Booking_start`;";
 
 	if(!$bkDets = mysqli_query($con,$bkDetsQuery)){
@@ -95,7 +95,7 @@
 			exit();
 		}
 
-		header("Location: studentIdInput.php?authkey=$stdtAuthKey");
+		header("Location: studentidinput.php?authkey=$stdtAuthKey");
 
 		exit();
 	}

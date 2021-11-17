@@ -46,7 +46,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	//if the input is not empty
 	if(!empty($stdtIdInput)){
 
-		if($stdtIdInput == $_SESSION['stdtId']){
+		if($stdtIdInput == $_SESSION['studentId']){
 			//redirects to booking page if the student id input corresponds
 			//to the student id retrieved via the authentication key
 			header("Location: booking.php");
@@ -75,12 +75,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	    <link rel="stylesheet" href="css/mystyle.css">
-		<script>
-			//prevents website to send another POST request when user refreshes website
-			/*if ( window.history.replaceState ) {
-				window.history.replaceState( null, null, window.location.href );
-			}*/
-		</script>
 		<title>Booking Page | MeetMe v2</title>
 
 	</head>
@@ -99,11 +93,13 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     	</nav>
     	
 	    <div class="content">
+	    	<h2>First, we'll like to verify your identity.</h1>
+	    	<hr class="redbar">
 			<form method="post">
-				<label>StudentID : </label>
+				<label class="editprofiletext">StudentID : </label>
 				<input type="text" name="studentId">
 				<p id="errorMessage"></p>
-				<input type="submit" value="Book Meeting">
+				<input class="linktobutton" type="submit" value="Book Meeting">
 			</form>
 		</div>
 	</body>

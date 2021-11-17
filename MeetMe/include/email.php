@@ -16,7 +16,7 @@ require_once("info_retrieve.php");
  * to book a meeting with a specific student id
  **/
 function fgBkLink($stdtAuthKey){
-    return "https://localhost/studentIdInput.php?authkey=$stdtAuthKey";
+    return "https://localhost/studentidinput.php?authkey=$stdtAuthKey";
 }
 
 
