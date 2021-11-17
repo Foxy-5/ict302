@@ -1,15 +1,24 @@
- RewriteEngine on 
- RewriteBase / 
- RewriteCond %{REQUEST_FILENAME} !-d
- RewriteCond %{REQUEST_FILENAME} !-f 
-RewriteRule ^(.*)$ http://localhost/MeetMe/error404.php [R,NC,L]
+DirectoryIndex login.php
 
-<FilesMatch /include(/?|/.*)>
-    Order allow,deny
-    Deny from all
-</FilesMatch>
+# denies any access to subdirectories
+Options -Indexes
+IndexIgnore *
 
-RedirectMatch 404 ^/include(/?|/.*)$
+RewriteEngine on
+RewriteBase /MeetMe/
+
+# redirects any non file or non directory
+# to error404.php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ error404.php [R,NC,L]
+
+# prevents user to access the '/include' directory
+#<FilesMatch "(/include|/css|/Images|/lib|/uploads)(/?|/.*)">
+#    Order allow,deny
+#    Deny from all
+#</FilesMatch>
+
 
 ErrorDocument 403 http://localhost/MeetMe/error404.php 
 ErrorDocument 404 http://localhost/MeetMe/error404.php 
