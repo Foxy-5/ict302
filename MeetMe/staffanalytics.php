@@ -120,7 +120,7 @@ $user_data = check_login($con);
                     WHEN(booking.Status = 'ended') 
                     THEN 
                         CASE 
-                        WHEN (DAYOFWEEK(DATE(booking.Booking_start)) = '1' OR DAYOFWEEK(DATE(booking.Booking_start)) = '7')
+                        WHEN (DAYOFWEEK(booking.Booking_date) = '1' OR DAYOFWEEK(booking.Booking_date) = '7')
                             THEN 1 
                             ELSE 0
                         END

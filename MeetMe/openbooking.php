@@ -100,15 +100,14 @@ $user_data = check_login($con);
                 <?php
                 $today = date("Y-m-d");
                 $userid = $user_data['StaffID'];
-                $query1 = "Select Booking_start, Auth_key,BookingID from booking where (booking.ConvenerID = '$userid') and booking.StudentID is NULL and booking.status = 'Not confirmed' ORDER BY booking_start ASC";
+                $query1 = "Select Booking_date, Booking_start, Auth_key,BookingID from booking where (booking.ConvenerID = '$userid') and booking.StudentID is NULL and booking.status = 'Not confirmed' ORDER BY booking_start ASC";
 
                 $result1 = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result1)) {
                     $starttime = date("h:i:s a", strtotime($row['Booking_start']));
-                    $bookingdate = date("Y-m-d",strtotime($row['Booking_start']));
                 ?>
                     <tr>
-                        <td><?php echo $bookingdate; ?></td>
+                        <td><?php echo $row['Booking_date']; ?></td>
                         <td><?php echo $starttime; ?></td>
                         <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['Auth_key']; ?>"><span class="glyphicon glyphicon-eye-open"></span> View Booking</a></td>
                     </tr>
