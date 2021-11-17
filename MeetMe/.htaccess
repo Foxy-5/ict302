@@ -1,8 +1,9 @@
 DirectoryIndex login.php
 
 # denies any access to subdirectories
-Options -Indexes
-IndexIgnore *
+# uncomment when everything's done
+# Options -Indexes
+# IndexIgnore *
 
 RewriteEngine on
 RewriteBase /MeetMe/
