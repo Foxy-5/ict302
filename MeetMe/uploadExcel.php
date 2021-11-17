@@ -281,7 +281,8 @@ if (isset($_POST["import"])) {
             mysqli_commit($con);
             //sends student booking request email
             for($emailLoop = 0;$emailLoop < sizeof($listOfAuthKey);$emailLoop++){
-                sendEmailStudent(0,$listOfAuthKey[$emailLoop]);
+                $mail = prepEmailStudent(0,$listOfAuthKey[$emailLoop]);
+                sendEmail($mail);
             }
             echo "<script>
                     alert('Upload Successful');
