@@ -1,5 +1,5 @@
 <?php
-    define('access', TRUE);
+    define('access', true);
     session_start();
 
     include("include/connection.php");
