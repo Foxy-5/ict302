@@ -8,21 +8,26 @@
 	$user_data = check_login($con);
 
 	if($_SERVER['REQUEST_METHOD'] == "POST"){
-		if(empty($_POST['staffid'])){
-			$staffId = $user_data['StaffID'];
+		if(!is_numeric($_POST['staffid'])){
+			echo "<script>alert('StaffID must be in numbers');</script>;";
+			exit();
 		}
+
 		else{
 			$staffId = $_POST['staffid'];
 
-			$staffIdQuery = "SELECT `staffid` FROM `staff` WHERE `staffid` = '$staffId' limit 1";
-			if(!$result = mysqli_query($con,$query)){
-				echo "<script>alert('There's something wrong while trying to connect to the database');</script>";
-				exit();
-			}
+			if($staffId!=$_SESSION['staffid']){
+				$staffIdQuery = "SELECT `staffid` FROM `staff` WHERE `staffid` = '$staffId' limit 1";
+				
+				if(!$result = mysqli_query($con,$query)){
+					echo "<script>alert('There's something wrong while trying to connect to the database');</script>";
+					exit();
+				}
 
-			if(!mysqli_num_rows($staffIdQuery)>0){
-				echo "<script>alert('Staff id cannot be found!');</script>";
-				exit();
+				if(!mysqli_num_rows($result)>0){
+					echo "<script>alert('Staff id cannot be found!');</script>";
+					exit();
+				}
 			}
 
 		}
@@ -104,7 +109,7 @@
 
 			//creating a unique id and then hashed to generate a unique identifier for each booking and saved in the database
 			$uniqueId = $staffId.$dateReceived.uniqid("booking",true);
-			$hashedAuthKey = str_split(hash('sha256',$uniqueid),32)[0];
+			$hashedAuthKey = str_split(hash('sha256',$uniqueId),32)[0];
 
 
 			$query = "INSERT INTO `booking` (`ConvenerID`,`Booking_date`, `Booking_start`, `Booking_end`,`Auth_Key`) VALUES ('$staffId','$dateReceived', '$startTimeQuery', '$endTimeQuery','$hashedAuthKey');";
