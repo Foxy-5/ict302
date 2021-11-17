@@ -193,7 +193,7 @@
 			<form method="post">
 
 				<label>Staff ID</label>
-            	<input type="text" value="<?php echo $user_data['StaffID']?>"><br><br>
+            	<input type="text" name="staffid" value="<?php echo $user_data['StaffID']?>"><br><br>
 
 				<label>Date</label>
             	<input type="date" name="date[]" required/>
