@@ -61,7 +61,7 @@ $userid = $user_data['StaffID'];
         <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
                 <li><a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                <li id="appointment" class="dropdown"><a href="#"><span class="glyphicon glyphicon-calendar"></span> Appointment <span class="caret"></span></a>
+                <li id="appointment" class="dropdown active"><a href="#"><span class="glyphicon glyphicon-calendar"></span> Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="uploadExcel.php">Upload Excel</a></li>
                         <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -73,7 +73,7 @@ $userid = $user_data['StaffID'];
                         </li>
                     </ul>
                 </li>
-                <li id="analytics" class="dropdown active"><a href="#"><span class="glyphicon glyphicon-tasks"></span> Analytics <span class="caret"></span></a>
+                <li id="analytics" class="dropdown"><a href="#"><span class="glyphicon glyphicon-tasks"></span> Analytics <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="staffanalytics.php">Staff Analytics</a></li>
                         <li><a href="studentlisting.php">Student Analytics</a></li>
