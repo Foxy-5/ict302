@@ -172,11 +172,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 ?>
                     <td><input type="text" name="previousid" id="text" value="<?php echo $bookingdata['PreviousMeetingID'] ?>"></td>
                     <td><?php 
-                            $defaultState = array($bookingdata['Status']); 
-                            $selections = array("Cancelled","Ended");
+                            $defaultState = array($bookingdata['Status']);
                             
-                            //$options = array("Cancelled","Ended");
-                            //$selections = array_diff($options,$defaultState);
+                            $options = array("Cancelled","Ended");
+                            $selections = array_diff($options,$defaultState);
                         ?>
 
                         <select name="status" id="text" selected="selected">
