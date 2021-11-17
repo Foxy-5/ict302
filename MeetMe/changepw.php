@@ -6,6 +6,33 @@ include("include/connection.php");
 include("include/function.php");
 
 $user_data = check_login($con);
+$userid = $user_data['StaffID'];
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $current_pw = $_POST['current_pw'];
+    $new_pw1 = $_POST['new_pw1'];
+    $new_pw2 = $_POST['new_pw2'];
+    if(!empty($current_pw) && !empty($new_pw1) && !empty($new_pw2) && ($new_pw1 == $new_pw2))
+    {
+            if(password_verify($current_pw,$user_data['Password'])){
+                $hash = password_hash($new_pw1,PASSWORD_DEFAULT);
+                $query = "UPDATE staff SET Password='$hash' WHERE StaffID = '$userid'";
+                if(mysqli_query($con,$query)){
+                    echo '<script>
+                    alert("Password was succesfully updated. Please login again.");
+                    window.location.href="login.php";
+                    </script>';
+                    mysqli_commit($con);
+                    die;
+                }
+                else{
+                    echo '<script>alert("An error has occured.")</script>';
+                }
+            }
+    }
+    else{
+        echo '<script>alert("Current password or new password dont match")</script>';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,29 +83,24 @@ $user_data = check_login($con);
     </nav>
 
     <div class="content">
-        <h3>Your Profile</h3>
+        <h3>Change your password</h3>
         <hr class="redbar">
-        <h4>Personal Details</h4>
-        <br>
-        <div class="containerprofile">
-            <label for="StaffID" class="editprofiletext">Staff ID</label><br>
-            <input class="myprofilebox" type="text" value=" <?php echo $user_data['StaffID']?>" readonly><br><br>
+        <form class="editprofileform" method="post">
+            <div class="containerprofile">
+                <label for="current_pw" class="editprofiletext">Current password</label><br>
+                <input class="editprofilebox" type="password" name="current_pw"><br><br>
 
-            <label for="UserName" class="editprofiletext">UserName</label><br>
-            <input class="myprofilebox" type="text" value=" <?php echo $user_data['Username']?>" readonly><br><br>
+                <label for="new_pw1" class="editprofiletext">new password</label><br>
+                <input class="editprofilebox" type="password" name="new_pw1"><br><br>
 
-            <label for="FirstName" class="editprofiletext">First Name</label><br>
-            <input class="myprofilebox" type="text" value=" <?php echo $user_data['First_name']?>" readonly><br><br>
+                <label for="new_pw2" class="editprofiletext">re-enter new password</label><br>
+                <input class="editprofilebox" type="password" name="new_pw2"><br><br>
 
-            <label for="LastName" class="editprofiletext">Last Name/Family Name</label><br>
-            <input class="myprofilebox" type="text" value=" <?php echo $user_data['Last_name']?>" readonly><br><br>
+                <input class="linktobutton" type="button" value="Cancel" onclick="location.href = 'profile.php'">
+                <input class="linktobutton" id="button" type="submit" value="Update password">
+            </div>
+        </form>
 
-            <label for="Email" class="editprofiletext">Registered Email</label><br>
-            <input class="myprofilebox" type="text" value=" <?php echo $user_data['Email']?>" readonly><br><br>
-        
-            <a href="editprofile.php?" class="linktobutton">Edit Personal Details</a>
-            <a href="changepw.php?" class ="linktobutton">Change Password</a>
-        </div>
     </div>
 </body>
 
