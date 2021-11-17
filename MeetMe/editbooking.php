@@ -176,6 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                             
                             $options = array("Cancelled","Ended");
                             $selections = array_diff($options,$defaultState);
+                            $selections = array_values($selections);
                         ?>
 
                         <select name="status" id="text" selected="selected">
