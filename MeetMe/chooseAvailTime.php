@@ -33,9 +33,9 @@
 		}
 
 
-		//sets the time when the server receives the form
+		//get date time
 		$dateValidate = new DateTime("now");
-		$dateReceived = $dateValidate->format('Y-m-d');
+		
 		//converted to minutes to match with the luxon output
 		$systemoffset = $dateValidate->getOffset()/60;
 
@@ -102,17 +102,17 @@
 
 			}
 
-			$startTimeQuery = $startTimeHolder->format('Y-m-d H:i');
-			$endTimeQuery = $endTimeHolder->format('Y-m-d H:i');
+			$startTimeStr = $startTimeHolder->format('Y-m-d H:i');
+			$endTimeStr = $endTimeHolder->format('Y-m-d H:i');
 
 			//after validation
 
 			//creating a unique id and then hashed to generate a unique identifier for each booking and saved in the database
-			$uniqueId = $staffId.$dateReceived.uniqid("booking",true);
+			$uniqueId = $staffId.$startTimeStr.uniqid("booking",true);
 			$hashedAuthKey = str_split(hash('sha256',$uniqueId),32)[0];
 
 
-			$query = "INSERT INTO `booking` (`ConvenerID`,`Booking_date`, `Booking_start`, `Booking_end`,`Auth_Key`) VALUES ('$staffId','$dateReceived', '$startTimeQuery', '$endTimeQuery','$hashedAuthKey');";
+			$query = "INSERT INTO `booking` (`ConvenerID`, `Booking_start`, `Booking_end`,`Auth_Key`) VALUES ('$staffId', '$startTimeStr', '$endTimeStr','$hashedAuthKey');";
 			if(!mysqli_query($con,$query)){
 	            $commitToDatabase = false;
 	            break;
@@ -129,7 +129,6 @@
 			echo '<script>alert("An error has occured.")</script>';
 			mysqli_rollback($con);
 		}
-
 
 		exit();
 	}
