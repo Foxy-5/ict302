@@ -45,7 +45,7 @@ $bookingdata = mysqli_fetch_assoc($result1);
                         <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
                             <ul id="sub-dropdown-menu" class="dropdown-menu">
                                 <li><a href="upcoming.php">View Upcoming Bookings</a></li>
-                                <li><a href="allbooking.php">View Concluded Bookings</a></li>
+                                <li><a href="allbooking.php">View All bookings</a></li>
                                 <li><a href="openbooking.php">View Open Bookings</a></li>
                             </ul>
                         </li>

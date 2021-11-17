@@ -16,13 +16,24 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $previousid = $_POST['previousid'];
     $newbookingend = date("Y-m-d H:i:s", strtotime($_POST['newbookingend']));
     //echo $newbookingend;
-    if ($newbookingend != '1970-01-01 01:00:00') {
+    if ($newbookingend != '1970-01-01 07:30:00') {
         $bookingend = $_POST['newbookingend'];
         $bookingenddate = date("Y-m-d H:i:s", strtotime($bookingend));
     } else {
         $bookingenddate = date("Y-m-d H:i:s", strtotime($bookingdata['Booking_end']));
     }
     $status = $_POST['status'];
+    //check if booking set to ended and student is null
+    if($status == "Ended"){
+        if($bookingdata['StudentID'] == NULL)
+        {
+            echo '<script>
+            alert("cannot set booking to ended without a student")
+            window.location.href="viewbooking.php?bookingid=' . $bookingId . '";
+            </script>';
+            exit();
+        }
+    }
     $acptStatus = array("Cancelled","Ended","Not confirmed");
     
     if(!in_array($status,$acptStatus)){
@@ -37,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $elapsed = $duration->days * 24 * 60;
     $elapsed += $duration->h * 60;
     $elapsed += $duration->i;
-    if ($status != "ended") {
+    if ($status != "Ended") {
         $elapsed = 0;
     }
     // echo "start date" . $bstart ."\r\n";
@@ -85,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
                             <ul id="sub-dropdown-menu" class="dropdown-menu">
                                 <li><a href="upcoming.php">View Upcoming Bookings</a></li>
-                                <li><a href="allbooking.php">View Concluded Bookings</a></li>
+                                <li><a href="allbooking.php">View All bookings</a></li>
                                 <li><a href="openbooking.php">View Open Bookings</a></li>
                             </ul>
                         </li>
@@ -162,8 +173,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     <td><input type="text" name="previousid" id="text" value="<?php echo $bookingdata['PreviousMeetingID'] ?>"></td>
                     <td><?php 
                             $defaultState = array($bookingdata['Status']); 
-                            $options = array("Cancelled","Ended");
-                            $selections = array_diff($options,$defaultState);
+                            $selections = array("Cancelled","Ended");
+                            
+                            //$options = array("Cancelled","Ended");
+                            //$selections = array_diff($options,$defaultState);
                         ?>
 
                         <select name="status" id="text" selected="selected">
