@@ -20,7 +20,8 @@
 		$bkIdQuery = "SELECT bookingid FROM booking WHERE Auth_Key = '$bkKey' limit 1;";
 
 		if(!$bkIdResult = mysqli_query($con,$bkIdQuery)){
-			header("Location: connectionError.php");
+			//header("Location: connectionError.php");
+			echo "<script>alert('Error: Booking cannot be found');</script>";
 			exit();
 		}
 		
@@ -28,7 +29,7 @@
 			echo "<script>alert('Error: Booking cannot be found');</script>";
 		}
 
-		$stdtId = $_SESSION['stdtId'];
+		$stdtId = $_SESSION['studentId'];
 		$bkIdArray = mysqli_fetch_assoc($bkIdResult);
 		$bkId = $bkIdArray['bookingid'];
 
@@ -36,10 +37,11 @@
 		$bkUniqId = $stdtId.$bkId.uniqid("booking",true);
     	$bkAuthKey = str_split(hash('sha256',$bkUniqId),32)[0];
     	
-		$bkUpdateQuery = "UPDATE booking SET StudentID = '$stdtId', Status = 'confirmed', Auth_key = '$bkAuthKey' WHERE bookingid = '$bkId';";
+		$bkUpdateQuery = "UPDATE booking SET StudentID = '$stdtId', Status = 'Confirmed', Auth_key = '$bkAuthKey' WHERE bookingid = '$bkId';";
 
 		if(!mysqli_query($con,$bkUpdateQuery)){
-			header("Location: connectionError.php");
+			echo "<script>alert('Error: Booking cannot be found');</script>";
+			//header("Location: connectionError.php");
 			exit();
 		}
 
@@ -53,9 +55,11 @@
 
 		if(!mysqli_query($con,$removeQuery)){
 			mysqli_rollback($con);
-			header("Location: connectionError.php");
+			echo "<script>alert('Error: Booking cannot be found');</script>";
+			//header("Location: connectionError.php");
 			exit();
 		}
+
 		sendEmail($stdtMail);
 		sendEmail($lectMail);
 		mysqli_commit($con);
@@ -85,7 +89,7 @@
 	$staffId = $_SESSION['bkStaffId'];
 
 	//get time zone then output
-	$bkDetsQuery = "SELECT `booking`.`Auth_Key`, DATE_FORMAT(`booking`.`booking_start`,'%Y-%m-%d %h:%i %p') AS Start_Date, DATE_FORMAT(`booking`.`booking_end`,'%Y-%m-%d %h:%i %p') AS End_Date FROM `booking` WHERE `booking`.`ConvenerID` = '$staffId' AND `booking`.`booking_start` >= '$streBkDate' AND `booking`.`StudentID` IS NULL ORDER BY `booking`.`Booking_start`;";
+	$bkDetsQuery = "SELECT `booking`.`Auth_Key`, DATE_FORMAT(`booking`.`booking_start`,'%Y-%m-%dT%h:%i %p') AS Start_Date, DATE_FORMAT(`booking`.`booking_end`,'%Y-%m-%dT%h:%i %p') AS End_Date FROM `booking` WHERE `booking`.`ConvenerID` = '$staffId' AND `booking`.`booking_start` >= '$streBkDate' AND `booking`.`StudentID` IS NULL ORDER BY `booking`.`Booking_start`;";
 
 	if(!$bkDets = mysqli_query($con,$bkDetsQuery)){
 		echo "<script>alert('Error: Connection error with the system.')</script>";
@@ -154,10 +158,10 @@
 						}
 						$authKeyArray = array();
 						while($row = mysqli_fetch_array($bkDets)){
-							$startDate = explode(" ",$row['Start_Date'])[0];
-							$startTime = explode(" ",$row['Start_Date'])[1];
-							$endDate = explode(" ",$row['End_Date'])[0];
-							$endTime = explode(" ",$row['End_Date'])[1];
+							$startDate = explode("T",$row['Start_Date'])[0];
+							$startTime = explode("T",$row['Start_Date'])[1];
+							$endDate = explode("T",$row['End_Date'])[0];
+							$endTime = explode("T",$row['End_Date'])[1];
 							$secretId = $row['Auth_Key'];
 							$authKeyArray[] = $secretId;
 

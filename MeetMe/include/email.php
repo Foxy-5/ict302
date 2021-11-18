@@ -7,7 +7,7 @@ if(!defined('access')) {
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require_once($_SERVER["DOCUMENT_ROOT"]."/lib/vendor/autoload.php");
+require_once("../lib/vendor/autoload.php");
 require_once("connection.php");
 require_once("info_retrieve.php");
 
@@ -16,7 +16,7 @@ require_once("info_retrieve.php");
  * to book a meeting with a specific student id
  **/
 function fgBkLink($stdtAuthKey){
-    return "https://localhost/studentidinput.php?authkey=$stdtAuthKey";
+    return "https://localhost/MeetMe/studentidinput.php?authkey=$stdtAuthKey";
 }
 
 
@@ -25,7 +25,7 @@ function fgBkLink($stdtAuthKey){
  * to cancel a specific meeting
  **/
 function fgCnclLink($bkAuthKey){
-    return "https://localhost/cancelBooking.php?authkey=$bkAuthKey";   
+    return "https://localhost/MeetMe/cancelBooking.php?authkey=$bkAuthKey";   
 }
 
 //initializing a phpmailer object to send mail
@@ -318,7 +318,7 @@ function prepEmailStaff($mode,...$AuthKeys){
         return false;
     }
 
-    return true;
+    return $mail;
 }
 
 function craftInvite($bkAuthKey){
