@@ -25,7 +25,7 @@ function fgBkLink($stdtAuthKey){
  * to cancel a specific meeting
  **/
 function fgCnclLink($bkAuthKey){
-    return "https://localhost/MeetMe/cancelBooking.php?authkey=$bkAuthKey";   
+    return "https://localhost/MeetMe/cancelbooking.php?authkey=$bkAuthKey";   
 }
 
 //initializing a phpmailer object to send mail
