@@ -3,16 +3,29 @@ DirectoryIndex login.php
 # denies any access to subdirectories
 # uncomment when everything's done
 # Options -Indexes
-# IndexIgnore *
 
 RewriteEngine on
 RewriteBase /MeetMe/
 
+# RewriteCond %{REQUEST_FILENAME}\.php[\/?].*HTTP/
+# (.*)\.php$ / index.html[L]
+
+# prevents access to extension.php (the original extension)
+RewriteCond %{THE_REQUEST} "^[^ ]* .*?\.php[? ].*$"
+RewriteRule .* - [L,R=404]
+
+# Allows file name but without redirection
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [NC,L]
+
 # redirects any non file or non directory
-# to error404.php
+# to error404
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ error404.php [R,NC,L]
+RewriteRule ^(.*)$ error404 [R,NC,L]
+
+
+
 
 # prevents user to access the '/include' directory
 #<FilesMatch "(/include|/css|/Images|/lib|/uploads)(/?|/.*)">
@@ -21,5 +34,5 @@ RewriteRule ^(.*)$ error404.php [R,NC,L]
 #</FilesMatch>
 
 
-ErrorDocument 403 http://localhost/MeetMe/error404.php 
-ErrorDocument 404 http://localhost/MeetMe/error404.php 
+ErrorDocument 403 http://localhost/MeetMe/error404
+ErrorDocument 404 http://localhost/MeetMe/error404

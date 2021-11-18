@@ -16,7 +16,7 @@ require_once("info_retrieve.php");
  * to book a meeting with a specific student id
  **/
 function fgBkLink($stdtAuthKey){
-    return "https://localhost/MeetMe/studentidinput.php?authkey=$stdtAuthKey";
+    return "https://localhost/MeetMe/studentidinput?authkey=$stdtAuthKey";
 }
 
 
@@ -25,7 +25,7 @@ function fgBkLink($stdtAuthKey){
  * to cancel a specific meeting
  **/
 function fgCnclLink($bkAuthKey){
-    return "https://localhost/MeetMe/cancelbooking.php?authkey=$bkAuthKey";   
+    return "https://localhost/MeetMe/cancelbooking?authkey=$bkAuthKey";   
 }
 
 //initializing a phpmailer object to send mail
@@ -206,7 +206,12 @@ function prepEmailStudent($mode,...$AuthKeys){
             }
 
             $subject = "Your meeting is confirmed!";
-            $mail->AddStringAttachment(craftInvite($AuthKeys[1]),'invite.ics');
+
+            if(empty($invite = craftInvite($AuthKeys[1]))){
+                return false;
+            }
+
+            $mail->AddStringAttachment($invite,'invite.ics');
 
         }
     }

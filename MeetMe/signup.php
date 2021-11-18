@@ -23,7 +23,7 @@ session_start();
             if(mysqli_query($con,$query)){
                 echo '<script>
                 alert("Account succesfully created.");
-                window.location.href="login.php";
+                window.location.href="login";
                 </script>';
                 mysqli_commit($con);
                 die;
@@ -61,7 +61,7 @@ session_start();
                     <label for="first_name" class="signuptext">First Name</label><br>
                     <input class="signuptextbox" name="first_name" id="text" placeholder="FIRST NAME"><br><br>
                     <label for="last_name" class="signuptext">Last Name</label><br>
-                    <input class="signuptextbox"" name="last_name" id="text" placeholder="LAST NAME/FAMILY NAME"><br><br>
+                    <input class="signuptextbox" name="last_name" id="text" placeholder="LAST NAME/FAMILY NAME"><br><br>
                     <label for="email" class="signuptext">Email</label><br>
                     <input class="signuptextbox" name="email" id="text" placeholder="EMAIL ADDRESS"><br><br>
                     <label for="user_name" class="signuptext">Username</label><br>
@@ -75,7 +75,7 @@ session_start();
                     <input class="signuppagebutton" type="submit" value="Sign Up"><br><br>
 
                     <div class="loginsignup">
-                        Click <a href="login.php"><em>here</em></a> back to Login
+                        Click <a href="login"><em>here</em></a> back to Login
                     </div>
                 </div>
             </form>

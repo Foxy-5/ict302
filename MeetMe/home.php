@@ -55,33 +55,34 @@ $userid = $user_data['StaffID'];
 <body>
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
-            <a href="home.php"><img src="Image/MU Logo.png" height="80"></a>
+            <a href="home"><img src="Image/MU Logo.png" height="80"></a>
         </div>
         <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                <li class="active"><a href="home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
                 <li id="appointment" class="dropdown"><a href="#"><span class="glyphicon glyphicon-calendar"></span> Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="uploadExcel.php">Upload Excel</a></li>
+                        <li><a href="uploadExcel">Upload Excel</a></li>
+                        <li><a href="chooseavailtime">Upload Time</a></li>
                         <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
                             <ul id="sub-dropdown-menu" class="dropdown-menu">
-                                <li><a href="upcoming.php">View Upcoming Bookings</a></li>
-                                <li><a href="allbooking.php">View All bookings</a></li>
-                                <li><a href="openbooking.php">View Open Bookings</a></li>
+                                <li><a href="upcoming">View Upcoming Bookings</a></li>
+                                <li><a href="allbooking">View All bookings</a></li>
+                                <li><a href="openbooking">View Open Bookings</a></li>
                             </ul>
                         </li>
                     </ul>
                 </li>
                 <li id="analytics" class="dropdown"><a href="#"><span class="glyphicon glyphicon-tasks"></span> Analytics <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="staffanalytics.php">Staff Analytics</a></li>
-                        <li><a href="studentlisting.php">Student Analytics</a></li>
+                        <li><a href="staffanalytics">Staff Analytics</a></li>
+                        <li><a href="studentlisting">Student Analytics</a></li>
                     </ul>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
-                <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="profile"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+                <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -115,7 +116,7 @@ $userid = $user_data['StaffID'];
                         <td><?php echo $starttime; ?></td>
                         <td><?php echo $row['StudentID']; ?></td>
                         <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
-                        <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['Auth_key']; ?>"><span class="glyphicon glyphicon-eye-open"></span> View Booking</a></td>
+                        <td><a class="linktobutton" href="viewbooking?bookingid=<?php echo $row['Auth_key']; ?>"><span class="glyphicon glyphicon-eye-open"></span> View Booking</a></td>
                     </tr>
                 <?php
                 }

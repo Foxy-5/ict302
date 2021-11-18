@@ -21,8 +21,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             $user_data = mysqli_fetch_assoc($result);
             if(password_verify($password,$user_data['Password'])){
                 $_SESSION['StaffID'] = $user_data['StaffID'];
-                header("Location: home.php");
-                die;
+                header("Location: home");
+                exit();
             }
             /*if($user_data['password'] === $password){
                 $_SESSION['user_id'] = $user_data['user_id'];
@@ -68,7 +68,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
                         <input class="loginpagebutton" type="reset" value="Clear">
                         <input class="loginpagebutton" type="submit" value="Login"><br><br>
                         <div class="loginsignup">
-                            Click <a href="signup.php"><em>here</em></a> to sign up
+                            Click <a href="signup"><em>here</em></a> to sign up
                         </div>
                     </div>
                 </div>
