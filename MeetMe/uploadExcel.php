@@ -372,10 +372,9 @@ if (isset($_POST["import"])) {
                 <br>
             </p>
             <h5>
-                <p><i>You are allow to download the templete below or refer to the image below for more details</i></p>
-                Example: <a href="uploads/example.csv" download="example.csv">example.csv</a>
+                <p><i>Click on the image below to download the templete or refer to the image below for more details</i></p>
             </h5>
-            <img src="Image/UploadFileExample.png">
+            <a href="uploads/example.csv" download="example.csv"><img src="Image/UploadFileExample.png"></img></a>
             <br>
             <br>
             <form action="" method="POST" enctype="multipart/form-data">
