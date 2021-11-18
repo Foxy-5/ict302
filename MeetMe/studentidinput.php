@@ -19,7 +19,7 @@ if(isset($_GET['authkey'])){
 	}
 
 	//sets student id to current session
-	$_SESSION['stdtId'] = $stdtId;
+	$_SESSION['studentId'] = $stdtId;
 
     //getting staff id that assigned the booking request from the same authentication key
     $bkStaffId = getStaffId(0,$authKey);
