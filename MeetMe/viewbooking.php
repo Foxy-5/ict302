@@ -8,7 +8,7 @@ include("include/function.php");
 $user_data = check_login($con);
 $bookingId = $_GET['bookingid'];
 // $query1 = "Select Booking_date, Booking_start, Booking_end, student.First_name, student.Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status from booking, student where booking.bookingID = '$bookingid' and booking.StudentID = student.StudentID LIMIT 1";
-$query1 = "Select Booking_date, Booking_start, Booking_end, case WHEN booking.StudentID is NULL THEN NULL ELSE student.First_name end as First_name, case WHEN booking.StudentID is NULL THEN NULL ELSE student.Last_name end as Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status from booking, student where booking.Auth_key = '$bookingId' LIMIT 1";
+$query1 = "Select Booking_date, Booking_start, Booking_end, case WHEN booking.StudentID is NULL THEN NULL ELSE student.First_name end as First_name, case WHEN booking.StudentID is NULL THEN NULL ELSE student.Last_name end as Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status, booking.Initial from booking, student where booking.Auth_key = '$bookingId' LIMIT 1";
 $result1 = mysqli_query($con, $query1);
 if(!mysqli_num_rows($result1)>0){
     echo "<script>alert('Invalid meeting')</script>";
@@ -112,13 +112,33 @@ $bookingdata = mysqli_fetch_assoc($result1);
             echo "</tr>";
             ?>
             <tr>
-                <th>Comment</th>
+                <th>Meeting Type</th>
                 <th>Status</th>
+            </tr>
+            <?php
+            if($bookingdata['Initial'] == 0)
+            {
+                $initial = "follow up meeting";
+            }
+            else if ($bookingdata['Initial'] == 1)
+            {
+                $initial = "first meeting";
+            }
+            echo "<tr>";
+            echo "<td>" . $initial . "</td>";
+            echo "<td>" . $bookingdata['Status'] ."</td>";
+            ?>
+            <?php
+            echo "</tr>";
+            ?>
+            <tr>
+                <th>Comment</th>
+                <th></th>
             </tr>
             <?php
             echo "<tr>";
             echo "<td>" . $bookingdata['Comment'] . "</td>";
-            echo "<td>" . $bookingdata['Status'] . "</td>";
+            echo "<td></td>";
             ?>
             <?php
             echo "</tr>";

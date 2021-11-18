@@ -34,6 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             exit();
         }
     }
+    if($previousid > 0)
+    {
+        $initial = 0;
+    }
+    else
+    {
+        $initial = 1;
+    }
     $acptStatus = array("Cancelled","Ended","Not confirmed");
     
     if(!in_array($status,$acptStatus)){
@@ -55,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // echo "end date" . $bookingenddate . "\r\n";
     //echo $elapsed;
 
-    $query = "UPDATE booking SET Status = '$status', Booking_end = '$bookingenddate', PreviousMeetingID = '$previousid', Comment = '$comment', Duration = '$elapsed' WHERE Auth_key= '$bookingId'";
+    $query = "UPDATE booking SET Status = '$status', Booking_end = '$bookingenddate', PreviousMeetingID = '$previousid', Comment = '$comment', Duration = '$elapsed', Initial = '$initial' WHERE Auth_key= '$bookingId'";
     if (mysqli_query($con, $query)) {
         echo '<script>
                 alert("Booking details was succesfully updated.");
