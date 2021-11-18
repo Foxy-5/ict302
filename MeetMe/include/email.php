@@ -322,17 +322,27 @@ function prepEmailStaff($mode,...$AuthKeys){
 }
 
 function craftInvite($bkAuthKey){
+    //getting time zone name
     $date = new DateTime();
     $timeZone = $date->getTimezone();
     $strTimeZone = $timeZone->getName();
+
+    //getting the offsett in +XXXX format from UTC
     $offset = $date->format('O');
-    $strCurrentDate = $date->format('Ymd\THis');
+
+    //gets staff details for organizer details
     $staffEmail = getStaffEmail(getStaffId(1,$bkAuthKey));
     $staffName = getStaffName(getStaffId(1,$bkAuthKey));
     $startTime = new DateTime(getStartTime($bkAuthKey));
-    $strStartTime = $startTime->format('Ymd\THis');
     $endTime = new DateTime(getEndTime($bkAuthKey));
+
+    if(!($staffEmail&&$staffName&&$startTime&&$endTime)){
+        return '';
+    }
+
+    $strStartTime = $startTime->format('Ymd\THis');
     $strEndTime = $endTime->format('Ymd\THis');
+    
 
     $icalBody="BEGIN:VCALENDAR
 VERSION:2.0

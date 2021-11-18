@@ -132,8 +132,10 @@ function getStartTime($bkAuthKey){
     $result = mysqli_query($con,$query);
     if($result && mysqli_num_rows($result) > 0){
         $output = mysqli_fetch_assoc($result);
-        return $output['booking_start'];
+        return $output['Booking_start'];
     }
+
+    return '';
 }
 
 function getEndTime($bkAuthKey){
@@ -142,8 +144,10 @@ function getEndTime($bkAuthKey){
     $result = mysqli_query($con,$query);
     if($result && mysqli_num_rows($result) > 0){
         $output = mysqli_fetch_assoc($result);
-        return $output['booking_end'];
+        return $output['Booking_end'];
     }
+
+    return '';
 }
 
 ?>
