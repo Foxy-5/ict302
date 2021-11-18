@@ -28,7 +28,7 @@ $user_data = check_login($con);
         </div>
         <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
-                <li><a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                <li><a href="home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
                 <li id="appointment" class="dropdown"><a href="#"><span class="glyphicon glyphicon-calendar"></span> Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="uploadExcel">Upload Excel</a></li>
@@ -36,7 +36,7 @@ $user_data = check_login($con);
                         <li id="sub-dropdown" class="dropdown"><a href="#">View Calendar <span class="glyphicon glyphicon-chevron-right"></span></a>
                             <ul id="sub-dropdown-menu" class="dropdown-menu">
                                 <li><a href="upcoming">View Upcoming Bookings</a></li>
-                                <li><a href="allbooking">View All bookings</a></li>
+                                <li><a href="allbooking">View All Bookings</a></li>
                                 <li><a href="openbooking">View Open Bookings</a></li>
                             </ul>
                         </li>
