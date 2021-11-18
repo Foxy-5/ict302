@@ -96,14 +96,19 @@ $userid = $user_data['StaffID'];
         student.Last_name,
         student.Email,
         sum(CASE 
-            WHEN booking.Status = 'ended' 
+            WHEN booking.Status = 'Ended' 
             THEN booking.duration 
             ELSE 0 END) as duration,
         sum(CASE
-            WHEN booking.Status = 'ended'
+            WHEN booking.Status = 'Ended'
             THEN 1
             ELSE 0
-            END) as total
+            END) as total,
+            sum(CASE
+            WHEN booking.Status = 'Cancelled'
+            THEN 1
+            ELSE 0
+            END) as cancelled
         from student LEFT JOIN booking ON student.StudentID = booking.StudentID GROUP BY student.StudentID";
         $result1 = mysqli_query($con, $query1);
         ?>
@@ -115,6 +120,7 @@ $userid = $user_data['StaffID'];
                     <th>Email</th>
                     <th>Meeting Hours</th>
                     <th>Meeting Count</th>
+                    <th>Cancelled meeting Count</th>
                 </tr>
             </thead>
             <tbody>
@@ -127,6 +133,7 @@ $userid = $user_data['StaffID'];
                         <td><?php echo $row['Email']; ?></td>
                         <td><?php echo $row['duration']; ?></td>
                         <td><?php echo $row['total']; ?></td>
+                        <td><?php echo $row['cancelled']; ?></td>
                     </tr>
                 <?php
                 }
