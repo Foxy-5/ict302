@@ -93,7 +93,10 @@ $user_data = check_login($con);
                 <tr>
                     <th>Booking Date</th>
                     <th>Start Time</th>
+                    <th>Student ID</th>
                     <th>Student Name</th>
+                    <th>Duration</th>
+                    <th>Status</th>
                     <th>Manage Booking</th>
                 </tr>
             </thead>
@@ -102,15 +105,42 @@ $user_data = check_login($con);
                 $today = date("Y-m-d");
                 $staffId = $user_data['StaffID'];
                 // $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID from booking, student where (booking.ConvenerID = '$staffid') and (booking.StudentID = student.StudentID) ORDER BY booking_start ASC";
-                $query1 = "Select Booking_date, Booking_start, Auth_key, case WHEN booking.StudentID is NULL THEN NULL ELSE student.First_name end as First_name, case WHEN booking.StudentID is NULL THEN NULL ELSE student.Last_name end as Last_name, BookingID from booking LEFT JOIN student on booking.StudentID = student.StudentID where booking.ConvenerID = '$staffId' order by booking_start asc";
+                $query1 = "Select Booking_date, Booking_start, Auth_key, booking.StudentID, booking.Status, booking.Duration, case WHEN booking.StudentID is NULL THEN NULL ELSE student.First_name end as First_name, case WHEN booking.StudentID is NULL THEN NULL ELSE student.Last_name end as Last_name, BookingID from booking LEFT JOIN student on booking.StudentID = student.StudentID where booking.ConvenerID = '$staffId' order by booking_start asc";
                 $result1 = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result1)) {
                     $starttime = date("h:i:s a", strtotime($row['Booking_start']));
+                    if($row['StudentID'] == null)
+                    {
+                        $studentid = 0;
+                    }
+                    else
+                    {
+                        $studentid = $row['StudentID'];
+                    }
+                    if($row['First_name'] == null || $row['Last_name'] == null)
+                    {
+                        $name = 'no student';
+                    }
+                    else
+                    {
+                        $name = $row['First_name'].' ' . $row['Last_name'];
+                    }
+                    if($row['Duration'] == null)
+                    {
+                        $duration = '0'.'mins';
+                    }
+                    else
+                    {
+                        $duration = $row['Duration'].'mins';
+                    }
                 ?>
                     <tr>
                         <td><?php echo $row['Booking_date']; ?></td>
                         <td><?php echo $starttime; ?></td>
-                        <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
+                        <td><?php echo $studentid; ?></td>
+                        <td><?php echo $name; ?></td>
+                        <td><?php echo $duration; ?></td>
+                        <td><?php echo $row['Status']; ?></td>
                         <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['Auth_key']; ?>"><span class="glyphicon glyphicon-eye-open"></span> View Booking</a></td>
                     </tr>
                 <?php

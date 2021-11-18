@@ -94,6 +94,7 @@ $userid = $user_data['StaffID'];
                 <tr>
                     <th>Booking Date</th>
                     <th>Start Time</th>
+                    <th>Student ID</th>
                     <th>Student Name</th>
                     <th>Manage Booking</th>
                 </tr>
@@ -101,7 +102,7 @@ $userid = $user_data['StaffID'];
             <tbody>
                 <?php
                 $today = date("Y-m-d");
-                $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID from booking, student where (booking.ConvenerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID) and (booking.Booking_date >= '$today') ORDER BY booking_start ASC";
+                $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID, booking.StudentID from booking, student where (booking.ConvenerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID) and (booking.Booking_date >= '$today') ORDER BY booking_start ASC";
                 
                 $result1 = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result1)) {
@@ -110,6 +111,7 @@ $userid = $user_data['StaffID'];
                     <tr>
                         <td><?php echo $row['Booking_date']; ?></td>
                         <td><?php echo $starttime; ?></td>
+                        <?php echo $row['Booking_date']; ?>
                         <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
                         <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>"><span class="glyphicon glyphicon-eye-open"></span> View Booking</a></td>
                     </tr>
