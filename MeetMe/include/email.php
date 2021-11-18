@@ -7,7 +7,7 @@ if(!defined('access')) {
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require_once("../lib/vendor/autoload.php");
+include_once("../lib/vendor/autoload.php");
 require_once("connection.php");
 require_once("info_retrieve.php");
 
