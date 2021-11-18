@@ -111,7 +111,7 @@ $userid = $user_data['StaffID'];
                     <tr>
                         <td><?php echo $row['Booking_date']; ?></td>
                         <td><?php echo $starttime; ?></td>
-                        <?php echo $row['Booking_date']; ?>
+                        <td><?php echo $row['StudentID']; ?></td>
                         <td><?php echo $row['First_name'] . " " . $row['Last_name']; ?></td>
                         <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['BookingID']; ?>"><span class="glyphicon glyphicon-eye-open"></span> View Booking</a></td>
                     </tr>
