@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 define('access',true);
 
 require_once("include/connection.php");
@@ -19,7 +20,6 @@ if(strlen($bkAuthKey)!=32||!preg_match("/^[a-zA-Z0-9]*$/",$bkAuthKey)){
 }
 
 $deleteQuery = "UPDATE booking SET status = 'Cancelled' WHERE Auth_key = '$bkAuthKey'";
-echo $deleteQuery;
 
 if(!mysqli_query($con,$deleteQuery)){
 	//header("Location: connectionfailed.php");
