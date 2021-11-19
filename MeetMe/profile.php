@@ -76,8 +76,8 @@ $user_data = check_login($con);
             <label for="Email" class="editprofiletext">Registered Email</label><br>
             <input class="myprofilebox" type="text" value=" <?php echo $user_data['Email']?>" readonly><br><br>
         
-            <a href="editprofile.php?" class="linktobutton">Edit Personal Details</a>
-            <a href="changepw.php?" class ="linktobutton">Change Password</a>
+            <a href="editprofile?" class="linktobutton">Edit Personal Details</a>
+            <a href="changepw?" class ="linktobutton">Change Password</a>
         </div>
     </div>
 </body>

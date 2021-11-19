@@ -75,11 +75,11 @@ $_SESSION['cnclBk'] = $bkAuthKey;
 <body>
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
-            <a href="home.php"><img src="Image/MU Logo.png" height="80"></a>
+            <a href="home"><img src="Image/MU Logo.png" height="80"></a>
         </div>
         <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
-                <li><a href="home.php">Home</a></li>
+                <li><a href="home">Home</a></li>
             </ul>
         </div>
     </nav>
@@ -144,7 +144,7 @@ $_SESSION['cnclBk'] = $bkAuthKey;
         </table>
         <br>
         <div class="containerprofile">
-               <a class="linktobutton" href="confirmcancelbooking.php">Confirm cancellation</a>
+               <a class="linktobutton" href="confirmcancelbooking">Confirm cancellation</a>
         </div>
         <br>
         <br>

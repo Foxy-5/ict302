@@ -26,7 +26,7 @@ if (isset($_FILES['excel'])) {
 
         echo "<script>
                 alert('$errorMsg');
-                window.location.href = \"uploadExcel.php\";
+                window.location.href = \"uploadExcel\";
               </script>";
         exit();
 
@@ -63,14 +63,14 @@ if (isset($_FILES['excel'])) {
         if ($errorType == 1) {
             echo "<script>
                     alert('Error: File type not recognized, must be file type csv.');
-                    window.location.href = \"uploadExcel.php\";
+                    window.location.href = \"uploadExcel\";
                   </script>";
         }
 
         else if ($errorType == 2) {
             echo "<script>
                     alert('Error: File is larger than 2MB.');
-                    window.location.href = \"uploadExcel.php\";
+                    window.location.href = \"uploadExcel\";
                   </script>";
         }
         exit();
@@ -119,7 +119,7 @@ if (isset($_POST["import"])) {
         if (!$listCreate) {
             echo "<script>
                     alert('Error: Student cannot be registered into the system.');
-                    window.location.href = \"uploadExcel.php\";
+                    window.location.href = \"uploadExcel\";
                   </script>";
             exit();
         }
@@ -132,7 +132,7 @@ if (isset($_POST["import"])) {
         if (!$getListId) {
             echo "<script>
                     alert('Error: Cannot receive data from system, your excel is not uploaded.');
-                    window.location.href = \"uploadExcel.php\";
+                    window.location.href = \"uploadExcel\";
                   </script>";
             exit();
         }
@@ -185,7 +185,7 @@ if (isset($_POST["import"])) {
                         $length = strlen($studentId);
                         echo "<script>
                                 alert('Student ID must be 8 numbers(Line $lineCounter)');
-                                window.location.href = \"uploadExcel.php\";
+                                window.location.href = \"uploadExcel\";
                               </script>";
                         break;
                     }
@@ -212,7 +212,7 @@ if (isset($_POST["import"])) {
                     if(!$stdtIdEmailSearch){
                         echo "<script>
                                 alert('Error: Cannot receive data from system, your excel is not uploaded.');
-                                window.location.href = \"uploadExcel.php\";
+                                window.location.href = \"uploadExcel\";
                               </script>";
                         exit();
                     }
@@ -233,7 +233,7 @@ if (isset($_POST["import"])) {
                         if(!($emailSearch && $studentIdSearch)){
                             echo "<script>
                                     alert('Error: Cannot receive data from server, your excel is not uploaded.');
-                                    window.location.href = \"uploadExcel.php\";
+                                    window.location.href = \"uploadExcel\";
                                   </script>";
                             exit();
                         }
@@ -247,7 +247,7 @@ if (isset($_POST["import"])) {
                         if($emailFound == 1){
                             echo "<script>
                                     alert('Email already existed in database under different student(Line $lineCounter)');
-                                    window.location.href = \"uploadExcel.php\";
+                                    window.location.href = \"uploadExcel\";
                                   </script>";
                             exit();
                         }
@@ -267,7 +267,7 @@ if (isset($_POST["import"])) {
                     if (!$updateDbStudent) {
                         echo "<script>
                                 alert('Error: Student cannot be registered into the system.');
-                                window.location.href = \"uploadExcel.php\";
+                                window.location.href = \"uploadExcel\";
                               </script>";
                         $commitToDatabase = false;
                         break;
@@ -284,7 +284,7 @@ if (isset($_POST["import"])) {
                     if (!$insStdtList) {
                         echo "<script>
                                 alert('Error: Student cannot be registered into the system.');
-                                window.location.href = \"uploadExcel.php\";
+                                window.location.href = \"uploadExcel\";
                               </script>";
                         $commitToDatabase = false;
                         break;
@@ -306,7 +306,7 @@ if (isset($_POST["import"])) {
             }
             echo "<script>
                     alert('Upload Successful');
-                    window.location.href = \"uploadExcel.php\";
+                    window.location.href = \"uploadExcel\";
                   </script>";
         }
     }

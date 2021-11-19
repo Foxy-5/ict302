@@ -122,7 +122,7 @@
 		
 		if($commitToDatabase){
 			echo '<script>alert("Time slots added successfully");
-	            			window.location.href="chooseAvailTime.php";
+	            			window.location.href="chooseAvailTime";
 	            	  </script>';
 			mysqli_commit($con);
 		}

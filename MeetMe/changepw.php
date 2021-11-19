@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 if(mysqli_query($con,$query)){
                     echo '<script>
                     alert("Password was succesfully updated. Please login again.");
-                    window.location.href="login.php";
+                    window.location.href="login";
                     </script>';
                     mysqli_commit($con);
                     die;
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <label for="new_pw2" class="editprofiletext">re-enter new password</label><br>
                 <input class="editprofilebox" type="password" name="new_pw2"><br><br>
 
-                <input class="linktobutton" type="button" value="Cancel" onclick="location.href = 'profile.php'">
+                <input class="linktobutton" type="button" value="Cancel" onclick="location.href = 'profile'">
                 <input class="linktobutton" id="button" type="submit" value="Update password">
             </div>
         </form>

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if(mysqli_query($con,$query)){
             echo '<script>
             alert("Account details was succesfully updated.");
-            window.location.href="profile.php";
+            window.location.href="profile";
             </script>';
             mysqli_commit($con);
             die;
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <label for="email" class="editprofiletext">Email</label><br>
                 <input class="editprofilebox" name="email" id="text" value="<?php echo $user_data['Email'] ?>"><br><br>
 
-                <input class="linktobutton" type="button" value = "Cancel" onclick="location.href = 'profile.php'">
+                <input class="linktobutton" type="button" value = "Cancel" onclick="location.href = 'profile'">
                 <input class="linktobutton" id="button" type="submit" value="Update Profile">
             </div>
         

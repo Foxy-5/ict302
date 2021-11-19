@@ -24,11 +24,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
                 header("Location: home");
                 exit();
             }
-            /*if($user_data['password'] === $password){
-                $_SESSION['user_id'] = $user_data['user_id'];
-                header("Location: home.php");
-                die;
-            }*/
         }
         echo '<script>
         alert("wrong username or password!");

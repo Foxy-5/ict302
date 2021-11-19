@@ -64,7 +64,7 @@
 		sendEmail($lectMail);
 		mysqli_commit($con);
 
-		header("Location: successfulbooking.php");
+		header("Location: successfulbooking");
 
 	}
 	
@@ -99,7 +99,7 @@
 			exit();
 		}
 
-		header("Location: studentidinput.php?authkey=$stdtAuthKey");
+		header("Location: studentidinput?authkey=$stdtAuthKey");
 
 		exit();
 	}
@@ -130,11 +130,11 @@
 	<body>
 		<nav class="navbar navbar-inverse">
 	        <div class="navbar-header">
-	            <a href="home.php"><img src="Image/MU Logo.png" height="80"></a>
+	            <a href="home"><img src="Image/MU Logo.png" height="80"></a>
 	        </div>
 	        <div class="navpaddingright">
 	            <ul class="nav navbar-nav">
-	                <li class="active"><a href="home.php">Home</a></li>
+	                <li class="active"><a href="home">Home</a></li>
 	            </ul>
 	        </div>
     	</nav>

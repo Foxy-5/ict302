@@ -142,7 +142,7 @@ $user_data = check_login($con);
                         <td><?php echo $name; ?></td>
                         <td><?php echo $duration; ?></td>
                         <td><?php echo $row['Status']; ?></td>
-                        <td><a class="linktobutton" href="viewbooking.php?bookingid=<?php echo $row['Auth_key']; ?>"><span class="glyphicon glyphicon-eye-open"></span> View Booking</a></td>
+                        <td><a class="linktobutton" href="viewbooking?bookingid=<?php echo $row['Auth_key']; ?>"><span class="glyphicon glyphicon-eye-open"></span> View Booking</a></td>
                     </tr>
                 <?php
                 }

@@ -49,7 +49,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 		if($stdtIdInput == $_SESSION['studentId']){
 			//redirects to booking page if the student id input corresponds
 			//to the student id retrieved via the authentication key
-			header("Location: booking.php");
+			header("Location: booking");
 			exit();
 		}
 
@@ -83,11 +83,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	<body>
 		<nav class="navbar navbar-inverse">
 	        <div class="navbar-header">
-	            <a href="home.php"><img src="Image/MU Logo.png" height="80"></a>
+	            <a href="home"><img src="Image/MU Logo.png" height="80"></a>
 	        </div>
 	        <div class="navpaddingright">
 	            <ul class="nav navbar-nav">
-	                <li class="active"><a href="home.php">Home</a></li>
+	                <li class="active"><a href="home">Home</a></li>
 	            </ul>
 	        </div>
     	</nav>

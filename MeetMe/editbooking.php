@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         {
             echo '<script>
             alert("cannot set booking to ended without a student")
-            window.location.href="viewbooking.php?bookingid=' . $bookingId . '";
+            window.location.href="viewbooking?bookingid=' . $bookingId . '";
             </script>';
             exit();
         }
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (mysqli_query($con, $query)) {
         echo '<script>
                 alert("Booking details was succesfully updated.");
-                window.location.href="viewbooking.php?bookingid=' . $bookingId . '";
+                window.location.href="viewbooking?bookingid=' . $bookingId . '";
             </script>';
         mysqli_commit($con);
         die;
@@ -215,7 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </table>
             <br>
             <div class="containerprofile">
-                <input class="linktobutton" type="button" value="Cancel Update" onclick="location.href = 'viewbooking.php?bookingid=<?php echo $bookingId; ?>'">
+                <input class="linktobutton" type="button" value="Cancel Update" onclick="location.href = 'viewbooking?bookingid=<?php echo $bookingId; ?>'">
                 <input class="linktobutton" id="button" type="submit" value="Update Booking">
             </div>
         </form>
