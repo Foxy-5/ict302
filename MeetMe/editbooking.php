@@ -4,6 +4,7 @@ session_start();
 
 include("include/connection.php");
 include("include/function.php");
+include("include/email.php");
 
 $user_data = check_login($con);
 $userid = $user_data['StaffID'];
@@ -22,18 +23,68 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     } else {
         $bookingenddate = date("Y-m-d H:i:s", strtotime($bookingdata['Booking_end']));
     }
+
     $status = $_POST['status'];
+    $acptStatus = array("Cancelled","Ended","Not confirmed","Confirmed");
+    
+    if(!in_array($status,$acptStatus)){
+        echo "<script>alert('Invalid input')</script>";
+    }
     //check if booking set to ended and student is null
     if($status == "Ended"){
         if($bookingdata['StudentID'] == NULL)
         {
             echo '<script>
-            alert("cannot set booking to ended without a student")
+            alert("cannot set booking to ended without a student");
+            window.location.href="viewbooking?bookingid=' . $bookingId . '";
+            </script>';
+            exit();
+        }
+
+        if($bookingdata['Status'] == "Cancelled"){
+                echo '<script>
+                alert("Cannot cancel ended booking!");
+                window.location.href="viewbooking?bookingid=' . $bookingId . '";
+                </script>';
+                exit();
+        }
+
+    }
+    else if($status == "Cancelled"){
+        if($bookingdata['Status'] != "Cancelled"){
+            if($bookingdata['Status'] == "Ended"){
+                echo '<script>
+                alert("Cannot end cancelled booking!");
+                window.location.href="viewbooking?bookingid=' . $bookingId . '";
+                </script>';
+                exit();
+            }
+
+            $stdtEmail = prepEmailStudent(2,$bookingId);
+            $staffEmail = prepEmailStaff(2,$bookingId);
+
+            if(!$stdtEmail||!$staffEmail){
+                http_response_code(404);
+                header("Location: error404");
+                exit();
+            }
+            sendEmail($stdtEmail);
+            sendEmail($staffEmail);
+
+        }
+
+    }
+    //not confirmed
+    else if($status == "Not confirmed"){
+        if($bookingdata['Status'] != "Not confirmed"){
+            echo '<script>
+            alert("Invalid status");
             window.location.href="viewbooking?bookingid=' . $bookingId . '";
             </script>';
             exit();
         }
     }
+
     if($previousid > 0)
     {
         $initial = 0;
@@ -41,11 +92,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     else
     {
         $initial = 1;
-    }
-    $acptStatus = array("Cancelled","Ended","Not confirmed");
-    
-    if(!in_array($status,$acptStatus)){
-        echo "<script>alert('Invalid input')</script>";
     }
 
     $comment = $_POST['comment'];
