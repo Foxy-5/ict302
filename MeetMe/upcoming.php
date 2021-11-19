@@ -103,7 +103,7 @@ $userid = $user_data['StaffID'];
             <tbody>
                 <?php
                 $today = date("Y-m-d");
-                $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID, Auth_key, booking.StudentID from booking, student where (booking.ConvenerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID) and (booking.Booking_date >= '$today') ORDER BY booking_start ASC";
+                $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID, Auth_key, booking.StudentID from booking LEFT JOIN student on booking.StudentID = student.StudentID where (booking.ConvenerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID) and (booking.Booking_date >= '$today') ORDER BY booking_start ASC";
                 
                 $result1 = mysqli_query($con, $query1);
                 while ($row = mysqli_fetch_array($result1)) {
