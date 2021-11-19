@@ -1,5 +1,11 @@
 <?php
+session_start();
 define('access',true);
+
+require_once("include/connection.php");
+require_once("include/email.php");
+
+
 if(!isset($_SESSION['cnclBk'])){
 	http_response_code(404);
 	exit();
@@ -7,12 +13,13 @@ if(!isset($_SESSION['cnclBk'])){
 
 $bkAuthKey = $_SESSION['cnclBk'];
 
-if(strlen($bkAuthKey)!=32||!preg_match("^[a-zA-Z0-9]*$",$bkAuthKey)){
+if(strlen($bkAuthKey)!=32||!preg_match("/^[a-zA-Z0-9]*$/",$bkAuthKey)){
 	http_response_code(404);
 	exit();	
 }
 
-$deleteQuery = "UPDATE booking SET booking_status = 'Cancelled' WHERE Auth_key = '$bkAuthKey'";
+$deleteQuery = "UPDATE booking SET status = 'Cancelled' WHERE Auth_key = '$bkAuthKey'";
+echo $deleteQuery;
 
 if(!mysqli_query($con,$deleteQuery)){
 	//header("Location: connectionfailed.php");
@@ -24,11 +31,13 @@ if(!mysqli_query($con,$deleteQuery)){
 $stdtEmail = prepEmailStudent(2,$bkAuthKey);
 $staffEmail = prepEmailStaff(2,$bkAuthKey);
 
-if(!sendEmail($stdtEmail)||!sendEmail($staffEmail)){
+if(!$stdtEmail||!$staffEmail){
 	http_response_code(404);
 	header("Location: error404");
 	exit();
 }
+sendEmail($stdtEmail);
+sendEmail($staffEmail);
 
 mysqli_commit($con);
 

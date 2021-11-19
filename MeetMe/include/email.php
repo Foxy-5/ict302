@@ -126,15 +126,17 @@ function fgCfmBody($recipient,...$AuthKeys){
 //0 for student email
 //1 for staff email
 function fgCnclBody($receipient,$bkAuthKey){
-    $bodyMsg = "Dear {RCP_NAME},\n\nYour meeting with {ORCP_NAME} has been cancelled.\n\nThank you,\nMurodch University Meet Me.\n\nThis is an auto generated email. Please do not reply\n\n\nMurdoch Singapore\n390 Havelock Road #03-01 King’s Centre Singapore 169662.";
-
-    $studentId = getStudentId(1,$bkAuthKey);
-    $studentName = getStudentName($studentId);
-
-    $staffId = getStaffId(1,$bkAuthKey);
-    $staffName = getStaffName($staffId);
+    if(empty($studentName = getStudentName(getStudentId(1,$bkAuthKey)))){
+        return '';
+    }
     
-    if($recipient==0){
+    if(empty($staffName = getStaffName(getStaffId(1,$bkAuthKey)))){
+        return '';
+    }
+
+    $bodyMsg = "Dear {RCP_NAME},\n\nYour meeting with {ORCP_NAME} has been cancelled.\n\nThank you,\nMurodch University Meet Me.\n\nThis is an auto generated email. Please do not reply\n\n\nMurdoch Singapore\n390 Havelock Road #03-01 King’s Centre Singapore 169662.";
+    
+    if($receipient==0){
         $rplcBody = array(
             '{RCP_NAME}' => $studentName,
             '{ORCP_NAME}' => $staffName,
@@ -166,56 +168,55 @@ function prepEmailStudent($mode,...$AuthKeys){
         return false;
     }
 
+
     if($mode==0||$mode==1){
         $studentId = getStudentId(0,$AuthKeys[0]);
-        $studentEmail = getStudentEmail($studentId);
-        $studentName = getStudentName($studentId);
-        $staffId = getStaffId(0,$AuthKeys[0]);
-        $staffName = getStaffName($staffId);
+    }
+    else if($mode==2){
+        $studentId = getStudentId(1,$AuthKeys[0]);
+    }
+    else{
+        return false;
+    }
 
-        if(empty($studentEmail)||empty($studentName)){
+    $studentEmail = getStudentEmail($studentId);
+    $studentName = getStudentName($studentId);
+
+    //sending booking request only needs student authentication key
+    if($mode==0){
+        if(sizeof($AuthKeys)!=1){
             return false;
         }
 
-        if(empty($staffName)){
+        if(empty($emailcontent = fgRqBody($AuthKeys[0]))){
             return false;
         }
 
-        //sending booking request only needs student authentication key
-        if($mode==0){
-            if(sizeof($AuthKeys)!=1){
-                return false;
-            }
+        $subject = "Action Required: Please respond regarding the best meeting time";
 
-            if(empty($emailcontent = fgRqBody($AuthKeys[0]))){
-                return false;
-            }
-
-            $subject = "Action Required: Please respond regarding the best meeting time";
-
-        }
+    }
 
         //sending confirmation email
-        else{
-            if(sizeof($AuthKeys)!=2){
-                return false;
-            }
-
-            if(empty($emailcontent = fgCfmBody(0,...$AuthKeys))){
-                return false;
-            }
-
-            $subject = "Your meeting is confirmed!";
-
-            if(empty($invite = craftInvite($AuthKeys[1]))){
-                return false;
-            }
-
-            $mail->AddStringAttachment($invite,'invite.ics');
-
+    else if($mode==1){
+        if(sizeof($AuthKeys)!=2){
+            return false;
         }
+
+        if(empty($emailcontent = fgCfmBody(0,...$AuthKeys))){
+            return false;
+        }
+
+        $subject = "Your meeting is confirmed!";
+
+        if(empty($invite = craftInvite($AuthKeys[1]))){
+            return false;
+        }
+
+        $mail->AddStringAttachment($invite,'invite.ics');
+
     }
-    else if(mode==2){
+
+    else{
         if(sizeof($AuthKeys)!=1){
             return false;
         }
@@ -226,10 +227,6 @@ function prepEmailStudent($mode,...$AuthKeys){
 
         $subject = "Your meeting has been cancelled";
     }
-    else{
-        return false;
-    }
-
     
     try{
         $mail->addAddress($studentEmail,$studentName);
@@ -249,7 +246,19 @@ function prepEmailStudent($mode,...$AuthKeys){
 }
 
 function sendEmail($mail){
-    $mail->send();
+    try{
+        $mail->send();
+    }
+    catch (phpmailerException $e) {
+        //echo $e->errorMessage();
+        return false;
+    }
+    catch (Exception $e) {
+        //echo $e->getMessage();
+        return false;
+    }
+
+    return true;
 }
 
 //mode 1 for booking confirmation
@@ -263,20 +272,18 @@ function prepEmailStaff($mode,...$AuthKeys){
         return false;
     }
 
-    $studentId = getStudentId(0,$AuthKeys[0]);
-    $studentName = getStudentName($studentId);
+    if($mode==1){
+        $staffId = getStaffId(0,$AuthKeys[0]);
+    }
+    else if($mode==2){
+        $staffId = getStaffId(1,$AuthKeys[0]);
+    }
+    else{
+        return false;
+    }
 
-    $staffId = getStaffId(0,$AuthKeys[0]);
-    $staffName = getStaffName($staffId);
     $staffEmail = getStaffEmail($staffId);
-
-    if(empty($studentName)){
-        return false;
-    }
-
-    if(empty($staffEmail)||empty($staffName)){
-        return false;
-    }
+    $staffName = getStaffName($staffId);
 
     if($mode==1){
         
@@ -293,7 +300,7 @@ function prepEmailStaff($mode,...$AuthKeys){
 
     }
 
-    else if($mode==2){
+    else{
         if(sizeof($AuthKeys)!=1){
             return false;
         }
@@ -304,9 +311,6 @@ function prepEmailStaff($mode,...$AuthKeys){
 
         $subject = "Your meeting has been cancelled";
 
-    }
-    else{
-        return false;
     }
 
     try{

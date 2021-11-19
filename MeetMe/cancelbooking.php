@@ -1,13 +1,15 @@
 <?php
+session_start();
+
 define('access',true);
 if(!isset($_GET['authkey'])){
-	http_response_code(404);
-	exit();
+    http_response_code(404);
+    exit();
 }
 
 if(strlen($_GET['authkey'])!=32||!preg_match("/^[a-zA-Z0-9]*$/",$_GET['authkey'])){
-	http_response_code(404);
-	exit();	
+    http_response_code(404);
+    exit(); 
 }
 
 require_once("include/connection.php");
@@ -18,22 +20,22 @@ $bkAuthKey = $_GET['authkey'];
 $searchBkQuery = "SELECT * FROM booking WHERE Auth_key = '$bkAuthKey' AND StudentID IS NOT NULL limit 1";
 
 if(!$bkResult = mysqli_query($con,$searchBkQuery)){
-	echo "<script>alert('Failed')</script>";
-	//header("Location: failedConnection.php");
-	exit();
+    echo "<script>alert('Failed')</script>";
+    //header("Location: failedConnection.php");
+    exit();
 }
 
 if(!mysqli_num_rows($bkResult)>0){
-	echo "<script>alert('Booking not found')</script>";
-	//header("Location: failedConnection.php");
-	exit();
+    echo "<script>alert('Booking not found')</script>";
+    //header("Location: failedConnection.php");
+    exit();
 }
 
 $bkDets = mysqli_fetch_assoc($bkResult);
 
 if($bkDets['Status']=='Ended'){
-	echo "<script>alert('Booking is over, cannot be cancelled')</script>";
-	exit();
+    echo "<script>alert('Booking is over, cannot be cancelled')</script>";
+    exit();
 }
 
 $studentId = $bkDets['StudentID'];
@@ -75,11 +77,11 @@ $_SESSION['cnclBk'] = $bkAuthKey;
 <body>
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
-            <a href="home"><img src="Image/MU Logo.png" height="80"></a>
+            <a href="home.php"><img src="Image/MU Logo.png" height="80"></a>
         </div>
         <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
-                <li><a href="home">Home</a></li>
+                <li><a href="home.php">Home</a></li>
             </ul>
         </div>
     </nav>
@@ -94,57 +96,57 @@ $_SESSION['cnclBk'] = $bkAuthKey;
                 <th>Previous Meeting ID</th>
             </tr>
             <?php
-	            echo "<tr>";
-	            echo "	<td>" . $bkDets['BookingID'] . "</td>";
-	            echo "	<td>" . ($bkDets['PreviousMeetingID']==0) ? "N/A" : $bkDets['PreviousMeetingID'] . "</td>";
-	            echo "</tr>";
+                echo "<tr>";
+                echo "  <td>" . $bkDets['BookingID'] . "</td>";
+                echo "  <td>" . ($bkDets['PreviousMeetingID']==0) ? "N/A" : $bkDets['PreviousMeetingID'] . "</td>";
+                echo "</tr>";
             ?>
             <tr>
                 <th>Student Name</th>
                 <th>Student ID</th>
             </tr>
             <?php
-	            echo "<tr>";
-	            echo "	<td>" . $stdtDets['First_name'] . " " . $stdtDets['Last_name'] . "</td>";
-	            echo "	<td>" . $bkDets['StudentID'] . "</td>";
-	            echo "</tr>";
+                echo "<tr>";
+                echo "  <td>" . $stdtDets['First_name'] . " " . $stdtDets['Last_name'] . "</td>";
+                echo "  <td>" . $bkDets['StudentID'] . "</td>";
+                echo "</tr>";
             ?>
             <tr>
                 <th>Booking Date</th>
                 <th>Booking Start</th>
             </tr>
             <?php
-	            $starttime = date("h:i a", strtotime($bkDets['Booking_start']));
-	            echo "<tr>";
-	            echo "	<td>" . $bkDets["Booking_date"] . "</td>";
-	            echo "	<td>" . $starttime . "</td>";
-	            echo "</tr>";
+                $starttime = date("h:i a", strtotime($bkDets['Booking_start']));
+                echo "<tr>";
+                echo "  <td>" . $bkDets["Booking_date"] . "</td>";
+                echo "  <td>" . $starttime . "</td>";
+                echo "</tr>";
             ?>
             <tr>
                 <th>Booking End</th>
                 <th>Duration (Minutes)</th>
             </tr>
             <?php
-	            $endtime = date("h:i a", strtotime($bkDets['Booking_end']));
-	            echo "<tr>";
-	            echo "	<td>" . $endtime . "</td>";
-	            echo "	<td>" . $bkDets['Duration'] . "</td>";
-	            echo "</tr>";
+                $endtime = date("h:i a", strtotime($bkDets['Booking_end']));
+                echo "<tr>";
+                echo "  <td>" . $endtime . "</td>";
+                echo "  <td>" . $bkDets['Duration'] . "</td>";
+                echo "</tr>";
             ?>
             <tr>
                 <th>Comment</th>
                 <th>Status</th>
             </tr>
             <?php
-	            echo "<tr>";
-	            echo "	<td>" . $bkDets['Comment'] . "</td>";
-	            echo "	<td>" . $bkDets['Status'] . "</td>";
-	            echo "</tr>";
+                echo "<tr>";
+                echo "  <td>" . $bkDets['Comment'] . "</td>";
+                echo "  <td>" . $bkDets['Status'] . "</td>";
+                echo "</tr>";
             ?>
         </table>
         <br>
         <div class="containerprofile">
-               <a class="linktobutton" href="confirmcancelbooking">Confirm cancellation</a>
+            <a class="linktobutton" href="confirmcancelbooking">Confirm cancellation</a>
         </div>
         <br>
         <br>
