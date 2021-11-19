@@ -146,10 +146,9 @@ $bookingdata = mysqli_fetch_assoc($result1);
             ?>
         </table>
         <br>
-        <!--<label for="editbooking">Edit Booking</label>-->
         <div class="containerprofile">
             <a class="linktobutton" href="allbooking">Back</a>
-            <a class="linktobutton" href="editbooking?bookingid=<?php echo $bookingId; ?>">Edit</a>
+            <a class="linktobutton" href="editbooking_all?bookingid=<?php echo $bookingId; ?>">Edit</a>
         </div>
         <br>
         <br>

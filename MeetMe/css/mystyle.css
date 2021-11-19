@@ -19,11 +19,13 @@ hr.redbar {
 }
 
 table.userprofile {
+  table-layout: fixed;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
 
   font-family: "Open Sans", sans-serif;
+  font-size: 14px;
   border-collapse: collapse;
   width: 50%;
 }
