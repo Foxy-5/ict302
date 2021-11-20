@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     }
     else if($status == "Cancelled"){
-        if($bookingdata['Status'] != "Cancelled"){
+        if($bookingdata['Status'] != "Cancelled" && $bookingdata['Status'] != "Not confirmed"){
             if($bookingdata['Status'] == "Ended"){
                 echo '<script>
                 alert("Cannot end cancelled booking!");
