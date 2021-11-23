@@ -319,6 +319,13 @@ input[type=file]::file-selector-button:hover {
   width: 50%;
 }
 
+.successbookingtextcenter{
+  text-align: center;
+  padding-top: 200px;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+}
+
 .calendar {
   display: flex;
   flex-flow: column;

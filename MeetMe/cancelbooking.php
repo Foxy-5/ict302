@@ -81,7 +81,7 @@ $_SESSION['cnclBk'] = $bkAuthKey;
         </div>
         <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
-                <li><a href="home.php">Home</a></li>
+                <li><a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
             </ul>
         </div>
     </nav>

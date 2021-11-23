@@ -134,7 +134,7 @@
 	        </div>
 	        <div class="navpaddingright">
 	            <ul class="nav navbar-nav">
-	                <li class="active"><a href="home">Home</a></li>
+	                <li class="active"><a href="home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
 	            </ul>
 	        </div>
     	</nav>
@@ -170,7 +170,7 @@
 						<td><?php echo "$startDate $startTime";?></td>
 						<td><?php echo "$endDate $endTime"?></td>
 						<td><form method="post">
-								<input type = "hidden" name="bookingKey" value=<?php echo "$secretId"?>>
+								<input type="hidden" name="bookingKey" value=<?php echo "$secretId"?>>
 								<input type="submit" name="button" value="Book">
 							</form>
 						</td>
