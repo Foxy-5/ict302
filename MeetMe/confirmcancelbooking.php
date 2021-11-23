@@ -46,11 +46,13 @@ mysqli_commit($con);
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" href="css/mystyle.css">
 		<title>Cancellation Success | MeetMe v2</title>
 	</head>
 
-	<body>
-		Your booking has been successfully cancelled! Email has been sent to you.
+	<body class="successbookingtextcenter">
+		<img src="Image/Mail Sent.svg" height="100">
+		<p>Your booking has been successfully cancelled! Email has been sent to you.</p>
 	</body>
 </html>
 
