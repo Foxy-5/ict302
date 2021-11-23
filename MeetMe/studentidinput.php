@@ -87,7 +87,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	        </div>
 	        <div class="navpaddingright">
 	            <ul class="nav navbar-nav">
-	                <li class="active"><a href="home">Home</a></li>
+	                <li class="active"><a href="home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
 	            </ul>
 	        </div>
     	</nav>
