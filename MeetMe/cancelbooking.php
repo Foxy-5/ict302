@@ -20,36 +20,50 @@ $bkAuthKey = $_GET['authkey'];
 $searchBkQuery = "SELECT * FROM booking WHERE Auth_key = '$bkAuthKey' AND StudentID IS NOT NULL limit 1";
 
 if(!$bkResult = mysqli_query($con,$searchBkQuery)){
-    echo "<script>alert('Failed')</script>";
+    echo '<script>alert("Failed");
+            window.location.href="error404";
+          </script>;';
     //header("Location: failedConnection.php");
     exit();
 }
 
 if(!mysqli_num_rows($bkResult)>0){
-    echo "<script>alert('Booking not found')</script>";
-    //header("Location: failedConnection.php");
+    echo '<script>alert("Booking not found");
+            window.location.href="error404";
+          </script>;';
     exit();
 }
 
 $bkDets = mysqli_fetch_assoc($bkResult);
 
 if($bkDets['Status']=='Ended'){
-    echo "<script>alert('Booking is over, cannot be cancelled')</script>";
+    echo '<script>alert("Booking is over, cannot be cancelled");
+            window.location.href="error404";
+          </script>';
     exit();
 }
+else if($bkDets['Status']=='Cancelled'){
+    echo '<script>alert("Booking is already cancelled, cannot be canelled again");
+            window.location.href="error404";
+          </script>;';
+    exit();
+}
+
 
 $studentId = $bkDets['StudentID'];
 $stdtDetsQuery = "SELECT First_name, Last_name FROM student WHERE StudentID = '$studentId'";
 
 if(!$stdtResult = mysqli_query($con,$stdtDetsQuery)){
-    echo "<script>alert('Failed')</script>";
-    //header("Location: failedConnection.php");
+    echo '<script>alert("Cannot connect to system, try again later");
+            window.location.href="error404";
+          </script>;';
     exit();
 }
 
 if(!mysqli_num_rows($stdtResult)>0){
-    echo "<script>alert('Booking not found')</script>";
-    //header("Location: failedConnection.php");
+    echo '<script>alert("Booking not found");
+            window.location.href="error404";
+          </script>;';
     exit();
 }
 
@@ -77,12 +91,7 @@ $_SESSION['cnclBk'] = $bkAuthKey;
 <body>
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
-            <a href="home.php"><img src="Image/MU Logo.png" height="80"></a>
-        </div>
-        <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
-            <ul class="nav navbar-nav">
-                <li><a href="home.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-            </ul>
+            <a href="#"><img src="Image/MU Logo.png" height="80"></a>
         </div>
     </nav>
 
@@ -96,9 +105,10 @@ $_SESSION['cnclBk'] = $bkAuthKey;
                 <th>Previous Meeting ID</th>
             </tr>
             <?php
+                $prevMeeting = (is_null($bkDets['PreviousMeetingID'])) ? "N/A" : $bkDets['PreviousMeetingID'];
                 echo "<tr>";
                 echo "  <td>" . $bkDets['BookingID'] . "</td>";
-                echo "  <td>" . ($bkDets['PreviousMeetingID']==0) ? "N/A" : $bkDets['PreviousMeetingID'] . "</td>";
+                echo "  <td>" . $prevMeeting . "</td>";
                 echo "</tr>";
             ?>
             <tr>

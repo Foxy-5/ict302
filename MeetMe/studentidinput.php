@@ -83,7 +83,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 	<body>
 		<nav class="navbar navbar-inverse">
 	        <div class="navbar-header">
-	            <a href="home"><img src="Image/MU Logo.png" height="80"></a>
+	            <a href="#"><img src="Image/MU Logo.png" height="80"></a>
 	        </div>
 	        <div class="navpaddingright">
 	            <ul class="nav navbar-nav">
@@ -93,7 +93,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     	</nav>
     	
 	    <div class="content">
-	    	<h2>First, we'll like to verify your identity.</h1>
+	    	<h2>First, we'll like to verify your identity.</h2>
 	    	<hr class="redbar">
 			<form method="post">
 				<label class="editprofiletext">StudentID : </label>

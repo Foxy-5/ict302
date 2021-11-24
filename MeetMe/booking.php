@@ -130,11 +130,14 @@
 	<body>
 		<nav class="navbar navbar-inverse">
 	        <div class="navbar-header">
-	            <a href="home"><img src="Image/MU Logo.png" height="80"></a>
+	            <a href="#"><img src="Image/MU Logo.png" height="80"></a>
 	        </div>
     	</nav>
 
     	<div class="content">
+    		<h1>Meeting Time Slots</h1>
+    		<hr class="redbar">
+    		<p>Please select your preferred time slot</p>
 			<table id="bookingtable">
 				<thead>
 					<tr>
@@ -147,9 +150,13 @@
 					<?php
 						if(mysqli_num_rows($bkDets)<1){
 							getStaffName($staffId);
-							echo "<script>alert('No Available timing from the lecturer')</script>;";
-							//header("Location: error404.php");
-
+							$authkey = $_SESSION['stdtAuthKey'];
+							echo '<script>
+									alert("No Available timing from the lecturer");
+									window.location.href="studentidinput?authkey=' . $authkey . '";
+								  </script>;
+									';
+							exit();
 						}
 						$authKeyArray = array();
 						while($row = mysqli_fetch_array($bkDets)){
