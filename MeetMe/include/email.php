@@ -305,7 +305,7 @@ function prepEmailStaff($mode,...$AuthKeys){
             return false;
         }
 
-        if(empty($emailcontent = fgCnclBody(0,$AuthKeys[0]))){
+        if(empty($emailcontent = fgCnclBody(1,$AuthKeys[0]))){
             return false;
         }
 
