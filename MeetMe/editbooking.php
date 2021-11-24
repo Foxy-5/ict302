@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($status == "Ended") {
         if ($bookingdata['StudentID'] == NULL) {
             echo '<script>
-            alert("cannot set booking to ended without a student");
+            alert("Cannot set booking to ended without a student");
             window.location.href="viewbooking?bookingid=' . $bookingId . '";
             </script>';
             exit();
@@ -47,13 +47,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         if ($bookingdata['Status'] == "Cancelled") {
             echo '<script>
-                alert("Cannot cancel ended booking!");
+                alert("Cannot cancel previously canclled booking!");
                 window.location.href="viewbooking?bookingid=' . $bookingId . '";
                 </script>';
             exit();
         }
-    } else if ($status == "Cancelled") {
+    }
+
+    else if ($status == "Cancelled") {
         if ($bookingdata['Status'] != "Cancelled" && $bookingdata['Status'] != "Not confirmed") {
+            //if the booking is ended, cannot be cancelled
             if ($bookingdata['Status'] == "Ended") {
                 echo '<script>
                 alert("Cannot end cancelled booking!");
@@ -61,6 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 </script>';
                 exit();
             }
+
+            //the code will come here if the meeting was previously confirmed
 
             $stdtEmail = prepEmailStudent(2, $bookingId);
             $staffEmail = prepEmailStaff(2, $bookingId);
