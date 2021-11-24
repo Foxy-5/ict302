@@ -132,11 +132,6 @@
 	        <div class="navbar-header">
 	            <a href="home"><img src="Image/MU Logo.png" height="80"></a>
 	        </div>
-	        <div class="navpaddingright">
-	            <ul class="nav navbar-nav">
-	                <li class="active"><a href="home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-	            </ul>
-	        </div>
     	</nav>
 
     	<div class="content">

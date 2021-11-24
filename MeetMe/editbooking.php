@@ -13,6 +13,7 @@ $query1 = "Select Booking_date, Booking_start, Booking_end, case WHEN booking.St
 $result1 = mysqli_query($con, $query1);
 $bookingdata = mysqli_fetch_assoc($result1);
 
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $previousid = $_POST['previousid'];
     $newbookingend = date("Y-m-d H:i:s", strtotime($_POST['newbookingend']));
@@ -25,72 +26,68 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
     $status = $_POST['status'];
-    $acptStatus = array("Cancelled","Ended","Not confirmed","Confirmed");
-    
-    if(!in_array($status,$acptStatus)){
-        echo "<script>alert('Invalid input')</script>";
+    $acptStatus = array("Cancelled", "Ended", "Not confirmed", "Confirmed");
+
+    if (!in_array($status, $acptStatus)) {
+        echo '<script>
+            alert("Invalid input");
+            window.location.href="viewbooking?bookingid=' . $bookingId . '";
+            </script>';
+            exit();
     }
     //check if booking set to ended and student is null
-    if($status == "Ended"){
-        if($bookingdata['StudentID'] == NULL)
-        {
+    if ($status == "Ended") {
+        if ($bookingdata['StudentID'] == NULL) {
             echo '<script>
             alert("cannot set booking to ended without a student");
-            window.location.href="viewbooking_today?bookingid=' . $bookingId . '";
+            window.location.href="viewbooking?bookingid=' . $bookingId . '";
             </script>';
             exit();
         }
 
-        if($bookingdata['Status'] == "Cancelled"){
-                echo '<script>
+        if ($bookingdata['Status'] == "Cancelled") {
+            echo '<script>
                 alert("Cannot cancel ended booking!");
-                window.location.href="viewbooking_today?bookingid=' . $bookingId . '";
+                window.location.href="viewbooking?bookingid=' . $bookingId . '";
                 </script>';
-                exit();
+            exit();
         }
-
-    }
-    else if($status == "Cancelled"){
-        if($bookingdata['Status'] != "Cancelled" && $bookingdata['Status'] != "Not confirmed"){
-            if($bookingdata['Status'] == "Ended"){
+    } else if ($status == "Cancelled") {
+        if ($bookingdata['Status'] != "Cancelled" && $bookingdata['Status'] != "Not confirmed") {
+            if ($bookingdata['Status'] == "Ended") {
                 echo '<script>
                 alert("Cannot end cancelled booking!");
-                window.location.href="viewbooking_today?bookingid=' . $bookingId . '";
+                window.location.href="viewbooking?bookingid=' . $bookingId . '";
                 </script>';
                 exit();
             }
 
-            $stdtEmail = prepEmailStudent(2,$bookingId);
-            $staffEmail = prepEmailStaff(2,$bookingId);
+            $stdtEmail = prepEmailStudent(2, $bookingId);
+            $staffEmail = prepEmailStaff(2, $bookingId);
 
-            if(!$stdtEmail||!$staffEmail){
+            if (!$stdtEmail || !$staffEmail) {
                 http_response_code(404);
                 header("Location: error404");
                 exit();
             }
             sendEmail($stdtEmail);
             sendEmail($staffEmail);
-
         }
-
     }
     //not confirmed
-    else if($status == "Not confirmed"){
-        if($bookingdata['Status'] != "Not confirmed"){
+    else if ($status == "Not confirmed") {
+        if ($bookingdata['Status'] != "Not confirmed") {
             echo '<script>
             alert("Invalid status");
-            window.location.href="viewbooking_today?bookingid=' . $bookingId . '";
+            window.location.href="viewbooking?bookingid=' . $bookingId . '";
             </script>';
             exit();
         }
     }
 
-    if($previousid > 0)
-    {
+    if ($previousid > 0) {
         $initial = 0;
-    }
-    else
-    {
+    } else {
         $initial = 1;
     }
 
@@ -113,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (mysqli_query($con, $query)) {
         echo '<script>
                 alert("Booking details was succesfully updated.");
-                window.location.href="viewbooking_today?bookingid=' . $bookingId . '";
+                window.location.href="viewbooking?bookingid=' . $bookingId . '";
             </script>';
         mysqli_commit($con);
         die;
@@ -143,8 +140,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
         <div class="navpaddingright collapse navbar-collapse" id="mynavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                <li id="appointment" class="dropdown"><a href="#"><span class="glyphicon glyphicon-calendar"></span> Appointment <span class="caret"></span></a>
+                <li><a href="home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                <li id="appointment" class="dropdown active"><a href="#"><span class="glyphicon glyphicon-calendar"></span> Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="uploadExcel">Upload Excel</a></li>
                         <li><a href="chooseavailtime">Upload Time</a></li>
@@ -225,26 +222,26 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <?php
                 echo "<tr>";
                 ?>
-                    <td><input type="text" name="previousid" id="text" value="<?php echo $bookingdata['PreviousMeetingID'] ?>"></td>
-                    <td><?php 
-                            $defaultState = array($bookingdata['Status']);
-                            
-                            $options = array("Cancelled","Ended");
-                            $selections = array_diff($options,$defaultState);
-                            $selections = array_values($selections);
+                <td><input type="text" name="previousid" id="text" value="<?php echo $bookingdata['PreviousMeetingID'] ?>"></td>
+                <td><?php
+                    $defaultState = array($bookingdata['Status']);
+
+                    $options = array("Cancelled", "Ended");
+                    $selections = array_diff($options, $defaultState);
+                    $selections = array_values($selections);
+                    ?>
+
+                    <select name="status" id="text" selected="selected">
+                        <?php
+                        echo "<option value=$defaultState[0] selected=\"selected\">$defaultState[0]</option>";
+                        for ($opCount = 0; $opCount < sizeof($selections); $opCount++) {
+                            $tempSelect = $selections[$opCount];
+                            echo "<option value=$tempSelect>$tempSelect</option>";
+                        }
                         ?>
 
-                        <select name="status" id="text" selected="selected">
-                            <?php 
-                                echo "<option value=$defaultState[0] selected=\"selected\">$defaultState[0]</option>";
-                                for($opCount=0;$opCount<sizeof($selections);$opCount++){
-                                    $tempSelect = $selections[$opCount];
-                                    echo "<option value=$tempSelect>$tempSelect</option>";
-                                }
-                            ?>
-
-                        </select>
-                    </td>
+                    </select>
+                </td>
                 <?php
                 echo "</tr>";
                 ?>
@@ -261,7 +258,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </table>
             <br>
             <div class="containerprofile">
-                <input class="linktobutton" type="button" value="Cancel Update" onclick="location.href = 'viewbooking_today?bookingid=<?php echo $bookingId; ?>'">
+                <input class="linktobutton" type="button" value="Cancel Update" onclick="location.href = 'viewbooking?bookingid=<?php echo $bookingId; ?>'">
                 <input class="linktobutton" id="button" type="submit" value="Update Booking">
             </div>
         </form>

@@ -7,6 +7,7 @@ include("include/function.php");
 
 $user_data = check_login($con);
 $userid = $user_data['StaffID'];
+$_SESSION['bkPageFrom'] = 'upcoming';
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -16,6 +16,14 @@ if(!mysqli_num_rows($result1)>0){
 }
 $bookingdata = mysqli_fetch_assoc($result1);
 
+if(isset($_SESSION['bkPageFrom'])&&!empty($_SESSION['bkPageFrom'])){
+    $fromPage = $_SESSION['bkPageFrom'];
+}
+//set to home page by default
+else{
+    $fromPage = 'home';
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -147,8 +155,8 @@ $bookingdata = mysqli_fetch_assoc($result1);
         </table>
         <br>
         <div class="containerprofile">
-            <a class="linktobutton" href="allbooking">Back</a>
-            <a class="linktobutton" href="editbooking_all?bookingid=<?php echo $bookingId; ?>">Edit</a>
+            <a class="linktobutton" href="<?php echo $fromPage;?>">Back</a>
+            <a class="linktobutton" href="editbooking?bookingid=<?php echo $bookingId; ?>">Edit</a>
         </div>
         <br>
         <br>

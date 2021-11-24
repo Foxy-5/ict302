@@ -6,6 +6,7 @@ include("include/connection.php");
 include("include/function.php");
 
 $user_data = check_login($con);
+$_SESSION['bkPageFrom'] = 'openbooking';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -110,7 +111,7 @@ $user_data = check_login($con);
                     <tr>
                         <td><?php echo $row['Booking_date']; ?></td>
                         <td><?php echo $starttime; ?></td>
-                        <td><a class="linktobutton" href="viewbooking_open?bookingid=<?php echo $row['Auth_key']; ?>"><span class="glyphicon glyphicon-eye-open"></span> View Booking</a></td>
+                        <td><a class="linktobutton" href="viewbooking?bookingid=<?php echo $row['Auth_key']; ?>"><span class="glyphicon glyphicon-eye-open"></span> View Booking</a></td>
                     </tr>
                 <?php
                 }
