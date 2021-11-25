@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         if ($bookingdata['Status'] == "Cancelled") {
             echo '<script>
-                alert("Cannot cancel previously canclled booking!");
+                alert("Cannot cancel previously cancelled booking!");
                 window.location.href="viewbooking?bookingid=' . $bookingId . '";
                 </script>';
             exit();
