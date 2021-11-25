@@ -91,6 +91,7 @@ $_SESSION['bkPageFrom'] = 'upcoming';
         <h5>Hi <?php echo $user_data['First_name']; ?> <?php echo $user_data['Last_name']; ?>!</h5>
         <h1>Upcoming Booking(s)</h1>
         <hr class="redbar">
+        <!-- display table for upcoming bookings -->
         <table id="myTable" class="upcomingbooking">
             <thead>
                 <tr>
@@ -103,10 +104,13 @@ $_SESSION['bkPageFrom'] = 'upcoming';
             </thead>
             <tbody>
                 <?php
+                //get today date
                 $today = date("Y-m-d");
+                //query for upcoming booking
                 $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID, Auth_key, booking.StudentID from booking LEFT JOIN student on booking.StudentID = student.StudentID where (booking.ConvenerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID) and (booking.Booking_date >= '$today') ORDER BY booking_start ASC";
                 
                 $result1 = mysqli_query($con, $query1);
+                //display rows for upcoming booking
                 while ($row = mysqli_fetch_array($result1)) {
                     $starttime = date("h:i:s a", strtotime($row['Booking_start']));
                 ?>
@@ -123,10 +127,11 @@ $_SESSION['bkPageFrom'] = 'upcoming';
             </tbody>
 
         </table>
+        <!-- print table button -->
         <button class="linktobutton" onclick="PrintTable();"><span class="glyphicon glyphicon-print"></span> Print</button>
-        <!--<input class="linktobutton" type="button" onclick="PrintTable();" value="Print" />-->
     </div>
 </body>
+<!-- script for printing table -->
 <script type="text/javascript">
     function PrintTable() {
         var printWindow = window.open('', '', 'height=700,width=700');

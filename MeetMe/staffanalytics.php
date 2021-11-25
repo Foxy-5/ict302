@@ -1,10 +1,10 @@
 <?php
 define('access', true);
 session_start();
-
+//include methods from this pages
 include("include/connection.php");
 include("include/function.php");
-
+//set user session data
 $user_data = check_login($con);
 ?>
 <!DOCTYPE html>
@@ -89,6 +89,7 @@ $user_data = check_login($con);
         <h1>Staff Meeting Analytics</h1>
         <hr class="redbar">
         <br>
+        <!-- table to display staff analytics -->
         <table id="myTable" class="upcomingbooking">
             <thead>
                 <tr>
@@ -103,6 +104,7 @@ $user_data = check_login($con);
             <tbody>
                 <?php
                 $status = "cancelled";
+                //query for staff analytics
                 $query1 = "Select
                 staff.StaffID,
                 staff.First_name,
@@ -134,8 +136,9 @@ $user_data = check_login($con);
                     staff.StaffID = booking.convenerID
                 GROUP BY
                     staff.StaffID";
-                // $query1 = "Select staff.StaffID, staff.First_name, staff.Last_name, sum(booking.duration) as duration, COALESCE(sum(booking.Status='$status'),0) as Status from staff LEFT JOIN booking ON staff.StaffID=booking.convenerID GROUP BY staff.StaffID";
+
                 $result1 = mysqli_query($con, $query1);
+                //display rows of staff analytics
                 while ($row = mysqli_fetch_array($result1)) {
                     $total = $row['total'];
                     if($total != 0){

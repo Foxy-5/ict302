@@ -1,18 +1,25 @@
 <?php
 define('access', true);
 session_start();
-
+//include methods from connection and function
 include("include/connection.php");
 include("include/function.php");
-
+// get user session data
 $user_data = check_login($con);
+//get user id from session
 $userid = $user_data['StaffID'];
+//when the form is posted, this function will run
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    //get current
     $current_pw = $_POST['current_pw'];
+    //set new password 1
     $new_pw1 = $_POST['new_pw1'];
+    //set new password 2
     $new_pw2 = $_POST['new_pw2'];
+    //check for empty fields
     if(!empty($current_pw) && !empty($new_pw1) && !empty($new_pw2) && ($new_pw1 == $new_pw2))
     {
+            //check password hash match
             if(password_verify($current_pw,$user_data['Password'])){
                 $hash = password_hash($new_pw1,PASSWORD_DEFAULT);
                 $query = "UPDATE staff SET Password='$hash' WHERE StaffID = '$userid'";
@@ -82,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </ul>
         </div>
     </nav>
+    <!-- Content of web page -->
     <div class="content">
         <h3>Change your password</h3>
         <hr class="redbar">

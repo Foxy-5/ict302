@@ -1,10 +1,10 @@
 <?php
 define('access', true);
 session_start();
-
+//include methods from this pages
 include("include/connection.php");
 include("include/function.php");
-
+//get user session data
 $user_data = check_login($con);
 ?>
 <!DOCTYPE html>
@@ -60,6 +60,7 @@ $user_data = check_login($con);
         <hr class="redbar">
         <h4>Personal Details</h4>
         <br>
+        <!-- display user profile -->
         <div class="containerprofile">
             <label for="StaffID" class="editprofiletext">Staff ID</label><br>
             <input class="myprofilebox" type="text" value=" <?php echo $user_data['StaffID']?>" readonly><br><br>

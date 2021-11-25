@@ -1,33 +1,42 @@
 <?php
 define('access', true);
 session_start();
-
+//include methods from this pages
 include("include/connection.php");
 include("include/function.php");
 include("include/email.php");
-
+//get user session
 $user_data = check_login($con);
+//get user id from user session
 $userid = $user_data['StaffID'];
+//get booking id
 $bookingId = $_GET['bookingid'];
+//query for getting booking data
 $query1 = "Select Booking_date, Booking_start, Booking_end, case WHEN booking.StudentID is NULL THEN NULL ELSE student.First_name end as First_name, case WHEN booking.StudentID is NULL THEN NULL ELSE student.Last_name end as Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status from booking LEFT JOIN student ON booking.StudentID = student.StudentID where booking.Auth_key = '$bookingId' LIMIT 1";
 $result1 = mysqli_query($con, $query1);
 $bookingdata = mysqli_fetch_assoc($result1);
 
-
+//when the form is posted, do this
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    //get previousid
     $previousid = $_POST['previousid'];
+    //get booking end
     $newbookingend = date("Y-m-d H:i:s", strtotime($_POST['newbookingend']));
-    //echo $newbookingend;
+    //if no input for booking end
     if ($newbookingend != '1970-01-01 07:30:00') {
+        //set new booking end time
         $bookingend = $_POST['newbookingend'];
+        //set date format
         $bookingenddate = date("Y-m-d H:i:s", strtotime($bookingend));
     } else {
+        //set date format
         $bookingenddate = date("Y-m-d H:i:s", strtotime($bookingdata['Booking_end']));
     }
-
+    //get statuts from form
     $status = $_POST['status'];
+    //acceptable array list
     $acptStatus = array("Cancelled", "Ended", "Not confirmed", "Confirmed");
-
+    //check if status is in array
     if (!in_array($status, $acptStatus)) {
         echo '<script>
             alert("Invalid input");
@@ -37,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     //check if booking set to ended and student is null
     if ($status == "Ended") {
+        //no student id
         if ($bookingdata['StudentID'] == NULL) {
             echo '<script>
             alert("Cannot set booking to ended without a student");
@@ -44,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </script>';
             exit();
         }
-
+        //if status = cancelled
         if ($bookingdata['Status'] == "Cancelled") {
             echo '<script>
                 alert("Cannot cancel previously cancelled booking!");
@@ -53,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             exit();
         }
     }
-
+    //check for status = cancelled
     else if ($status == "Cancelled") {
         if ($bookingdata['Status'] != "Cancelled" && $bookingdata['Status'] != "Not confirmed") {
             //if the booking is ended, cannot be cancelled
@@ -66,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
 
             //the code will come here if the meeting was previously confirmed
-
+            //set up the emails for student and staff
             $stdtEmail = prepEmailStudent(2, $bookingId);
             $staffEmail = prepEmailStaff(2, $bookingId);
 
@@ -75,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 header("Location: error404");
                 exit();
             }
+            //send out email
             sendEmail($stdtEmail);
             sendEmail($staffEmail);
         }
@@ -90,12 +101,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
     }
 
+    //check for previous meeting id
     if ($previousid > 0) {
         $initial = 0;
     } else {
         $initial = 1;
     }
-
+    
     $comment = $_POST['comment'];
     $bstart = $bookingdata['Booking_start'];
     $bstartd = date_create($bstart);
@@ -107,10 +119,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($status != "Ended") {
         $elapsed = 0;
     }
-    // echo "start date" . $bstart ."\r\n";
-    // echo "end date" . $bookingenddate . "\r\n";
-    //echo $elapsed;
 
+    //update booking query
     $query = "UPDATE booking SET Status = '$status', Booking_end = '$bookingenddate', PreviousMeetingID = '$previousid', Comment = '$comment', Duration = '$elapsed', Initial = '$initial' WHERE Auth_key= '$bookingId'";
     if (mysqli_query($con, $query)) {
         echo '<script>
@@ -176,6 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <h1>Edit Booking</h1>
         <hr class="redbar">
         <form method="post">
+            <!-- Display form in table format for booking data -->
             <table class="userprofile">
                 <tr>
                     <th>Booking ID</th>

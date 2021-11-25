@@ -7,7 +7,7 @@ include("include/function.php");
 
 $user_data = check_login($con);
 $bookingId = $_GET['bookingid'];
-// $query1 = "Select Booking_date, Booking_start, Booking_end, student.First_name, student.Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status from booking, student where booking.bookingID = '$bookingid' and booking.StudentID = student.StudentID LIMIT 1";
+//query for viewing booking
 $query1 = "Select Booking_date, Booking_start, Booking_end, case WHEN booking.StudentID is NULL THEN NULL ELSE student.First_name end as First_name, case WHEN booking.StudentID is NULL THEN NULL ELSE student.Last_name end as Last_name, BookingID, Comment, PreviousMeetingID , booking.StudentID, Duration, Status, booking.Initial from booking LEFT JOIN student ON booking.StudentID = student.StudentID where booking.Auth_key = '$bookingId'limit 1";
 $result1 = mysqli_query($con, $query1);
 if(!mysqli_num_rows($result1)>0){
@@ -77,6 +77,7 @@ else{
         <h1>View Booking</h1>
         <hr class="redbar">
         Current Booking<br /><br>
+        <!-- display table for booking -->
         <table class="userprofile">
             <tr>
                 <th>Booking ID</th>

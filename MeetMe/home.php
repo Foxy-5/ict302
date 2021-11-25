@@ -1,12 +1,14 @@
 <?php
 define('access', true);
 session_start();
-
+//include methods from this pages
 include("include/connection.php");
 include("include/function.php");
-
+//get user session data
 $user_data = check_login($con);
+//get user id
 $userid = $user_data['StaffID'];
+//set page 
 $_SESSION['bkPageFrom'] = 'home';
 ?>
 <!DOCTYPE html>
@@ -93,6 +95,7 @@ $_SESSION['bkPageFrom'] = 'home';
         <h3>Today's Booking</h3>
         <hr class="redbar">
         <br>
+        <!-- Display table for today's booking -->
         <table id="myTable" class="upcomingbooking">
             <thead>
                 <tr>
@@ -105,10 +108,13 @@ $_SESSION['bkPageFrom'] = 'home';
             </thead>
             <tbody>
                 <?php
+                //get today's date
                 $today = date("Y-m-d");
+                //query for today's booking
                 $query1 = "Select Booking_date, Booking_start, First_name, Last_name, Auth_key, booking.StudentID from booking, student where (booking.ConvenerID = '$userid') and (booking.Status = 'confirmed') and (booking.StudentID = student.StudentID) and (booking.Booking_date = '$today') ORDER BY booking_start ASC";
 
                 $result1 = mysqli_query($con, $query1);
+                //print out rows of booking
                 while ($row = mysqli_fetch_array($result1)) {
                     $starttime = date("h:i:s a", strtotime($row['Booking_start']));
                 ?>
@@ -124,10 +130,11 @@ $_SESSION['bkPageFrom'] = 'home';
                 ?>
             </tbody>
         </table>
+        <!-- Print table button -->
         <button class="linktobutton" onclick="PrintTable();"><span class="glyphicon glyphicon-print"></span> Print</button>
-        <!--<input class="linktobutton" type="button" onclick="PrintTable();" value="Print" />-->
     </div>
 </body>
+<!-- Script for print table -->
 <script type="text/javascript">
     function PrintTable() {
         var printWindow = window.open('', '', 'height=700,width=700');

@@ -1,11 +1,12 @@
 <?php
 define('access', true);
 session_start();
-
+//include methods from connection and function
 include("include/connection.php");
 include("include/function.php");
-
+// get user session data
 $user_data = check_login($con);
+//get booking page id
 $_SESSION['bkPageFrom'] = 'allbooking';
 ?>
 <!DOCTYPE html>
@@ -21,11 +22,13 @@ $_SESSION['bkPageFrom'] = 'allbooking';
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="css/mystyle.css">
+    <!--Script from datatables-->
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable();
         });
     </script>
+    <!--Style for table -->
     <style id="table_style" type="text/css">
         body {
             font-family: Arial;
@@ -86,10 +89,12 @@ $_SESSION['bkPageFrom'] = 'allbooking';
             </ul>
         </div>
     </nav>
+    <!-- Content of the web page -->
     <div class="content">
         <h5>Hi <?php echo $user_data['First_name']; ?> <?php echo $user_data['Last_name']; ?>!</h5>
         <h1>All Booking(s)</h1>
         <hr class="redbar">
+        <!-- Display table for all booking -->
         <table id="myTable" class="upcomingbooking">
             <thead>
                 <tr>
@@ -104,13 +109,17 @@ $_SESSION['bkPageFrom'] = 'allbooking';
             </thead>
             <tbody>
                 <?php
+                //get today date
                 $today = date("Y-m-d");
+                //set staffid from user session
                 $staffId = $user_data['StaffID'];
-                // $query1 = "Select Booking_date, Booking_start, First_name, Last_name, BookingID from booking, student where (booking.ConvenerID = '$staffid') and (booking.StudentID = student.StudentID) ORDER BY booking_start ASC";
                 $query1 = "Select Booking_date, Booking_start, Auth_key, booking.StudentID, booking.Status, booking.Duration, case WHEN booking.StudentID is NULL THEN NULL ELSE student.First_name end as First_name, case WHEN booking.StudentID is NULL THEN NULL ELSE student.Last_name end as Last_name, BookingID from booking LEFT JOIN student on booking.StudentID = student.StudentID where booking.ConvenerID = '$staffId' order by booking_start asc";
                 $result1 = mysqli_query($con, $query1);
+                //print out row for the table
                 while ($row = mysqli_fetch_array($result1)) {
+                    //Set start time
                     $starttime = date("h:i:s a", strtotime($row['Booking_start']));
+                    //check if booking have student id
                     if($row['StudentID'] == null)
                     {
                         $studentid = 0;
@@ -119,6 +128,7 @@ $_SESSION['bkPageFrom'] = 'allbooking';
                     {
                         $studentid = $row['StudentID'];
                     }
+                    //check if there is student name
                     if($row['First_name'] == null || $row['Last_name'] == null)
                     {
                         $name = 'no student';
@@ -127,6 +137,7 @@ $_SESSION['bkPageFrom'] = 'allbooking';
                     {
                         $name = $row['First_name'].' ' . $row['Last_name'];
                     }
+                    //check if there is duration
                     if($row['Duration'] == null)
                     {
                         $duration = '0'.'mins';
@@ -136,6 +147,7 @@ $_SESSION['bkPageFrom'] = 'allbooking';
                         $duration = $row['Duration'].'mins';
                     }
                 ?>
+                <!-- Print out table data -->
                     <tr>
                         <td><?php echo $row['Booking_date']; ?></td>
                         <td><?php echo $starttime; ?></td>
@@ -151,11 +163,12 @@ $_SESSION['bkPageFrom'] = 'allbooking';
             </tbody>
 
         </table>
+        <!-- button to print out table -->
         <button class="linktobutton" onclick="PrintTable();"><span class="glyphicon glyphicon-print"></span> Print</button>
-        <!--<input class="linktobutton" type="button" onclick="PrintTable();" value="Print" />-->
     </div>
 
 </body>
+<!-- script for print table -->
 <script type="text/javascript">
     function PrintTable() {
         var printWindow = window.open('', '', 'height=700,width=700');

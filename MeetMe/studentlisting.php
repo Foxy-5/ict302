@@ -91,6 +91,7 @@ $userid = $user_data['StaffID'];
         <h1>Student Analytics</h1>
         <hr class="redbar">
         <?php
+        //query for student data
         $query1 = "Select
         student.StudentID,
         student.First_name,
@@ -113,6 +114,7 @@ $userid = $user_data['StaffID'];
         from student LEFT JOIN booking ON student.StudentID = booking.StudentID GROUP BY student.StudentID";
         $result1 = mysqli_query($con, $query1);
         ?>
+        <!-- display table -->
         <table id="myTable" class="upcomingbooking">
             <thead>
                 <tr>
@@ -126,6 +128,7 @@ $userid = $user_data['StaffID'];
             </thead>
             <tbody>
                 <?php
+                //display rows for student data
                 while ($row = mysqli_fetch_array($result1)) {
                 ?>
                     <tr>

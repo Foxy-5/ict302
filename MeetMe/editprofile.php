@@ -1,18 +1,21 @@
 <?php
 define('access', true);
 session_start();
-
+//includes methods from this pages
 include("include/connection.php");
 include("include/function.php");
-
+//get user session data
 $user_data = check_login($con);
+//if the form is posted
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $firstname = $_POST['first_name'];
     $lastname = $_POST['last_name'];
     $email = $_POST['email'];
     $user_name = $_POST['user_name'];
     $id = $user_data['StaffID'];
+    //check for empty fields
     if(!empty($firstname) && !empty($lastname) && !empty($email) && !empty($user_name)){
+        //update user data query
         $query = "UPDATE staff SET First_name='$firstname', Last_name='$lastname', Email='$email', Username='$user_name' WHERE StaffID= '$id'";
 
         if(mysqli_query($con,$query)){
