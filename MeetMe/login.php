@@ -5,6 +5,13 @@ session_start();
 include("include/connection.php");
 include("include/function.php");
 
+
+//redirects to home page if user is logged in 
+if(isset($_SESSION['StaffID'])&&!empty($_SESSION['StaffID'])){
+    header("Location: home");
+    exit();
+}
+
 if($_SERVER['REQUEST_METHOD'] == "POST")
 {
     //something was posted
@@ -26,7 +33,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             }
         }
         echo '<script>
-        alert("wrong username or password!");
+        alert("Wrong username or password!");
         </script>';
     }
     else

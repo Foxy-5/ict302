@@ -1,19 +1,28 @@
 <?php
+
+//only allowed files can access this file
 if(!defined('access')) {
     http_response_code(404);
     exit();
 }
 
 /**
- *  Gets the student id given the authentication key from studentlist
- *  0 for student list authentication key
- *  1 for booking authentication key
+ *  This function gets the student id given the authentication key
+ *  
+ *  param:
+ *      mode: 0 for student list authentication key
+ *            1 for booking authentication key
+ *      AuthKey: either sutdent list or booking authentication key
+ * 
+ *  return:
+ *      Student id
  **/
 function getStudentId($mode,$AuthKey){
     global $con;
 
     $tableQuery = '';
 
+    //mode of grabbing student id from database
     if($mode==0){
         $tableQuery = "studentlist";
     }
@@ -24,6 +33,7 @@ function getStudentId($mode,$AuthKey){
 
     $query = "SELECT StudentID FROM $tableQuery WHERE Auth_key = '$AuthKey' limit 1";
     $result = mysqli_query($con,$query);
+
     if($result && mysqli_num_rows($result) > 0){
         $output = mysqli_fetch_assoc($result);
         return $output['StudentID'];
@@ -33,9 +43,15 @@ function getStudentId($mode,$AuthKey){
 }
 
 /**
- *  Gets the staff id given the authentication key from studentlist
- *  0 for student list authentication key
- *  1 for booking authentication key
+ *  This function gets the staff id given the authentication key
+ *  
+ *  param:
+ *      mode: 0 for student list authentication key
+ *            1 for booking authentication key
+ *      AuthKey: either sutdent list or booking authentication key
+ * 
+ *  return:
+ *      Staff id
  **/
 function getStaffId($mode,$AuthKey){
     global $con;
@@ -64,7 +80,13 @@ function getStaffId($mode,$AuthKey){
 
 
 /**
- *  Gets the student name given the student id
+ *  This function gets the student name using a student id
+ * 
+ *  param:
+ *      studentid: student id of a student
+ * 
+ *  return:
+ *      full name of student
  **/
 function getStudentName($studentid){
     global $con;
@@ -84,7 +106,13 @@ function getStudentName($studentid){
 }
 
 /**
- *  Gets the staff name given the student id
+ *  This function gets the staff name using a staff id
+ * 
+ *  param:
+ *      staffid: staff id of a staff
+ * 
+ *  return:
+ *      full name of staff
  **/
 function getStaffName($staffid){
     global $con;
@@ -101,6 +129,15 @@ function getStaffName($staffid){
     return '';
 }
 
+/**
+ *  This function gets the student email using a student id
+ * 
+ *  param:
+ *      studentid: student id of a student
+ * 
+ *  return:
+ *      email of student
+ **/
 function getStudentEmail($studentid){
     global $con;
     $query = "SELECT email FROM student WHERE studentid = '$studentid' limit 1;";
@@ -114,6 +151,15 @@ function getStudentEmail($studentid){
     return '';
 }
 
+/**
+ *  This function gets the staff email using a staff id
+ * 
+ *  param:
+ *      staffid: staff id of a staff
+ * 
+ *  return:
+ *      email of staff
+ **/
 function getStaffEmail($staffid){
     global $con;
     $query = "SELECT email FROM staff WHERE staffid = '$staffid' limit 1;";
@@ -126,6 +172,15 @@ function getStaffEmail($staffid){
     return '';
 }
 
+/**
+ *  This function gets the start time of a booking
+ * 
+ *  param:
+ *      bkAuthKey: authentication key for a booking
+ * 
+ *  return:
+ *      start time of a booking
+ **/
 function getStartTime($bkAuthKey){
     global $con;
     $query = "SELECT Booking_start FROM booking WHERE Auth_key = '$bkAuthKey';";
@@ -138,6 +193,15 @@ function getStartTime($bkAuthKey){
     return '';
 }
 
+/**
+ *  This function gets the end time of a booking
+ * 
+ *  param:
+ *      bkAuthKey: authentication key for a booking
+ * 
+ *  return:
+ *      end time of a booking
+ **/
 function getEndTime($bkAuthKey){
     global $con;
     $query = "SELECT Booking_end FROM booking WHERE Auth_key = '$bkAuthKey';";

@@ -1,9 +1,14 @@
 <?php
+
+//only allowed files can access this file
 if(!defined('access')) {
     http_response_code(404);
     exit();
 }
 
+/**
+ * using PHPMailer library
+ */
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -12,8 +17,14 @@ require_once("connection.php");
 require_once("info_retrieve.php");
 
 /**
- * Takes in an authentication link and forges a unique url 
- * to book a meeting with a specific student id
+ * This function forges a unique url to book a meeting with a specific student id
+ * 
+ * param:
+ *      stdtAuthKey: authentication key in student list
+ * 
+ * return:
+ *      forged booking link for email
+ * 
  **/
 function fgBkLink($stdtAuthKey){
     return "https://localhost/MeetMe/studentidinput?authkey=$stdtAuthKey";
@@ -21,14 +32,24 @@ function fgBkLink($stdtAuthKey){
 
 
 /**
- * Takes in an authentication link and forges a unique url 
- * to cancel a specific meeting
+ * This function forges a unique url to cancel a specific meeting
+ * 
+ * param:
+ *      bkAuthKey: authentication key for a booking
+ * 
+ * return:
+ *      forged cancellation link for email
  **/
 function fgCnclLink($bkAuthKey){
     return "https://localhost/MeetMe/cancelbooking?authkey=$bkAuthKey";   
 }
 
-//initializing a phpmailer object to send mail
+/**
+ * This function initializes a PHPMailer object email for sending
+ * 
+ * return:
+ *      Initialized PHPMailer object
+ **/
 function initEmail(){
     $emailSetup = true;
     try{
@@ -44,11 +65,9 @@ function initEmail(){
         $mail->CharSet = 'UTF-8';
     }
     catch (phpmailerException $e) {
-        //echo $e->errorMessage();
         $emailSetup = false;
     }
     catch (Exception $e) {
-        //echo $e->getMessage();
         $emailSetup = false;
     }
 
@@ -61,7 +80,7 @@ function initEmail(){
 
 }
 
-//requesting student to book an email
+//forging the email contents for student to book a meeting
 function fgRqBody($stdtAuthKey){
     $fgSuccess = true;
 
@@ -82,9 +101,19 @@ function fgRqBody($stdtAuthKey){
     }
 }
 
-//0 for student's email body
-//1 for lecturer's email body
-//student auth key to get basic info
+
+/**
+ * 
+ * This function forges the email content for a booking confirmation
+ * for both staff and student
+ * 
+ * param:
+ *   recipient: 0 for forging an email for student
+ *              1 for forging an email for staff
+ *   AuthKeys: authentication keys to get details of staff/students
+ * 
+ * 
+ */
 function fgCfmBody($recipient,...$AuthKeys){
     $stdtAuthKey = $AuthKeys[0];
     $bkAuthKey = $AuthKeys[1];
@@ -97,6 +126,7 @@ function fgCfmBody($recipient,...$AuthKeys){
         return '';
     }
 
+    //getting cancellation link
     $cnclLink = fgCnclLink($bkAuthKey);
 
     $bodyMsg = "Dear {RCP_NAME},\n\nYour meeting with {ORCP_NAME} is confirmed. Attached is the calendar meeting invitation.\n\nIf you wish to cancel your booking, please click on the following link.\n\n$cnclLink\n\nAdvise on cancellation: {ADVISE_MESSAGE}\n\nThank you,\nMurodch University Meet Me.\n\nThis is an auto generated email. Please do not reply\n\n\nMurdoch Singapore\n390 Havelock Road #03-01 King’s Centre Singapore 169662.";
@@ -123,8 +153,18 @@ function fgCfmBody($recipient,...$AuthKeys){
 
 }
 
-//0 for student email
-//1 for staff email
+/**
+ * 
+ * This function forges the email content for a booking cancellation
+ * for both staff and student
+ * 
+ * param:
+ *   recipient: 0 for forging an email for student
+ *              1 for forging an email for staff
+ *   bkAuthKey: booking authentication key to retrieve details of student and staff
+ * 
+ * 
+ */
 function fgCnclBody($receipient,$bkAuthKey){
     if(empty($studentName = getStudentName(getStudentId(1,$bkAuthKey)))){
         return '';
@@ -156,9 +196,18 @@ function fgCnclBody($receipient,$bkAuthKey){
     return strtr($bodyMsg,$rplcBody);
 }
 
-//mode 0 for booking request
-//mode 1 for booking confirmed
-//mode 2 for booking canceled
+/**
+ * 
+ * This function prepares the PHPMailer object to be sent to student
+ * 
+ * param:
+ *   recipient: 0 for email to request for booking
+ *              1 for email for booking confirmation
+ *              2 for email upon successful cancellation
+ *   bkAuthKey: booking authentication key to retrieve details of student
+ * 
+ * 
+ */
 function prepEmailStudent($mode,...$AuthKeys){
     if(sizeof($AuthKeys)>2){
         return false;
@@ -168,7 +217,7 @@ function prepEmailStudent($mode,...$AuthKeys){
         return false;
     }
 
-
+    //gets student id with different methods according to the mode
     if($mode==0||$mode==1){
         $studentId = getStudentId(0,$AuthKeys[0]);
     }
@@ -196,7 +245,11 @@ function prepEmailStudent($mode,...$AuthKeys){
 
     }
 
-        //sending confirmation email
+    /**
+      * sending confirmation email [needs both the student authentication key and
+      * booking authentication key]
+      * 
+      */
     else if($mode==1){
         if(sizeof($AuthKeys)!=2){
             return false;
@@ -208,6 +261,7 @@ function prepEmailStudent($mode,...$AuthKeys){
 
         $subject = "Your meeting is confirmed!";
 
+        //creating ics file and adding as attachment
         if(empty($invite = craftInvite($AuthKeys[1]))){
             return false;
         }
@@ -234,35 +288,27 @@ function prepEmailStudent($mode,...$AuthKeys){
         $mail->Body = $emailcontent;
     }
     catch (phpmailerException $e) {
-        //echo $e->errorMessage();
         return false;
     }
     catch (Exception $e) {
-        //echo $e->getMessage();
         return false;
     }
     
     return $mail;
 }
 
-function sendEmail($mail){
-    try{
-        $mail->send();
-    }
-    catch (phpmailerException $e) {
-        //echo $e->errorMessage();
-        return false;
-    }
-    catch (Exception $e) {
-        //echo $e->getMessage();
-        return false;
-    }
 
-    return true;
-}
-
-//mode 1 for booking confirmation
-//mode 2 for booking cancellation
+/**
+ * 
+ * This function prepares the PHPMailer object to be sent to staff
+ * 
+ * param:
+ *   recipient: 1 for email for booking confirmation
+ *              2 for email upon successful cancellation
+ *   bkAuthKey: booking authentication key to retrieve details of staff
+ * 
+ * 
+ */
 function prepEmailStaff($mode,...$AuthKeys){
     if(sizeof($AuthKeys)>2){
         return false;
@@ -272,6 +318,8 @@ function prepEmailStaff($mode,...$AuthKeys){
         return false;
     }
 
+
+    //gets staff id using different queries according to input
     if($mode==1){
         $staffId = getStaffId(0,$AuthKeys[0]);
     }
@@ -295,6 +343,7 @@ function prepEmailStaff($mode,...$AuthKeys){
             return false;
         }
 
+        //adding subject and ics attachment to the email
         $subject = "Your meeting is confirmed!";
         $mail->AddStringAttachment(craftInvite($AuthKeys[1]),'invite.ics');
 
@@ -319,17 +368,25 @@ function prepEmailStaff($mode,...$AuthKeys){
         $mail->Body = $emailcontent;
     }
     catch (phpmailerException $e) {
-        //echo $e->errorMessage();
         return false;
     }
     catch (Exception $e) {
-        //echo $e->getMessage();
         return false;
     }
 
     return $mail;
 }
 
+/**
+ * This function crafts the string for a ics (calendar invitation) file
+ * 
+ * param:
+ *      bkAuthKey: booking authentication key to get staff and student info
+ * 
+ * return:
+ *      String to insert as ics attachment
+ * 
+ **/
 function craftInvite($bkAuthKey){
     //getting time zone name
     $date = new DateTime();
@@ -352,7 +409,7 @@ function craftInvite($bkAuthKey){
     $strStartTime = $startTime->format('Ymd\THis');
     $strEndTime = $endTime->format('Ymd\THis');
     
-
+    //forging ics body
     $icalBody="BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//hacksw/handcal//NONSGML v1.0//EN
@@ -386,6 +443,27 @@ END:VEVENT
 END:VCALENDAR";
     
     return $icalBody;
+}
+
+/**
+ * This function sends the PHPMailer object that is received as a parameter
+ * 
+ * param:
+ *   mail: PHPMailer object that is ready to send
+ * 
+ */ 
+function sendEmail($mail){
+    try{
+        $mail->send();
+    }
+    catch (phpmailerException $e) {
+        return false;
+    }
+    catch (Exception $e) {
+        return false;
+    }
+
+    return true;
 }
 
 ?>

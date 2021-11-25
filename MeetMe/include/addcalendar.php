@@ -1,4 +1,7 @@
 <?php
+/**
+ * class for calendar implementation that is unable to implement
+ */
 class addcalendar {
 
     private $active_year, $active_month, $active_day;

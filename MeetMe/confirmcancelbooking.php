@@ -46,13 +46,26 @@ mysqli_commit($con);
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="css/mystyle.css">
-		<title>Cancellation Success | MeetMe v2</title>
+		<meta charset="UTF-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	    <link rel="stylesheet" href="css/mystyle.css">
+		<title>Cancellation Success | MeetMev2</title>
 	</head>
 
-	<body class="successbookingtextcenter">
-		<img src="Image/Mail Sent.svg" height="100">
-		<p>Your booking has been successfully cancelled! Email has been sent to you.</p>
+	
+	<body>
+		<nav class="navbar navbar-inverse">
+	        <div class="navbar-header">
+	            <a href="#"><img src="Image/MU Logo.png" height="80"></a>
+	        </div>
+    	</nav>
+    	<nav class="successbookingtextcenter">
+			<img src="Image/Mail Sent.svg" height="100">
+			<p>Your booking has been successfully cancelled! Email has been sent to you.</p>
+		</nav>
 	</body>
 </html>
 
