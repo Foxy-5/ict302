@@ -8,24 +8,36 @@
 	$user_data = check_login($con);
 
 	if($_SERVER['REQUEST_METHOD'] == "POST"){
+
+		//check if staff id is a valid input (numbers)
 		if(!is_numeric($_POST['staffid'])){
-			echo "<script>alert('StaffID must be in numbers');</script>;";
+			echo "<script>
+					alert('StaffID must be in numbers');
+				  </script>;";
 			exit();
 		}
+
 
 		else{
 			$staffId = $_POST['staffid'];
 
+			//check if staff id exists
 			if($staffId!=$user_data['StaffID']){
 				$staffIdQuery = "SELECT `StaffID` FROM `staff` WHERE `StaffID` = '$staffId' limit 1";
 				
 				if(!$result = mysqli_query($con,$staffIdQuery)){
-					echo "<script>alert('There's something wrong while trying to connect to the database');</script>";
+					echo "<script>
+							alert('Cannot connect to system, try again later');
+						  </script>";
+
 					exit();
 				}
 
 				if(!mysqli_num_rows($result)>0){
-					echo "<script>alert('Staff id cannot be found!');</script>";
+					echo "<script>
+							alert('Staff id cannot be found!');
+						  </script>";
+
 					exit();
 				}
 			}
@@ -33,7 +45,7 @@
 		}
 
 
-		//get date time
+		//get date time now
 		$dateValidate = new DateTime("now");
 		
 		//converted to minutes to match with the luxon output
@@ -56,19 +68,20 @@
 
 		$commitToDatabase = true;
 
-		//do validation
+		//do validation for each input received
 		for($i=0;$i<sizeof($dateInput);$i++){
+
+			//check if date input and time input is a valid input date time
 			try{
-				$dateHolder = new DateTime($dateInput[$i]);
+				$startTimeHolder = new DateTime($dateInput[$i] . $startTimeInput[$i]);
+				$endTimeHolder = new DateTime($dateInput[$i] . $endTimeInput[$i]);
 			}
 			catch (Exception $e) {
-				echo "<script>alert('There's something wrong while receiving your input');</script>";
-				die;
+				echo "<script>
+						alert('There's something wrong while receiving your input');
+					  </script>";
+				exit();
 			}
-
-			//validate date
-			$startTimeHolder = new DateTime($dateInput[$i] . $startTimeInput[$i]);
-			$endTimeHolder = new DateTime($dateInput[$i] . $endTimeInput[$i]);
 
 
 			//if the start time is earlier than the end time
@@ -82,11 +95,14 @@
 			
 			//shows error if both start and end time are the same
 			else{
-				echo "<script>alert('The start and end time stamps are the same!');</script>";
+				echo "<script>
+						alert('The start and end time stamps are the same!');
+					  </script>";
 				//stops entire process if one of it fails
-				die;
+				exit();
 			}
 
+			//converts date time to time zone after it's validated
 			if($changeDateToTimeZone==true){
 				$inputDateToUtc = -($timezoneoffset);
 				$systemTimeFromUtc = $systemoffset;
@@ -102,32 +118,40 @@
 
 			}
 
+			//convert processed input to 
 			$startDateStr = $startTimeHolder->format('Y-m-d');
 			$startTimeStr = $startTimeHolder->format('Y-m-d H:i');
 			$endTimeStr = $endTimeHolder->format('Y-m-d H:i');
 
-			//after validation
 
-			//creating a unique id and then hashed to generate a unique identifier for each booking and saved in the database
+			//creating a unique id and then hashed to generate a unique identifier
+			//for each booking and saved in the database
 			$uniqueId = $staffId.$startTimeStr.uniqid("booking",true);
 			$hashedAuthKey = str_split(hash('sha256',$uniqueId),32)[0];
 
-
+			//inserts a new booking into the database
 			$query = "INSERT INTO `booking` (`ConvenerID`, `Booking_date`, `Booking_start`, `Booking_end`,`Auth_Key`) VALUES ('$staffId', '$startDateStr', '$startTimeStr', '$endTimeStr','$hashedAuthKey');";
+
 			if(!mysqli_query($con,$query)){
 	            $commitToDatabase = false;
 	            break;
 	    	}
 		}
 		
+
 		if($commitToDatabase){
-			echo '<script>alert("Time slots added successfully");
-	            			window.location.href="chooseAvailTime";
-	            	  </script>';
+			echo '<script>
+					alert("Time slots added successfully");
+	            	window.location.href="chooseAvailTime";
+	              </script>';
 			mysqli_commit($con);
 		}
+
+		//if any of the validation fails
 		else{
-			echo '<script>alert("An error has occured.")</script>';
+			echo '<script>
+					alert("An error has occured.")
+				  </script>';
 			mysqli_rollback($con);
 		}
 
@@ -219,11 +243,7 @@
 		window['moment-range'].extendMoment(moment);
 
 		//set timezone of form once user enters
-		//moment.js
-		/*var something = new Date().getTimezoneOffset();
-		document.getElementsByName('timezone')[0].value = something;*/
 
-		//luxon.js
 		const DateTime = luxon.DateTime;
 		var timeZone = DateTime.now();
 		console.log(timeZone.toString());
@@ -249,11 +269,6 @@
 			//as the minimum date to set available time
 			//must be at least a day after the current date
 
-			//moment.js
-			/*minimumDate = moment();
-			minimumDate.add(1,'days');*/
-
-			//luxon.js
 			minimumDate = DateTime.now();
 
 			document.getElementsByName('timezone')[0].value = minimumDate.offset;
@@ -273,10 +288,6 @@
 		function updateDateField(){
 			var dateFields = document.getElementsByName('date[]');
 			for(var i=0;i<dateFields.length;i++){
-				//moment.js
-				//dateFields[i].min = minimumDate.format('YYYY-MM-DD');
-
-				//luxon.js
 				dateFields[i].min = minimumDate.toISODate();
 			}
 		}
@@ -286,10 +297,7 @@
 			var timeFields = document.getElementsByName('time[]');
 			for(var i=0;i<timeFields.length;i++){
 				if(timeFields[i].hasAttribute("min")){
-					//moment.js
-					//timeFields[i].min = minimumDate.format("HH:mm");
 
-					//luxon.js
 					timeFields[i].min = minimumDate.toISODate();
 				}
 
@@ -358,17 +366,6 @@
 
 			//start time input container
 			array[3].addEventListener("input",checkTime);
-
-			/*var observer = new MutationObserver(function(mutations) {
-				mutations.forEach(function(mutation) {
-					if(mutation.type === "attributes") {
-						checkDate;
-					}
-				});
-			});
-
-
-			observer.observe(element, {attributes: true});*/
 
 		}
 

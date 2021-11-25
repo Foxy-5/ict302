@@ -1,75 +1,80 @@
 <?php
-session_start();
+    session_start();
+    define('access',true);
 
-define('access',true);
-if(!isset($_GET['authkey'])){
-    http_response_code(404);
-    exit();
-}
+    //check for authentication key
+    if(!isset($_GET['authkey'])){
+        http_response_code(404);
+        exit();
+    }
 
-if(strlen($_GET['authkey'])!=32||!preg_match("/^[a-zA-Z0-9]*$/",$_GET['authkey'])){
-    http_response_code(404);
-    exit(); 
-}
+    if(strlen($_GET['authkey'])!=32||!preg_match("/^[a-zA-Z0-9]*$/",$_GET['authkey'])){
+        http_response_code(404);
+        exit(); 
+    }
 
-require_once("include/connection.php");
-require_once("include/email.php");
-require_once("include/info_retrieve.php");
+    require_once("include/connection.php");
+    require_once("include/email.php");
+    require_once("include/info_retrieve.php");
 
-$bkAuthKey = $_GET['authkey'];
-$searchBkQuery = "SELECT * FROM booking WHERE Auth_key = '$bkAuthKey' AND StudentID IS NOT NULL limit 1";
+    //finding the booking from the database
+    $bkAuthKey = $_GET['authkey'];
+    $searchBkQuery = "SELECT * FROM booking WHERE Auth_key = '$bkAuthKey' AND StudentID IS NOT NULL limit 1";
 
-if(!$bkResult = mysqli_query($con,$searchBkQuery)){
-    echo '<script>alert("Failed");
-            window.location.href="error404";
-          </script>;';
-    //header("Location: failedConnection.php");
-    exit();
-}
+    if(!$bkResult = mysqli_query($con,$searchBkQuery)){
+        echo '<script>alert("Cannot connect to system, try again later");
+                window.location.href="error404";
+              </script>;';
+        exit();
+    }
 
-if(!mysqli_num_rows($bkResult)>0){
-    echo '<script>alert("Booking not found");
-            window.location.href="error404";
-          </script>;';
-    exit();
-}
+    if(!mysqli_num_rows($bkResult)>0){
+        echo '<script>alert("Booking not found");
+                window.location.href="error404";
+              </script>;';
+        exit();
+    }
 
-$bkDets = mysqli_fetch_assoc($bkResult);
+    $bkDets = mysqli_fetch_assoc($bkResult);
 
-if($bkDets['Status']=='Ended'){
-    echo '<script>alert("Booking is over, cannot be cancelled");
-            window.location.href="error404";
-          </script>';
-    exit();
-}
-else if($bkDets['Status']=='Cancelled'){
-    echo '<script>alert("Booking is already cancelled, cannot be canelled again");
-            window.location.href="error404";
-          </script>;';
-    exit();
-}
+    //shows error if the booking is either ended or cancelled
+    if($bkDets['Status']=='Ended'){
+        echo '<script>alert("Booking is over, cannot be cancelled");
+                window.location.href="error404";
+              </script>';
+        exit();
+    }
+    else if($bkDets['Status']=='Cancelled'){
+        echo '<script>alert("Booking is already cancelled, cannot be canelled again");
+                window.location.href="error404";
+              </script>;';
+        exit();
+    }
 
+    //getting name of student
+    $studentId = $bkDets['StudentID'];
+    $stdtDetsQuery = "SELECT First_name, Last_name FROM student WHERE StudentID = '$studentId'";
 
-$studentId = $bkDets['StudentID'];
-$stdtDetsQuery = "SELECT First_name, Last_name FROM student WHERE StudentID = '$studentId'";
+    if(!$stdtResult = mysqli_query($con,$stdtDetsQuery)){
+        echo '<script>
+                alert("Cannot connect to system, try again later");
+                window.location.href="error404";
+              </script>;';
+        exit();
+    }
 
-if(!$stdtResult = mysqli_query($con,$stdtDetsQuery)){
-    echo '<script>alert("Cannot connect to system, try again later");
-            window.location.href="error404";
-          </script>;';
-    exit();
-}
+    if(!mysqli_num_rows($stdtResult)>0){
+        echo '<script>
+                alert("Booking not found");
+                window.location.href="error404";
+              </script>;';
+        exit();
+    }
 
-if(!mysqli_num_rows($stdtResult)>0){
-    echo '<script>alert("Booking not found");
-            window.location.href="error404";
-          </script>;';
-    exit();
-}
+    $stdtDets = mysqli_fetch_assoc($stdtResult);
 
-$stdtDets = mysqli_fetch_assoc($stdtResult);
-
-$_SESSION['cnclBk'] = $bkAuthKey;
+    //saves the booking authentication key if everything retrieves
+    $_SESSION['cnclBk'] = $bkAuthKey;
 
 
 ?>
@@ -105,6 +110,9 @@ $_SESSION['cnclBk'] = $bkAuthKey;
                 <th>Previous Meeting ID</th>
             </tr>
             <?php
+                //prints all details of the booking
+
+                //if previous booking is not null, prints the previous booking id
                 $prevMeeting = (is_null($bkDets['PreviousMeetingID'])) ? "N/A" : $bkDets['PreviousMeetingID'];
                 echo "<tr>";
                 echo "  <td>" . $bkDets['BookingID'] . "</td>";
@@ -126,6 +134,7 @@ $_SESSION['cnclBk'] = $bkAuthKey;
                 <th>Booking Start</th>
             </tr>
             <?php
+                //formatting time output 
                 $starttime = date("h:i a", strtotime($bkDets['Booking_start']));
                 echo "<tr>";
                 echo "  <td>" . $bkDets["Booking_date"] . "</td>";

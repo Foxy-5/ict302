@@ -55,6 +55,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
 	}
 
+	//shows error message if student id does not correspond with the authenticaation link
 	echo <<<END
 			<script>
 				window.onload = function () {
