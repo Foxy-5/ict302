@@ -60,11 +60,11 @@
 		}
 
 		//preparing email to send
-		$stdtMail = prepEmailStudent(1,$stdtAuthKey,$bkAuthKey);
-		$lectMail = prepEmailStaff(1,$stdtAuthKey,$bkAuthKey);
+		$stdtMail = prepEmailStudent(1,$stdtAuthkey,$bkAuthKey);
+		$lectMail = prepEmailStaff(1,$stdtAuthkey,$bkAuthKey);
 
 		//removing the record from student list
-		$removeQuery = "DELETE from studentlist WHERE Auth_Key = '$stdtAuthKey'";
+		$removeQuery = "DELETE from studentlist WHERE Auth_Key = '$stdtAuthkey'";
 
 		if(!mysqli_query($con,$removeQuery)){
 			mysqli_rollback($con);
