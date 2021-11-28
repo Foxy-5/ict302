@@ -19,7 +19,7 @@ if (isset($_FILES['excel'])) {
         //the maximum $_FILES and $_POST can handle is 40MB
         $LargeFileErrors = array_fill_keys(array(1,2),'Error: File is larger than 2MB.');
         $uploadErrors = array_fill_keys(array(3,4),'File corrupted/Nothing is uploaded.');
-        $serverErrors = array_fill_keys(array(6,7,8),'System error, please contact the administrator.');
+        $serverErrors = array_fill_keys(array(6,7,8),'System error, please try again.');
 
         $errors = $LargeFileErrors + $uploadErrors + $serverErrors;
         $errorMsg = $errors[$_FILES['excel']['error']];
@@ -79,29 +79,37 @@ if (isset($_FILES['excel'])) {
 
 //if user submits the file
 if (isset($_POST["import"])) {
-    if(!is_numeric($_POST['staffid'])){
-        echo "<script>alert('StaffID must be in numbers');</script>;";
+    $rgStaffId = "/^[a-zA-Z0-9]{8}$/";
+    if(!preg_match($rgStaffId,$_POST['staffid'])){
+        echo "<script>
+                alert('StaffID must be in 8 characters and alphanumeric');
+                window.location.href = \"uploadExcel\";
+              </script>";
         exit();
     }
 
-    else{
-        $staffId = $_POST['staffid'];
+    $staffId = $_POST['staffid'];
 
-        if($staffId!=$user_data['StaffID']){
-            $staffIdQuery = "SELECT `StaffID` FROM `staff` WHERE `StaffID` = '$staffId' limit 1";
-            
-            if(!$result = mysqli_query($con,$staffIdQuery)){
-                echo "<script>alert('There's something wrong while trying to connect to the database');</script>";
-                exit();
-            }
-
-            if(!mysqli_num_rows($result)>0){
-                echo "<script>alert('Staff id cannot be found!');</script>";
-                exit();
-            }
+    if($staffId!=$user_data['StaffID']){
+        $staffIdQuery = "SELECT `StaffID` FROM `staff` WHERE `StaffID` = '$staffId' limit 1";
+        
+        if(!$result = mysqli_query($con,$staffIdQuery)){
+            echo "<script>
+                    alert('There's something wrong while trying to connect to the database');
+                    window.location.href = \"uploadExcel\";
+                  </script>";
+            exit();
         }
 
+        if(!mysqli_num_rows($result)>0){
+            echo "<script>
+                    alert('Staff id cannot be found!');
+                    window.location.href = \"uploadExcel\";
+                  </script>";
+            exit();
+        }
     }
+
 
     //grabs the file from the saved directory
     $file = "uploads/" . $_FILES['excel']['name'];
@@ -182,7 +190,6 @@ if (isset($_POST["import"])) {
                     //checks using regex for each input
                     if(!preg_match($rgStudentId,$studentId)){
                         $commitToDatabase = false;
-                        $length = strlen($studentId);
                         echo "<script>
                                 alert('Student ID must be 8 numbers(Line $lineCounter)');
                                 window.location.href = \"uploadExcel\";

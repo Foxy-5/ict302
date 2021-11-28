@@ -8,18 +8,18 @@ session_start();
     if($_SERVER['REQUEST_METHOD'] == "POST")
     {
         //something was posted
+        $staffid = $_POST['staff_id'];
         $firstname = $_POST['first_name'];
         $lastname = $_POST['last_name'];
         $email = $_POST['email'];
         $user_name = $_POST['user_name'];
         $password = $_POST['password'];
         $password2 = $_POST['repassword'];
-        if(!empty($firstname) && !empty($lastname) && !empty($email) && !empty($user_name) && !empty($password) && ($password == $password2))
+        if(!empty($staffid) && !empty($firstname) && !empty($lastname) && !empty($email) && !empty($user_name) && !empty($password) && ($password == $password2))
         {
             //save to database
-            
             $hash = password_hash($password,PASSWORD_DEFAULT);
-            $query = "insert into staff (First_name,Last_name,Username,Password,Email) values ('$firstname','$lastname','$user_name','$hash','$email')";
+            $query = "insert into staff (StaffID,First_name,Last_name,Username,Password,Email) values ('$staffid','$firstname','$lastname','$user_name','$hash','$email')";
             if(mysqli_query($con,$query)){
                 echo '<script>
                 alert("Account succesfully created.");
@@ -30,13 +30,14 @@ session_start();
             }
             else{
                 echo '<script>alert("Username already exists, please try another.")</script>';
-                //echo "Username already exists, please try another.";
+                exit();
             }
             
         }
         else
         {
             echo '<script>alert("Please enter valid details.")</script>';
+            exit();
         }
     }
 ?>
@@ -58,6 +59,8 @@ session_start();
             <img src="Image/LoginBackground.jpg" class="imagebackground">
             <form method="post">
                 <div class="signupcontainerbox">
+                    <label for="staff_id" class="signuptext">Staff ID</label><br>
+                    <input class="signuptextbox" name="staff_id" id="text" placeholder="STAFF ID"><br><br>
                     <label for="first_name" class="signuptext">First Name</label><br>
                     <input class="signuptextbox" name="first_name" id="text" placeholder="FIRST NAME"><br><br>
                     <label for="last_name" class="signuptext">Last Name</label><br>

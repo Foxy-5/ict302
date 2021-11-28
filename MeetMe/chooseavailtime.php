@@ -10,39 +10,40 @@
 	if($_SERVER['REQUEST_METHOD'] == "POST"){
 
 		//check if staff id is a valid input (numbers)
-		if(!is_numeric($_POST['staffid'])){
-			echo "<script>
-					alert('StaffID must be in numbers');
-				  </script>;";
-			exit();
-		}
+		$rgStaffId = "/^[a-zA-Z0-9]{8}$/";
+	    if(!preg_match($rgStaffId,$_POST['staffid'])){
+	        echo "<script>
+	        		alert('StaffID must be in 8 characters and alphanumeric');
+	        		window.location.href = \"chooseavailtime\";
+	        	  </script>";
+	        exit();
+	    }
 
+		$staffId = $_POST['staffid'];
 
-		else{
-			$staffId = $_POST['staffid'];
+		//check if staff id exists
+		if($staffId!=$user_data['StaffID']){
+			$staffIdQuery = "SELECT `StaffID` FROM `staff` WHERE `StaffID` = '$staffId' limit 1";
+			
+			if(!$result = mysqli_query($con,$staffIdQuery)){
+				echo "<script>
+						alert('Cannot connect to system, try again later');
+						window.location.href = \"chooseavailtime\";
+					  </script>";
 
-			//check if staff id exists
-			if($staffId!=$user_data['StaffID']){
-				$staffIdQuery = "SELECT `StaffID` FROM `staff` WHERE `StaffID` = '$staffId' limit 1";
-				
-				if(!$result = mysqli_query($con,$staffIdQuery)){
-					echo "<script>
-							alert('Cannot connect to system, try again later');
-						  </script>";
-
-					exit();
-				}
-
-				if(!mysqli_num_rows($result)>0){
-					echo "<script>
-							alert('Staff id cannot be found!');
-						  </script>";
-
-					exit();
-				}
+				exit();
 			}
 
+			if(!mysqli_num_rows($result)>0){
+				echo "<script>
+						alert('Staff id cannot be found!');
+						window.location.href = \"chooseavailtime\";
+					  </script>";
+
+				exit();
+			}
 		}
+
 
 
 		//get date time now
@@ -79,6 +80,7 @@
 			catch (Exception $e) {
 				echo "<script>
 						alert('There's something wrong while receiving your input');
+						window.location.href = \"chooseavailtime\";
 					  </script>";
 				exit();
 			}
@@ -95,9 +97,10 @@
 			
 			//shows error if both start and end time are the same
 			else{
-				echo "<script>
-						alert('The start and end time stamps are the same!');
-					  </script>";
+				echo '<script>
+						alert("The start and end time stamps are the same!");
+						window.location.href = "chooseavailtime";
+					  </script>';
 				//stops entire process if one of it fails
 				exit();
 			}
@@ -151,6 +154,7 @@
 		else{
 			echo '<script>
 					alert("An error has occured.")
+					window.location.href="chooseAvailTime";
 				  </script>';
 			mysqli_rollback($con);
 		}
@@ -310,6 +314,7 @@
 			//maximum time slot to add is 10
 			if(fieldCounter>=10){
 				alert("No more fields can be added!");
+				window.location.href="chooseAvailTime";
 				return;
 			}
 
